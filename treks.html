@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Himalayan Treks — Himachal BNB</title>
+  <meta name="description" content="8 curated Himalayan treks from weekend walks to extreme expeditions. Hampta Pass, Pin Parvati, Triund, and more — with day-by-day itineraries and local tips.">
+  <link rel="canonical" href="https://himachalbnb.com/treks.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="page-main">
+    <div class="container">
+      <header class="page-header">
+        <span class="section-label">Trails</span>
+        <h1 class="section-title giant-title">Walk Into the <span class="text-gradient">Wild</span></h1>
+        <p class="section-desc">Curated Himalayan treks with day-by-day itineraries, honest difficulty ratings, and local tips you won't find elsewhere. Lace up.</p>
+      </header>
+      <div class="filter-bar" id="trek-filters">
+        <button class="filter-btn active" data-filter="all">All Treks</button>
+        <button class="filter-btn" data-filter="Easy">🟢 Easy</button>
+        <button class="filter-btn" data-filter="Moderate">🟡 Moderate</button>
+        <button class="filter-btn" data-filter="Hard">🔴 Hard</button>
+      </div>
+      <div class="trek-grid" id="trek-grid"></div>
+    </div>
+  </main>
+  <script src="js/data.js" defer></script>
+  <script src="js/images.js" defer></script>
+  <script src="js/common.js" defer></script>
+</body>
+</html>

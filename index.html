@@ -3,383 +3,197 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Himachal BNB — Premium Tourism App</title>
-  <meta name="description" content="Himachal BNB is an ultra-premium tourism and booking guide focusing on top-tier resorts and retreats in Himachal Pradesh.">
+  <title>Himachal BNB — Your Gateway to Himachal Pradesh</title>
+  <meta name="description" content="Discover the best of Himachal Pradesh with locally curated destinations, handpicked luxury resorts, expert trek guides, and insider travel knowledge from the hills.">
+  <meta name="keywords" content="Himachal Pradesh, travel, Manali, Shimla, Spiti Valley, Dharamshala, Kasol, treks, resorts, hill stations, India travel">
+  <meta property="og:title" content="Himachal BNB — Your Gateway to Himachal Pradesh">
+  <meta property="og:description" content="Locally curated travel guide to Himachal Pradesh. Handpicked resorts, expert trek guides, and insider knowledge from the hills.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://himachalbnb.com/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-  <!-- ═══ NAVIGATION ═══ -->
-  <nav id="main-nav" class="unsplash-nav">
-    <div class="nav-left">
-      <div class="nav-brand" id="nav-brand" style="cursor: pointer;">
-        <span style="color: var(--text-primary); font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase;">Himachal</span><span style="color: var(--accent); font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; margin-left: 6px; text-transform: uppercase;">BNB</span>
-      </div>
-    </div>
-    <div class="nav-right">
-      <div class="nav-links-desktop">
-         <button class="nav-link active" data-page="resorts">Resorts</button>
-         <button class="nav-link" data-page="destinations">Destinations</button>
-         <button class="nav-link" data-page="treks">Treks</button>
-         <button class="nav-link" data-page="planner">Plan Trip</button>
-      </div>
-      <div class="nav-utilities">
-        <button class="nav-hamburger unsplash-hamburger" id="nav-hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-  </nav>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- PAGE: RESORTS (Home Landing)               -->
-  <!-- ═══════════════════════════════════════════ -->
-  <section class="page active" id="page-resorts">
-    
-    <!-- HERO -->
-    <div class="hero-forest-bg" style="position: relative; width: 100%; min-height: 100vh; background: url('https://images.unsplash.com/photo-1448375240586-882707db888b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2600&q=80') center/cover no-repeat; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-      
-      <div style="position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(13,13,13,0.65) 0%, rgba(13,13,13,0.15) 40%, rgba(13,13,13,0.85) 100%); z-index: 1;"></div>
-      
-      <div style="position: relative; z-index: 2; max-width: 900px; width: 100%; margin: 0 auto; padding: 2rem 24px; display: flex; flex-direction: column; align-items: center; text-align: center;">
-        
-        <p style="color: var(--accent); font-family: var(--font-bold); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.35em; margin-bottom: 2rem;">Handpicked Luxury Retreats · Himachal Pradesh</p>
-        <h1 style="color: var(--text-primary); font-size: clamp(3.2rem, 9vw, 6rem); font-family: var(--font-heading); font-weight: 900; margin-bottom: 1.5rem; line-height: 1.0; letter-spacing: -0.03em; text-transform: uppercase;">Discover the<br><span style='color: var(--accent);'>Himalayas</span></h1>
-        <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 560px; line-height: 1.7; margin-bottom: 3rem; font-weight: 300;">Curated escapes for discerning travellers. Experience pristine forests, snow-capped peaks, and world-class hospitality.</p>
-
-        <button id="explore-btn" style="background: var(--accent); border: none; border-radius: 6px; padding: 16px 44px; color: #0d0d0d; font-family: var(--font-bold); font-size: 0.8rem; font-weight: 800; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.15em;">Explore Retreats</button>
-      </div>
-    </div>
-
-    <!-- STATS BAR -->
-    <div style="background: rgba(255,255,255,0.03); border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass);">
-      <div style="max-width: 1320px; margin: 0 auto; padding: 2.5rem 24px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center;">
-        <div>
-          <span style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; color: var(--accent); display: block;">12+</span>
-          <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600;">Premium Retreats</span>
+  <main>
+    <!-- HERO — 5-PANEL DESTINATION STRIP -->
+    <section class="hero-panels" id="hero-panels" aria-label="Featured Destinations">
+      <div class="hero-panel active" data-dest="manali" style="background-image: url('https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1600&auto=format&fit=crop');">
+        <div class="hero-panel-overlay"></div>
+        <div class="hero-panel-content">
+          <span class="hero-panel-label">Kullu Valley</span>
+          <h2 class="hero-panel-title">Manali</h2>
+          <p class="hero-panel-tagline">Where deodar forests meet snow-capped passes and riverside cafes serve fresh trout.</p>
+          <a href="destinations.html" class="hero-panel-btn">Explore →</a>
         </div>
-        <div>
-          <span style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; color: var(--accent); display: block;">10</span>
-          <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600;">Destinations</span>
-        </div>
-        <div>
-          <span style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; color: var(--accent); display: block;">4.8</span>
-          <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600;">Avg. Rating</span>
-        </div>
-        <div>
-          <span style="font-family: var(--font-heading); font-size: 2.2rem; font-weight: 900; color: var(--accent); display: block;">5★</span>
-          <span style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.15em; font-weight: 600;">Service Standard</span>
-        </div>
+        <span class="hero-panel-number">01</span>
       </div>
-    </div>
+      <div class="hero-panel" data-dest="spiti" style="background-image: url('https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1600&auto=format&fit=crop');">
+        <div class="hero-panel-overlay"></div>
+        <div class="hero-panel-content">
+          <span class="hero-panel-label">Lahaul-Spiti</span>
+          <h2 class="hero-panel-title">Spiti Valley</h2>
+          <p class="hero-panel-tagline">A cold desert at 3,800m where thousand-year-old monasteries cling to barren cliffs.</p>
+          <a href="destinations.html" class="hero-panel-btn">Explore →</a>
+        </div>
+        <span class="hero-panel-number">02</span>
+      </div>
+      <div class="hero-panel" data-dest="dharamshala" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&auto=format&fit=crop');">
+        <div class="hero-panel-overlay"></div>
+        <div class="hero-panel-content">
+          <span class="hero-panel-label">Kangra Valley</span>
+          <h2 class="hero-panel-title">Dharamshala</h2>
+          <p class="hero-panel-tagline">Home of the Dalai Lama, Tibetan momos, and the mighty Dhauladhar range.</p>
+          <a href="destinations.html" class="hero-panel-btn">Explore →</a>
+        </div>
+        <span class="hero-panel-number">03</span>
+      </div>
+      <div class="hero-panel" data-dest="kasol" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1600&auto=format&fit=crop');">
+        <div class="hero-panel-overlay"></div>
+        <div class="hero-panel-content">
+          <span class="hero-panel-label">Parvati Valley</span>
+          <h2 class="hero-panel-title">Kasol</h2>
+          <p class="hero-panel-tagline">Pine forests, crystal-clear rivers, and hot springs hidden in the valley.</p>
+          <a href="destinations.html" class="hero-panel-btn">Explore →</a>
+        </div>
+        <span class="hero-panel-number">04</span>
+      </div>
+      <div class="hero-panel" data-dest="kinnaur" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&auto=format&fit=crop');">
+        <div class="hero-panel-overlay"></div>
+        <div class="hero-panel-content">
+          <span class="hero-panel-label">Kinnaur District</span>
+          <h2 class="hero-panel-title">Kinnaur</h2>
+          <p class="hero-panel-tagline">Apple orchards, sacred peaks, and India's most jaw-dropping mountain highway.</p>
+          <a href="destinations.html" class="hero-panel-btn">Explore →</a>
+        </div>
+        <span class="hero-panel-number">05</span>
+      </div>
+    </section>
 
-    <!-- CURATED RETREATS GRID -->
-    <div class="page-container" style="padding-top: 5rem; padding-bottom: 4rem;">
-      <p style="font-family: var(--font-bold); font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 0.5rem; font-weight: 700;">Curated Collection</p>
-      <h2 style="font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--text-primary); margin-bottom: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: -0.01em;">Exclusive Retreats</h2>
-      <p style="color: var(--text-muted); max-width: 500px; margin-bottom: 2.5rem; font-size: 0.95rem; line-height: 1.6;">Every property vetted, every view earned. Only the finest stay on our list.</p>
-      <div class="resorts-grid" id="resorts-grid"></div>
-    </div>
+    <!-- STATS -->
+    <section class="stats-bar" aria-label="Key Numbers">
+      <div class="container stats-grid">
+        <div class="stat-item"><span class="stat-number">10</span><span class="stat-label">Destinations</span></div>
+        <div class="stat-item"><span class="stat-number">8</span><span class="stat-label">Curated Treks</span></div>
+        <div class="stat-item"><span class="stat-number">12+</span><span class="stat-label">Premium Resorts</span></div>
+        <div class="stat-item"><span class="stat-number">4.8</span><span class="stat-label">Avg. Rating</span></div>
+      </div>
+    </section>
 
-    <!-- WHY HIMACHAL BNB — TRUST SECTION -->
-    <div style="background: rgba(255,255,255,0.02); border-top: 1px solid var(--border-glass); border-bottom: 1px solid var(--border-glass);">
-      <div class="page-container" style="padding-top: 5rem; padding-bottom: 5rem;">
-        <p style="font-family: var(--font-bold); font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 0.5rem; font-weight: 700; text-align: center;">Why Us</p>
-        <h2 style="font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--text-primary); margin-bottom: 3rem; font-weight: 800; text-transform: uppercase; text-align: center;">Built for the<br><span style="color: var(--accent);">Discerning Traveller</span></h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-          <div style="background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius); padding: 2rem; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
-            <span style="font-size: 2rem; display: block; margin-bottom: 1rem;">🏔️</span>
-            <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; text-transform: uppercase;">Locally Curated</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">Every retreat is personally inspected. We don't list — we discover. Handpicked by locals from the hills of Himachal.</p>
+    <!-- WHY US -->
+    <section class="section" aria-label="Why Himachal BNB">
+      <div class="container">
+        <span class="section-label">Why Himachal BNB</span>
+        <h2 class="section-title">Not Another Travel Site.<br><span class="text-gradient">Built by Locals.</span></h2>
+        <p class="section-desc">Most travel sites regurgitate the same stale info. We grew up in these hills. Every resort is personally visited, every trail walked, every dhaba tested. This is Himachal from the inside.</p>
+        <div class="features-grid">
+          <div class="feature-card">
+            <span class="feature-icon">🏔️</span>
+            <h3>Locally Curated</h3>
+            <p>Every retreat personally inspected. We don't list — we discover. Handpicked by locals from the hills of Himachal.</p>
           </div>
-          <div style="background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius); padding: 2rem; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
-            <span style="font-size: 2rem; display: block; margin-bottom: 1rem;">✨</span>
-            <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; text-transform: uppercase;">Luxury Standard</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">Only properties rated 4.7+ make the cut. Expect world-class service, premium amenities, and views that take your breath away.</p>
+          <div class="feature-card">
+            <span class="feature-icon">✨</span>
+            <h3>Luxury Standard</h3>
+            <p>Only properties rated 4.7+ make the cut. Expect world-class service, premium amenities, and views that take your breath away.</p>
           </div>
-          <div style="background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius); padding: 2rem; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
-            <span style="font-size: 2rem; display: block; margin-bottom: 1rem;">🗺️</span>
-            <h3 style="font-family: var(--font-heading); font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem; text-transform: uppercase;">Expert Guidance</h3>
-            <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">Trek routes, seasonal guides, cultural intel, and wildlife spotting — everything a Himalayan explorer needs in one place.</p>
+          <div class="feature-card">
+            <span class="feature-icon">🗺️</span>
+            <h3>Expert Guidance</h3>
+            <p>Trek routes, seasonal guides, cultural intel, wildlife spotting — everything a Himalayan explorer needs, in one place.</p>
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- CURATED EXPERIENCES -->
-    <div class="page-container" style="padding-top: 5rem; padding-bottom: 4rem;">
-      <p style="font-family: var(--font-bold); font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 0.5rem; font-weight: 700;">Explore by Experience</p>
-      <h2 style="font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--text-primary); margin-bottom: 2.5rem; font-weight: 800; text-transform: uppercase;">Your Kind of <span style="color: var(--accent);">Adventure</span></h2>
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;" id="experience-grid">
-        <div onclick="switchPage('treks')" style="cursor: pointer; position: relative; border-radius: var(--radius); overflow: hidden; height: 320px; background: url('https://images.unsplash.com/photo-1626714486580-08709e99a341?q=80&w=800&auto=format&fit=crop') center/cover; transition: transform 0.4s var(--ease);" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
-          <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%);"></div>
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem;">
-            <span style="font-size: 0.65rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700;">Adventure</span>
-            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--text-primary); text-transform: uppercase; margin-top: 0.3rem;">Himalayan Treks</h3>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem;">8 curated trails from weekend walks to extreme expeditions</p>
-          </div>
-        </div>
-        <div onclick="switchPage('destinations')" style="cursor: pointer; position: relative; border-radius: var(--radius); overflow: hidden; height: 320px; background: url('https://images.unsplash.com/photo-1605649487212-4dcb18c0cb8db?q=80&w=800&auto=format&fit=crop') center/cover; transition: transform 0.4s var(--ease);" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
-          <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%);"></div>
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem;">
-            <span style="font-size: 0.65rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700;">Explore</span>
-            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--text-primary); text-transform: uppercase; margin-top: 0.3rem;">Hidden Valleys</h3>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem;">Spiti, Kinnaur, Parvati — 10 extraordinary destinations</p>
-          </div>
-        </div>
-        <div onclick="switchPage('seasons')" style="cursor: pointer; position: relative; border-radius: var(--radius); overflow: hidden; height: 320px; background: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=800&auto=format&fit=crop') center/cover; transition: transform 0.4s var(--ease);" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
-          <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%);"></div>
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem;">
-            <span style="font-size: 0.65rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700;">Seasonal</span>
-            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--text-primary); text-transform: uppercase; margin-top: 0.3rem;">When to Visit</h3>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem;">Month-by-month intel for the perfect Himalayan trip</p>
-          </div>
-        </div>
-        <div onclick="switchPage('wildlife')" style="cursor: pointer; position: relative; border-radius: var(--radius); overflow: hidden; height: 320px; background: url('https://images.unsplash.com/photo-1513220556209-66c30ddde66f?q=80&w=800&auto=format&fit=crop') center/cover; transition: transform 0.4s var(--ease);" onmouseover="this.style.transform='translateY(-6px)'" onmouseout="this.style.transform='none'">
-          <div style="position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.1) 60%);"></div>
-          <div style="position: absolute; bottom: 0; left: 0; right: 0; padding: 1.5rem;">
-            <span style="font-size: 0.65rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.2em; font-weight: 700;">Wildlife</span>
-            <h3 style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 800; color: var(--text-primary); text-transform: uppercase; margin-top: 0.3rem;">Rare Encounters</h3>
-            <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.3rem;">Snow leopards, monals, and the ghost of the mountains</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- TESTIMONIAL / SOCIAL PROOF -->
-    <div style="background: rgba(255,255,255,0.02); border-top: 1px solid var(--border-glass);">
-      <div class="page-container" style="padding-top: 5rem; padding-bottom: 5rem; text-align: center;">
-        <p style="font-family: var(--font-bold); font-size: 0.7rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.25em; margin-bottom: 0.5rem; font-weight: 700;">Traveller Voices</p>
-        <h2 style="font-family: var(--font-heading); font-size: clamp(1.8rem, 4vw, 2.8rem); color: var(--text-primary); margin-bottom: 3rem; font-weight: 800; text-transform: uppercase;">What They <span style="color: var(--accent);">Say</span></h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; text-align: left;">
-          <div style="background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius); padding: 2rem; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; font-style: italic;">"We stayed at Wildflower Hall and it exceeded every expectation. The concierge arranged a private helicopter tour of the Dhauladhar range — unforgettable."</p>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent-subtle); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--accent); font-size: 0.9rem;">A</div>
-              <div><span style="font-weight: 600; font-size: 0.85rem; color: var(--text-primary); display: block;">Arjun Malhotra</span><span style="font-size: 0.7rem; color: var(--text-muted);">Mumbai · stayed Jan 2025</span></div>
+    <!-- EXPERIENCES -->
+    <section class="section section-dark" aria-label="Explore by Experience">
+      <div class="container">
+        <span class="section-label">Explore by Experience</span>
+        <h2 class="section-title">Your Kind of <span class="text-gradient">Adventure</span></h2>
+        <div class="experience-grid">
+          <a href="treks.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1626714486580-08709e99a341?w=800&auto=format&fit=crop');">
+            <div class="exp-overlay"></div>
+            <div class="exp-content">
+              <span class="exp-tag">Adventure</span>
+              <h3>Himalayan Treks</h3>
+              <p>8 curated trails from weekend walks to extreme expeditions</p>
             </div>
-          </div>
-          <div style="background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius); padding: 2rem; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; font-style: italic;">"The trek curation is unmatched. The Hampta Pass itinerary was spot-on — right difficulty, right season, right mindset. Felt like a personal guide."</p>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent-subtle); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--accent); font-size: 0.9rem;">P</div>
-              <div><span style="font-weight: 600; font-size: 0.85rem; color: var(--text-primary); display: block;">Priya Sharma</span><span style="font-size: 0.7rem; color: var(--text-muted);">Delhi · trekked Sep 2024</span></div>
+          </a>
+          <a href="destinations.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1605649487212-4dcb18c0cb8db?w=800&auto=format&fit=crop');">
+            <div class="exp-overlay"></div>
+            <div class="exp-content">
+              <span class="exp-tag">Explore</span>
+              <h3>Hidden Valleys</h3>
+              <p>Spiti, Kinnaur, Parvati — 10 extraordinary destinations</p>
             </div>
-          </div>
-          <div style="background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: var(--radius); padding: 2rem; backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);">
-            <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.7; margin-bottom: 1.5rem; font-style: italic;">"Neeralaya blew us away. Sitting by the Beas with a glass of wine at sunset — that's what luxury should feel like. Raw, simple, majestic."</p>
-            <div style="display: flex; align-items: center; gap: 12px;">
-              <div style="width: 40px; height: 40px; border-radius: 50%; background: var(--accent-subtle); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--accent); font-size: 0.9rem;">R</div>
-              <div><span style="font-weight: 600; font-size: 0.85rem; color: var(--text-primary); display: block;">Rahul & Meera</span><span style="font-size: 0.7rem; color: var(--text-muted);">Bangalore · stayed Mar 2025</span></div>
+          </a>
+          <a href="seasons.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop');">
+            <div class="exp-overlay"></div>
+            <div class="exp-content">
+              <span class="exp-tag">Seasonal</span>
+              <h3>When to Visit</h3>
+              <p>Month-by-month intel for the perfect Himalayan trip</p>
             </div>
-          </div>
+          </a>
+          <a href="wildlife.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1513220556209-66c30ddde66f?w=800&auto=format&fit=crop');">
+            <div class="exp-overlay"></div>
+            <div class="exp-content">
+              <span class="exp-tag">Wildlife</span>
+              <h3>Rare Encounters</h3>
+              <p>Snow leopards, monals, and the ghost of the mountains</p>
+            </div>
+          </a>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- FOOTER CTA -->
-    <div class="page-container" style="padding-top: 5rem; padding-bottom: 5rem; text-align: center;">
-      <h2 style="font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.5rem); color: var(--text-primary); margin-bottom: 1rem; font-weight: 900; text-transform: uppercase;">Ready to <span style="color: var(--accent);">Explore?</span></h2>
-      <p style="color: var(--text-muted); max-width: 500px; margin: 0 auto 2rem; font-size: 0.95rem; line-height: 1.6;">Plan your dream Himalayan getaway with our trip planner. Answer 4 questions, get personalized recommendations.</p>
-      <button onclick="switchPage('planner')" style="background: var(--accent); border: none; border-radius: 6px; padding: 16px 44px; color: #0d0d0d; font-family: var(--font-bold); font-size: 0.8rem; font-weight: 800; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 0.15em;">Plan Your Trip</button>
-    </div>
-
-  </section>
-
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- PAGE: DESTINATIONS                         -->
-  <!-- ═══════════════════════════════════════════ -->
-  <section class="page" id="page-destinations">
-    <div class="page-container">
-      <div class="page-header">
-        <span class="page-label">Explore</span>
-        <h2 class="page-title giant-title">Where Will the <span class="text-gradient">Mountains</span> Take You?</h2>
-        <p class="page-desc">10 extraordinary Himalayan destinations. Each one a different world. From frozen deserts to flower-carpeted valleys — find your calling.</p>
-      </div>
-      <div class="filter-bar" id="dest-filters">
-        <button class="filter-btn active" data-filter="all">All Destinations</button>
-        <button class="filter-btn" data-filter="Easy">🟢 Easy</button>
-        <button class="filter-btn" data-filter="Moderate">🟡 Moderate</button>
-        <button class="filter-btn" data-filter="Hard">🔴 Hard</button>
-      </div>
-      <div class="dest-grid" id="dest-grid"></div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- PAGE: TREKS                                -->
-  <!-- ═══════════════════════════════════════════ -->
-  <section class="page" id="page-treks">
-    <div class="page-container">
-      <div class="page-header">
-        <span class="page-label">Adventure Awaits</span>
-        <h2 class="page-title giant-title">Choose Your <span class="text-gradient">Trek</span></h2>
-        <p class="page-desc">From weekend walks to frozen-river expeditions. Every trail tells a different story. Which one is yours?</p>
-      </div>
-      <div class="filter-bar" id="trek-filters">
-        <button class="filter-btn active" data-filter="all">All Treks</button>
-        <button class="filter-btn" data-filter="Easy">🟢 Easy</button>
-        <button class="filter-btn" data-filter="Moderate">🟡 Moderate</button>
-        <button class="filter-btn" data-filter="Hard">🔴 Hard</button>
-      </div>
-      <div class="trek-grid" id="trek-grid"></div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- PAGE: TRIP PLANNER                         -->
-  <!-- ═══════════════════════════════════════════ -->
-  <section class="page" id="page-planner">
-    <div class="page-container">
-      <div class="page-header">
-        <span class="page-label">Your Journey Begins Here</span>
-        <h2 class="page-title giant-title">Plan Your <span class="text-gradient">Dream Trip</span></h2>
-        <p class="page-desc">Answer 4 simple questions. Get personalized Himalayan recommendations matched to your style, fitness, and timeline.</p>
-      </div>
-      <div class="planner-wizard" id="planner-wizard">
-        <div class="planner-steps">
-          <div class="planner-step active" data-step="1"><span class="step-num">1</span><span class="step-label">Style</span></div>
-          <div class="planner-step" data-step="2"><span class="step-num">2</span><span class="step-label">Duration</span></div>
-          <div class="planner-step" data-step="3"><span class="step-num">3</span><span class="step-label">Fitness</span></div>
-          <div class="planner-step" data-step="4"><span class="step-num">4</span><span class="step-label">Season</span></div>
-          <div class="planner-step" data-step="5"><span class="step-num">5</span><span class="step-label">Results</span></div>
-        </div>
-        <div class="planner-panel active" id="plan-step-1">
-          <h3 class="planner-question">What calls to you?</h3>
-          <div class="option-cards" id="style-options">
-            <div class="option-card" data-value="adventure"><span class="option-icon">🏔️</span><span class="option-name">Adventure</span><span class="option-desc">High passes, glaciers, challenging trails</span></div>
-            <div class="option-card" data-value="spiritual"><span class="option-icon">🕉️</span><span class="option-name">Spiritual</span><span class="option-desc">Ancient temples, monasteries, sacred lakes</span></div>
-            <div class="option-card" data-value="nature"><span class="option-icon">🌺</span><span class="option-name">Nature</span><span class="option-desc">Wildflowers, alpine lakes, wildlife, forests</span></div>
-            <div class="option-card" data-value="culture"><span class="option-icon">🏯</span><span class="option-name">Culture</span><span class="option-desc">Local food, tribal life, festivals, crafts</span></div>
-          </div>
-        </div>
-        <div class="planner-panel" id="plan-step-2">
-          <h3 class="planner-question">How many days can you spare?</h3>
-          <div class="option-cards" id="duration-options">
-            <div class="option-card" data-value="1-3"><span class="option-icon">⚡</span><span class="option-name">Weekend</span><span class="option-desc">1–3 days</span></div>
-            <div class="option-card" data-value="4-7"><span class="option-icon">📅</span><span class="option-name">A Week</span><span class="option-desc">4–7 days</span></div>
-            <div class="option-card" data-value="8-14"><span class="option-icon">🗓️</span><span class="option-name">Extended</span><span class="option-desc">8–14 days</span></div>
-          </div>
-        </div>
-        <div class="planner-panel" id="plan-step-3">
-          <h3 class="planner-question">How tough can you go?</h3>
-          <div class="option-cards" id="difficulty-options">
-            <div class="option-card" data-value="Easy"><span class="option-icon">🚶</span><span class="option-name">Relaxed</span><span class="option-desc">Gentle trails, accessible to everyone</span></div>
-            <div class="option-card" data-value="Moderate"><span class="option-icon">🥾</span><span class="option-name">Moderate</span><span class="option-desc">Some trekking experience helpful</span></div>
-            <div class="option-card" data-value="Hard"><span class="option-icon">⛏️</span><span class="option-name">Beast Mode</span><span class="option-desc">Experienced, altitude-ready, fearless</span></div>
-          </div>
-        </div>
-        <div class="planner-panel" id="plan-step-4">
-          <h3 class="planner-question">When are you heading out?</h3>
-          <div class="month-grid" id="month-grid">
-            <button class="month-btn" data-month="1">Jan</button><button class="month-btn" data-month="2">Feb</button><button class="month-btn" data-month="3">Mar</button>
-            <button class="month-btn" data-month="4">Apr</button><button class="month-btn" data-month="5">May</button><button class="month-btn" data-month="6">Jun</button>
-            <button class="month-btn" data-month="7">Jul</button><button class="month-btn" data-month="8">Aug</button><button class="month-btn" data-month="9">Sep</button>
-            <button class="month-btn" data-month="10">Oct</button><button class="month-btn" data-month="11">Nov</button><button class="month-btn" data-month="12">Dec</button>
-          </div>
-        </div>
-        <div class="planner-panel" id="plan-step-5">
-          <h3 class="planner-question">Your Perfect Himalayan Match</h3>
-          <div id="planner-results" class="planner-results"></div>
-        </div>
-        <div class="planner-nav">
-          <button class="btn btn-outline" id="plan-prev" disabled>← Back</button>
-          <button class="btn btn-primary" id="plan-next">Next →</button>
+    <!-- TESTIMONIALS -->
+    <section class="section" aria-label="Traveller Reviews">
+      <div class="container">
+        <span class="section-label">Traveller Voices</span>
+        <h2 class="section-title">What They <span class="text-gradient">Say</span></h2>
+        <div class="testimonials-grid">
+          <article class="testimonial-card">
+            <p>"We stayed at Wildflower Hall and it exceeded every expectation. The concierge arranged a private helicopter tour of the Dhauladhar range — unforgettable."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">A</div>
+              <div><strong>Arjun Malhotra</strong><span>Mumbai · stayed Jan 2025</span></div>
+            </div>
+          </article>
+          <article class="testimonial-card">
+            <p>"The trek curation is unmatched. The Hampta Pass itinerary was spot-on — right difficulty, right season, right mindset. Felt like a personal guide."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">P</div>
+              <div><strong>Priya Sharma</strong><span>Delhi · trekked Sep 2024</span></div>
+            </div>
+          </article>
+          <article class="testimonial-card">
+            <p>"Neeralaya blew us away. Sitting by the Beas with a glass of wine at sunset — that's what luxury should feel like. Raw, simple, majestic."</p>
+            <div class="testimonial-author">
+              <div class="author-avatar">R</div>
+              <div><strong>Rahul & Meera</strong><span>Bangalore · stayed Mar 2025</span></div>
+            </div>
+          </article>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- PAGE: SEASONS                              -->
-  <!-- ═══════════════════════════════════════════ -->
-  <section class="page" id="page-seasons">
-    <div class="page-container">
-      <div class="page-header">
-        <span class="page-label">Timing is Everything</span>
-        <h2 class="page-title giant-title">When to <span class="text-gradient">Go</span></h2>
-        <p class="page-desc">The Himalayas transform dramatically with every season. One wrong month can make or break your trip. Choose wisely.</p>
+    <!-- CTA -->
+    <section class="section section-cta" aria-label="Plan Your Trip">
+      <div class="container" style="text-align: center;">
+        <h2 class="section-title">Ready to <span class="text-gradient">Explore?</span></h2>
+        <p class="section-desc" style="margin: 0 auto 2rem;">Plan your dream Himalayan getaway with our trip planner. Answer 4 questions, get personalized recommendations tailored to your style.</p>
+        <a href="planner.html" class="btn btn-primary btn-lg">Plan Your Trip</a>
       </div>
-      <div class="season-wheel" id="season-wheel"></div>
-      <div class="season-detail" id="season-detail"></div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- PAGE: WILDLIFE                             -->
-  <!-- ═══════════════════════════════════════════ -->
-  <section class="page" id="page-wildlife">
-    <div class="page-container">
-      <div class="page-header">
-        <span class="page-label">The Wild Side</span>
-        <h2 class="page-title giant-title">Himalayan <span class="text-gradient">Wildlife</span></h2>
-        <p class="page-desc">The Himalayas are home to some of the rarest and most elusive creatures on Earth. Know what to look for.</p>
-      </div>
-      <div class="wildlife-grid" id="wildlife-grid"></div>
-      <div class="wildlife-fact" id="wildlife-fact">
-        <div class="wildlife-fact-icon">🐾</div>
-        <div class="wildlife-fact-text" id="wildlife-fact-text"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- PAGE: GUIDE                                -->
-  <!-- ═══════════════════════════════════════════ -->
-  <section class="page" id="page-guide">
-    <div class="page-container">
-      <div class="page-header">
-        <span class="page-label">Be Prepared</span>
-        <h2 class="page-title giant-title">The <span class="text-gradient">Essential</span> Guide</h2>
-        <p class="page-desc">Don't wing it in the Himalayas. This guide could save your trip — or your life.</p>
-      </div>
-      <div class="guide-sections">
-        <div class="guide-section"><h3 class="guide-heading" data-toggle="altitude-content">🫁 Altitude &amp; Acclimatization</h3><div class="guide-content" id="altitude-content"></div></div>
-        <div class="guide-section"><h3 class="guide-heading" data-toggle="packing-content">🎒 Packing Checklist</h3><div class="guide-content" id="packing-content"></div></div>
-        <div class="guide-section"><h3 class="guide-heading" data-toggle="budget-content">💰 Budget Breakdown</h3><div class="guide-content" id="budget-content"></div></div>
-        <div class="guide-section"><h3 class="guide-heading" data-toggle="permits-content">📋 Permits &amp; Documents</h3><div class="guide-content" id="permits-content"></div></div>
-        <div class="guide-section"><h3 class="guide-heading" data-toggle="emergency-content">🚨 Emergency &amp; Safety</h3><div class="guide-content" id="emergency-content"></div></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- PAGE: CULTURE                              -->
-  <!-- ═══════════════════════════════════════════ -->
-  <section class="page" id="page-culture">
-    <div class="page-container">
-      <div class="page-header">
-        <span class="page-label">Respect &amp; Connect</span>
-        <h2 class="page-title giant-title">The <span class="text-gradient">Soul</span> of the Himalayas</h2>
-        <p class="page-desc">The mountains are not just rock and ice — they are home to ancient civilizations, sacred traditions, and flavors that will change you.</p>
-      </div>
-      <div class="culture-section-nav">
-        <button class="culture-tab active" data-tab="etiquette">🙏 Customs</button>
-        <button class="culture-tab" data-tab="food">🍜 Food</button>
-        <button class="culture-tab" data-tab="festivals">🎉 Festivals</button>
-        <button class="culture-tab" data-tab="languages">🗣️ Languages</button>
-      </div>
-      <div class="culture-panel active" id="culture-etiquette"><div id="etiquette-cards"></div></div>
-      <div class="culture-panel" id="culture-food"><div id="food-cards"></div></div>
-      <div class="culture-panel" id="culture-festivals"><div id="festival-cards"></div></div>
-      <div class="culture-panel" id="culture-languages"><div id="language-cards"></div></div>
-    </div>
-  </section>
-
-  <!-- ═══ DETAIL OVERLAY ═══ -->
-  <div class="detail-overlay" id="detail-overlay">
-    <div class="detail-panel" id="detail-panel">
-      <button class="detail-close" id="detail-close">✕</button>
-      <div class="detail-content" id="detail-content"></div>
-    </div>
-  </div>
-
-  <!-- ═══ SCRIPTS ═══ -->
-
-  <script src="js/data.js"></script>
-  <script src="js/app.js"></script>
+  <script src="js/data.js" defer></script>
+  <script src="js/images.js" defer></script>
+  <script src="js/common.js" defer></script>
 </body>
 </html>
