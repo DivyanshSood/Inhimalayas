@@ -15,15 +15,16 @@
   const PAGE_MAP = {
     'index.html': 'home',
     '': 'home',
-    'resorts.html': 'resorts',
     'destinations.html': 'destinations',
-    'treks.html': 'treks',
+    'treks.html': 'adventure',
+    'services.html': 'services',
+    'info.html': 'info',
     'planner.html': 'planner',
-    'seasons.html': 'seasons',
-    'wildlife.html': 'wildlife',
-    'guide.html': 'guide',
-    'culture.html': 'culture',
-    'services.html': 'services'
+    'resorts.html': 'resorts',
+    'seasons.html': 'info',
+    'wildlife.html': 'info',
+    'guide.html': 'info',
+    'culture.html': 'info'
   };
   const currentPage = PAGE_MAP[currentPath] || 'home';
 
@@ -32,6 +33,8 @@
   // ═══════════════════════════════════════════════════════════
 
   function renderNav() {
+    const chevron = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>`;
+
     const nav = document.createElement('nav');
     nav.id = 'main-nav';
     nav.className = 'site-nav';
@@ -41,21 +44,50 @@
           <span class="brand-primary">Himachal</span><span class="brand-accent">BNB</span>
         </a>
         <div class="nav-links" id="nav-links">
-          <a href="destinations.html" class="nav-link ${currentPage === 'destinations' ? 'active' : ''}">Destinations</a>
-          <a href="treks.html" class="nav-link ${currentPage === 'treks' ? 'active' : ''}">Treks</a>
-          <a href="resorts.html" class="nav-link ${currentPage === 'resorts' ? 'active' : ''}">Resorts</a>
-          <a href="services.html" class="nav-link ${currentPage === 'services' ? 'active' : ''}">Services</a>
-          <div class="nav-dropdown">
-            <button class="nav-link nav-dropdown-trigger ${['seasons','wildlife','guide','culture'].includes(currentPage) ? 'active' : ''}">
-              More <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </button>
+
+          <!-- Destinations dropdown -->
+          <div class="nav-dropdown" data-dropdown="destinations">
+            <button class="nav-link nav-dropdown-trigger ${currentPage === 'destinations' ? 'active' : ''}">Destinations ${chevron}</button>
             <div class="nav-dropdown-menu">
-              <a href="seasons.html" class="dropdown-link ${currentPage === 'seasons' ? 'active' : ''}">When to Visit</a>
-              <a href="wildlife.html" class="dropdown-link ${currentPage === 'wildlife' ? 'active' : ''}">Wildlife</a>
-              <a href="guide.html" class="dropdown-link ${currentPage === 'guide' ? 'active' : ''}">Travel Guide</a>
-              <a href="culture.html" class="dropdown-link ${currentPage === 'culture' ? 'active' : ''}">Culture & Food</a>
+              <a href="destinations.html#kullu" class="dropdown-link">Kullu</a>
+              <a href="destinations.html#manali" class="dropdown-link">Manali</a>
+              <a href="destinations.html#kasol" class="dropdown-link">Kasol</a>
+              <a href="destinations.html#dharamshala" class="dropdown-link">Dharamshala</a>
+              <a href="destinations.html#bir" class="dropdown-link">Bir</a>
+              <a href="destinations.html#dalhousie" class="dropdown-link">Dalhousie</a>
+              <a href="destinations.html#shimla" class="dropdown-link">Shimla</a>
+              <a href="destinations.html#kalpa" class="dropdown-link">Kalpa</a>
+              <div class="dropdown-divider"></div>
+              <a href="destinations.html" class="dropdown-link dropdown-view-all">All Destinations</a>
             </div>
           </div>
+
+          <!-- Services dropdown -->
+          <div class="nav-dropdown" data-dropdown="services">
+            <button class="nav-link nav-dropdown-trigger ${currentPage === 'services' || currentPage === 'resorts' ? 'active' : ''}">Services ${chevron}</button>
+            <div class="nav-dropdown-menu">
+              <a href="resorts.html" class="dropdown-link">Resorts</a>
+              <a href="services.html#homestays" class="dropdown-link">Homestays</a>
+              <a href="services.html#hostels" class="dropdown-link">Hostels</a>
+              <a href="services.html#bikes" class="dropdown-link">Bike Rental</a>
+              <a href="services.html#cabs" class="dropdown-link">Cab / Traveller</a>
+            </div>
+          </div>
+
+          <!-- Adventure Activities dropdown -->
+          <div class="nav-dropdown" data-dropdown="adventure">
+            <button class="nav-link nav-dropdown-trigger ${currentPage === 'adventure' ? 'active' : ''}">Adventure ${chevron}</button>
+            <div class="nav-dropdown-menu">
+              <a href="services.html#paragliding" class="dropdown-link">Paragliding</a>
+              <a href="services.html#rock-climbing" class="dropdown-link">Rock Climbing</a>
+              <a href="treks.html" class="dropdown-link">Trekking & Hiking</a>
+              <a href="services.html#snow-sports" class="dropdown-link">Snow Sports</a>
+              <a href="services.html#rafting" class="dropdown-link">River Rafting</a>
+              <a href="services.html#bungee" class="dropdown-link">Bungee Jumping</a>
+            </div>
+          </div>
+
+          <a href="info.html" class="nav-link ${currentPage === 'info' ? 'active' : ''}">Info</a>
           <a href="planner.html" class="nav-cta ${currentPage === 'planner' ? 'active' : ''}">Plan Trip</a>
         </div>
         <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
@@ -71,29 +103,42 @@
       $('#nav-links').classList.toggle('open');
     });
 
-    // Dropdown — toggle on click, close on outside click/focusout
-    const trigger = $('.nav-dropdown-trigger');
-    const dropdown = $('.nav-dropdown');
-    if (trigger && dropdown) {
+    // Dropdowns — hover on desktop, click on mobile
+    $$('.nav-dropdown').forEach((dropdown) => {
+      const trigger = $('.nav-dropdown-trigger', dropdown);
+
+      // Click toggle (mobile + fallback)
       trigger.addEventListener('click', (e) => {
         e.preventDefault();
+        // Close other open dropdowns
+        $$('.nav-dropdown.open').forEach((d) => {
+          if (d !== dropdown) d.classList.remove('open');
+        });
         const isOpen = dropdown.classList.toggle('open');
         if (isOpen) {
-          // Add temporary listener only while menu is open — removed immediately on close
           const closeDropdown = (ev) => {
             if (!dropdown.contains(ev.target)) {
               dropdown.classList.remove('open');
               document.removeEventListener('click', closeDropdown, true);
             }
           };
-          // Use setTimeout to avoid the current click event triggering close
           setTimeout(() => document.addEventListener('click', closeDropdown, true), 0);
         }
       });
+
+      // Hover open/close on desktop
+      dropdown.addEventListener('mouseenter', () => {
+        if (window.innerWidth > 768) dropdown.classList.add('open');
+      });
+      dropdown.addEventListener('mouseleave', () => {
+        if (window.innerWidth > 768) dropdown.classList.remove('open');
+      });
+
+      // Focusout
       dropdown.addEventListener('focusout', (e) => {
         if (!dropdown.contains(e.relatedTarget)) dropdown.classList.remove('open');
       });
-    }
+    });
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -113,22 +158,36 @@
             <p>Your trusted guide to Himachal Pradesh — curated by locals who grew up in the hills. We handpick every resort, verify every trail, and share the insider knowledge that guidebooks miss.</p>
           </div>
           <div class="footer-col">
-            <h4>Explore</h4>
+            <h4>Destinations</h4>
             <ul>
-              <li><a href="destinations.html">Destinations</a></li>
-              <li><a href="treks.html">Treks</a></li>
-              <li><a href="resorts.html">Resorts</a></li>
-              <li><a href="services.html">Services</a></li>
-              <li><a href="planner.html">Plan Your Trip</a></li>
+              <li><a href="destinations.html#kullu">Kullu</a></li>
+              <li><a href="destinations.html#manali">Manali</a></li>
+              <li><a href="destinations.html#kasol">Kasol</a></li>
+              <li><a href="destinations.html#dharamshala">Dharamshala</a></li>
+              <li><a href="destinations.html#shimla">Shimla</a></li>
+              <li><a href="destinations.html#bir">Bir</a></li>
+              <li><a href="destinations.html#dalhousie">Dalhousie</a></li>
+              <li><a href="destinations.html#kalpa">Kalpa</a></li>
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Resources</h4>
+            <h4>Services</h4>
             <ul>
-              <li><a href="guide.html">Travel Guide</a></li>
-              <li><a href="seasons.html">When to Visit</a></li>
-              <li><a href="wildlife.html">Wildlife</a></li>
-              <li><a href="culture.html">Culture & Food</a></li>
+              <li><a href="resorts.html">Resorts</a></li>
+              <li><a href="services.html#homestays">Homestays</a></li>
+              <li><a href="services.html#bikes">Bike Rental</a></li>
+              <li><a href="services.html#cabs">Cab / Traveller</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <h4>Adventure</h4>
+            <ul>
+              <li><a href="services.html#paragliding">Paragliding</a></li>
+              <li><a href="treks.html">Trekking & Hiking</a></li>
+              <li><a href="services.html#rafting">River Rafting</a></li>
+              <li><a href="services.html#snow-sports">Snow Sports</a></li>
+              <li><a href="info.html">Travel Info</a></li>
+              <li><a href="planner.html">Plan Your Trip</a></li>
             </ul>
           </div>
           <div class="footer-col">

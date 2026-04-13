@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Himachal Info — Seasons, Wildlife, Culture & Travel Guide</title>
+  <meta name="description" content="Everything you need to know about Himachal Pradesh — best seasons to visit, wildlife sanctuaries, local culture & food, travel permits, packing lists, and emergency contacts.">
+  <meta name="keywords" content="himachal pradesh travel guide, best time to visit himachal, himachal wildlife, himachal culture, himachal food, manali weather">
+  <link rel="canonical" href="https://himachalbnb.com/info.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="page-main">
+    <div class="container">
+      <header class="page-header">
+        <span class="section-label">Know Before You Go</span>
+        <h1 class="section-title giant-title">Himachal <span class="text-gradient">Info</span></h1>
+        <p class="section-desc">Seasons, wildlife, culture, food, permits, packing lists — everything you need for a perfect Himachal trip, all in one place.</p>
+      </header>
+
+      <!-- INFO TABS -->
+      <div class="info-tabs" id="info-tabs">
+        <button class="info-tab active" data-tab="seasons">🗓 Seasons</button>
+        <button class="info-tab" data-tab="wildlife">🦅 Wildlife</button>
+        <button class="info-tab" data-tab="culture">🎭 Culture & Food</button>
+        <button class="info-tab" data-tab="guide">📋 Travel Guide</button>
+      </div>
+
+      <!-- TAB CONTENT AREAS -->
+      <div class="info-panel active" id="panel-seasons">
+        <h2 class="info-panel-title">When to Visit</h2>
+        <div class="season-wheel" id="season-wheel"></div>
+        <div id="season-detail"></div>
+      </div>
+
+      <div class="info-panel" id="panel-wildlife">
+        <h2 class="info-panel-title">Wildlife of Himachal</h2>
+        <div class="wildlife-grid" id="wildlife-grid"></div>
+        <div id="wildlife-facts"></div>
+      </div>
+
+      <div class="info-panel" id="panel-culture">
+        <h2 class="info-panel-title">Culture & Food</h2>
+        <div class="culture-tabs" id="culture-sub-tabs"></div>
+        <div class="culture-cards-grid" id="culture-grid"></div>
+      </div>
+
+      <div class="info-panel" id="panel-guide">
+        <h2 class="info-panel-title">Travel Guide</h2>
+        <div class="guide-sections" id="guide-sections"></div>
+      </div>
+    </div>
+  </main>
+  <script src="js/data.js" defer></script>
+  <script src="js/images.js" defer></script>
+  <script src="js/common.js" defer></script>
+</body>
+</html>
