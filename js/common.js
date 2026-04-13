@@ -19,15 +19,11 @@
     'destination.html': 'destination',
     'service.html': 'servicepage',
     'adventure.html': 'adventurepage',
-    'treks.html': 'adventure',
+    'treks.html': 'treks',
     'services.html': 'services',
     'info.html': 'info',
     'planner.html': 'planner',
-    'resorts.html': 'resorts',
-    'seasons.html': 'info',
-    'wildlife.html': 'info',
-    'guide.html': 'info',
-    'culture.html': 'info'
+    'resorts.html': 'resorts'
   };
   const currentPage = PAGE_MAP[currentPath] || 'home';
 
@@ -44,6 +40,7 @@
     nav.innerHTML = `
       <div class="nav-inner">
         <a href="index.html" class="nav-brand">
+          <span class="brand-icon">⛰</span>
           <span class="brand-primary">Himachal</span><span class="brand-accent">BNB</span>
         </a>
         <div class="nav-links" id="nav-links">
@@ -52,45 +49,35 @@
           <div class="nav-dropdown" data-dropdown="destinations">
             <button class="nav-link nav-dropdown-trigger ${currentPage === 'destinations' ? 'active' : ''}">Destinations ${chevron}</button>
             <div class="nav-dropdown-menu">
-              <a href="destination.html?id=kullu" class="dropdown-link">Kullu</a>
               <a href="destination.html?id=manali" class="dropdown-link">Manali</a>
               <a href="destination.html?id=kasol" class="dropdown-link">Kasol</a>
+              <a href="destination.html?id=bir" class="dropdown-link">Bir Billing</a>
               <a href="destination.html?id=dharamshala" class="dropdown-link">Dharamshala</a>
-              <a href="destination.html?id=bir" class="dropdown-link">Bir</a>
-              <a href="destination.html?id=dalhousie" class="dropdown-link">Dalhousie</a>
               <a href="destination.html?id=shimla" class="dropdown-link">Shimla</a>
-              <a href="destination.html?id=kinnaur" class="dropdown-link">Kalpa</a>
+              <a href="destination.html?id=spiti" class="dropdown-link">Spiti Valley</a>
+              <a href="destination.html?id=kullu" class="dropdown-link">Kullu</a>
+              <a href="destination.html?id=kinnaur" class="dropdown-link">Kinnaur</a>
               <div class="dropdown-divider"></div>
-              <a href="destinations.html" class="dropdown-link dropdown-view-all">All Destinations</a>
+              <a href="destinations.html" class="dropdown-link dropdown-view-all">All Destinations →</a>
             </div>
           </div>
 
-          <!-- Services dropdown -->
-          <div class="nav-dropdown" data-dropdown="services">
-            <button class="nav-link nav-dropdown-trigger ${currentPage === 'services' || currentPage === 'resorts' || currentPage === 'servicepage' ? 'active' : ''}">Services ${chevron}</button>
+          <!-- Stays dropdown -->
+          <div class="nav-dropdown" data-dropdown="stays">
+            <button class="nav-link nav-dropdown-trigger ${currentPage === 'resorts' || currentPage === 'servicepage' ? 'active' : ''}">Stays ${chevron}</button>
             <div class="nav-dropdown-menu">
-              <a href="service.html?cat=resorts" class="dropdown-link">Resorts</a>
-              <a href="service.html?cat=homestays" class="dropdown-link">Homestays</a>
               <a href="service.html?cat=hostels" class="dropdown-link">Hostels</a>
-              <a href="service.html?cat=bikes" class="dropdown-link">Bike Rental</a>
-              <a href="service.html?cat=cabs" class="dropdown-link">Cab / Traveller</a>
+              <a href="service.html?cat=homestays" class="dropdown-link">Homestays</a>
+              <a href="service.html?cat=resorts" class="dropdown-link">Resorts</a>
             </div>
           </div>
 
-          <!-- Adventure Activities dropdown -->
-          <div class="nav-dropdown" data-dropdown="adventure">
-            <button class="nav-link nav-dropdown-trigger ${currentPage === 'adventure' || currentPage === 'adventurepage' ? 'active' : ''}">Adventure ${chevron}</button>
-            <div class="nav-dropdown-menu">
-              <a href="adventure.html?type=paragliding" class="dropdown-link">Paragliding</a>
-              <a href="adventure.html?type=rock-climbing" class="dropdown-link">Rock Climbing</a>
-              <a href="adventure.html?type=trekking" class="dropdown-link">Trekking & Hiking</a>
-              <a href="adventure.html?type=snow-sports" class="dropdown-link">Snow Sports</a>
-              <a href="adventure.html?type=rafting" class="dropdown-link">River Rafting</a>
-              <a href="adventure.html?type=bungee" class="dropdown-link">Bungee Jumping</a>
-            </div>
-          </div>
+          <!-- Treks -->
+          <a href="treks.html" class="nav-link ${currentPage === 'treks' ? 'active' : ''}">Treks</a>
 
-          <a href="info.html" class="nav-link ${currentPage === 'info' ? 'active' : ''}">Info</a>
+          <!-- Info -->
+          <a href="info.html" class="nav-link ${currentPage === 'info' ? 'active' : ''}">Guide</a>
+
           <a href="planner.html" class="nav-cta ${currentPage === 'planner' ? 'active' : ''}">Plan Trip</a>
         </div>
         <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
@@ -152,63 +139,57 @@
         <div class="footer-grid">
           <div class="footer-col footer-about">
             <div class="footer-brand">
-              <span class="brand-primary">Himachal</span><span class="brand-accent">BNB</span>
+              <span style="margin-right:6px;">⛰</span><span class="brand-primary">Himachal</span><span class="brand-accent">BNB</span>
             </div>
-            <p>Curated by locals from the hills. Every resort vetted, every trail walked.</p>
+            <p>Curated by locals from the hills. Every stay vetted, every trail walked.</p>
+            <a href="mailto:hello@himachalbnb.com" class="footer-email">hello@himachalbnb.com</a>
+            <div class="footer-socials">
+              <a href="https://instagram.com/himachalbnb" class="footer-social-link" aria-label="Instagram" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+              </a>
+              <a href="https://facebook.com/himachalbnb" class="footer-social-link" aria-label="Facebook" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" width="18" height="18"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+              </a>
+              <a href="https://youtube.com/@himachalbnb" class="footer-social-link" aria-label="YouTube" target="_blank" rel="noopener">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" width="18" height="18"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.95C5.12 20 12 20 12 20s6.88 0 8.59-.47a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+              </a>
+            </div>
           </div>
           <div class="footer-col">
             <h4>Destinations</h4>
             <ul>
-              <li><a href="destination.html?id=kullu">Kullu</a></li>
               <li><a href="destination.html?id=manali">Manali</a></li>
               <li><a href="destination.html?id=kasol">Kasol</a></li>
+              <li><a href="destination.html?id=bir">Bir Billing</a></li>
               <li><a href="destination.html?id=dharamshala">Dharamshala</a></li>
               <li><a href="destination.html?id=shimla">Shimla</a></li>
-              <li><a href="destination.html?id=bir">Bir</a></li>
-              <li><a href="destination.html?id=dalhousie">Dalhousie</a></li>
-              <li><a href="destination.html?id=kinnaur">Kalpa</a></li>
+              <li><a href="destination.html?id=spiti">Spiti Valley</a></li>
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Services</h4>
+            <h4>Stays</h4>
             <ul>
-              <li><a href="service.html?cat=resorts">Resorts</a></li>
+              <li><a href="service.html?cat=hostels">Hostels</a></li>
               <li><a href="service.html?cat=homestays">Homestays</a></li>
+              <li><a href="service.html?cat=resorts">Resorts</a></li>
               <li><a href="service.html?cat=bikes">Bike Rental</a></li>
-              <li><a href="service.html?cat=cabs">Cab / Traveller</a></li>
+              <li><a href="service.html?cat=cabs">Cab Booking</a></li>
             </ul>
           </div>
           <div class="footer-col">
-            <h4>Adventure</h4>
+            <h4>Explore</h4>
             <ul>
+              <li><a href="treks.html">Treks</a></li>
               <li><a href="adventure.html?type=paragliding">Paragliding</a></li>
-              <li><a href="adventure.html?type=trekking">Trekking & Hiking</a></li>
-              <li><a href="adventure.html?type=rafting">River Rafting</a></li>
-              <li><a href="adventure.html?type=snow-sports">Snow Sports</a></li>
-              <li><a href="info.html">Travel Info</a></li>
+              <li><a href="info.html">Travel Guide</a></li>
               <li><a href="planner.html">Plan Your Trip</a></li>
+              <li><a href="destinations.html">All Destinations</a></li>
             </ul>
-          </div>
-          <div class="footer-col">
-            <h4>Stay Connected</h4>
-            <p class="footer-contact-text">We reply to every message.</p>
-            <a href="mailto:hello@himachalbnb.com" class="footer-email">hello@himachalbnb.com</a>
-            <div class="footer-socials">
-              <a href="#" aria-label="Instagram" class="social-link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-              </a>
-              <a href="#" aria-label="Twitter" class="social-link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/></svg>
-              </a>
-              <a href="#" aria-label="YouTube" class="social-link">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z"/><polygon points="9.75,15.02 15.5,11.75 9.75,8.48" fill="currentColor" stroke="none"/></svg>
-              </a>
-            </div>
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; ${new Date().getFullYear()} Himachal BNB. Made with love from the hills of Himachal Pradesh.</p>
-          <p class="footer-disclaimer">Himachal BNB is an independent travel guide. We are not affiliated with the Himachal Pradesh Tourism Development Corporation (HPTDC) or any government body. All information is curated from personal experience and local knowledge.</p>
+          <p>&copy; ${new Date().getFullYear()} Himachal BNB. Built by locals from the hills.</p>
+          <p class="footer-disclaimer">Independent travel guide. Not affiliated with HPTDC or any government body.</p>
         </div>
       </div>
     `;
@@ -440,32 +421,125 @@
   function initHomePage() {
     const grid = document.getElementById('home-dest-grid');
     if (!grid || typeof DESTINATIONS === 'undefined') return;
-    // Override grid class to Airbnb style
     grid.className = 'bnb-listing-grid';
-    const top = DESTINATIONS.slice(0, 8);
-    grid.innerHTML = top.map((dest, i) => {
-      const img = dest.images ? dest.images[0] : dest.image;
-      const fromPrice = dest.budget.backpacker.split('\u2013')[0];
-      const rating = dest.difficulty === 'Hard' ? '4.9' : dest.difficulty === 'Moderate' ? '4.8' : '4.7';
-      return `
-        <a href="destination.html?id=${dest.id}" class="bnb-listing-card" aria-label="Explore ${dest.name}" style="animation-delay:${i * 0.05}s">
-          <div class="bnb-listing-card-img-wrap">
-            <img src="${img}" alt="${dest.name}" loading="lazy" width="400" height="400">
-            <button class="bnb-listing-card-heart" aria-label="Save ${dest.name}" onclick="event.preventDefault();this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'\u2665':'\u2661';">\u2661</button>
-            <span class="bnb-listing-card-type-badge">${dest.difficulty}</span>
-            <div class="bnb-card-dots"><div class="bnb-card-dot active"></div><div class="bnb-card-dot"></div><div class="bnb-card-dot"></div></div>
-          </div>
-          <div class="bnb-listing-card-body">
-            <div class="bnb-listing-card-top">
-              <div class="bnb-listing-card-name">${dest.name}</div>
-              <div class="bnb-listing-card-rating">\u2605 ${rating}</div>
+
+    // ── Category strip ──────────────────────────────────────────
+    const CATEGORIES = [
+      { id: 'all', icon: '🗺️', label: 'All' },
+      { id: 'adventure', icon: '🏔️', label: 'Adventure' },
+      { id: 'Easy', icon: '🌿', label: 'Easy Access' },
+      { id: 'Moderate', icon: '🥾', label: 'Trekking' },
+      { id: 'Hard', icon: '❄️', label: 'Remote' },
+      { id: 'workation', icon: '💻', label: 'Workation' },
+    ];
+
+    let activeCategory = 'all';
+    let searchQuery = '';
+
+    const catStrip = document.getElementById('hp-category-strip');
+    if (catStrip) {
+      catStrip.innerHTML = CATEGORIES.map(c => `
+        <button class="hp-category-pill${c.id === 'all' ? ' active' : ''}" data-cat="${c.id}">
+          <span class="hp-category-pill-icon">${c.icon}</span>
+          ${c.label}
+        </button>`).join('');
+      catStrip.addEventListener('click', e => {
+        const pill = e.target.closest('.hp-category-pill');
+        if (!pill) return;
+        activeCategory = pill.dataset.cat;
+        $$('.hp-category-pill').forEach(p => p.classList.toggle('active', p === pill));
+        renderHomeListings();
+      });
+    }
+
+    // ── Search wiring ───────────────────────────────────────────
+    const searchBtn = document.getElementById('hp-search-btn');
+    const destInput = document.getElementById('hp-dest-input');
+    const typeSelect = document.getElementById('hp-type-select');
+    const budgetSelect = document.getElementById('hp-budget-select');
+
+    const doSearch = () => {
+      searchQuery = (destInput ? destInput.value.trim().toLowerCase() : '');
+      renderHomeListings();
+    };
+    if (searchBtn) searchBtn.addEventListener('click', doSearch);
+    if (destInput) destInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+    // ── Render ──────────────────────────────────────────────────
+    function renderHomeListings() {
+      let filtered = [...DESTINATIONS];
+
+      // Text search
+      if (searchQuery) {
+        filtered = filtered.filter(d =>
+          d.name.toLowerCase().includes(searchQuery) ||
+          d.region.toLowerCase().includes(searchQuery) ||
+          (d.tags || []).some(t => t.toLowerCase().includes(searchQuery))
+        );
+      }
+
+      // Category filter
+      if (activeCategory === 'adventure') {
+        filtered = filtered.filter(d => (d.tags || []).some(t => ['adventure', 'trek', 'paragliding', 'rafting'].includes(t)));
+      } else if (activeCategory === 'workation') {
+        filtered = filtered.filter(d => (d.tags || []).some(t => ['cafes', 'quiet', 'nature', 'tibetan'].includes(t)));
+      } else if (['Easy', 'Moderate', 'Hard'].includes(activeCategory)) {
+        filtered = filtered.filter(d => d.difficulty === activeCategory);
+      }
+
+      // Budget filter
+      const budgetVal = budgetSelect ? budgetSelect.value : 'all';
+      if (budgetVal === 'budget') {
+        filtered = filtered.filter(d => {
+          const num = parseInt((d.budget.backpacker || '').replace(/[^\d]/g, ''));
+          return num < 2000;
+        });
+      } else if (budgetVal === 'mid') {
+        filtered = filtered.filter(d => d.difficulty !== 'Hard');
+      } else if (budgetVal === 'luxury') {
+        filtered = filtered.filter(d => d.difficulty === 'Hard' || d.difficulty === 'Moderate');
+      }
+
+      const titleEl = document.getElementById('hp-listings-title');
+      if (titleEl) titleEl.textContent = filtered.length + ' Destinations';
+
+      const top = filtered.slice(0, 10);
+      if (top.length === 0) {
+        grid.innerHTML = `<div class="bnb-empty" style="grid-column:1/-1"><p>No destinations match your search.</p><button class="btn btn-outline" onclick="document.getElementById('hp-dest-input').value='';document.getElementById('hp-search-btn').click()">Clear search</button></div>`;
+        return;
+      }
+      grid.innerHTML = top.map((dest, i) => {
+        const img = dest.images ? dest.images[0] : dest.image;
+        const fromPrice = dest.budget.backpacker.split('\u2013')[0];
+        const rating = dest.difficulty === 'Hard' ? '4.9' : dest.difficulty === 'Moderate' ? '4.8' : '4.7';
+        const badges = {
+          Easy: '<span class="verified-badge">✓ Easy Access</span>',
+          Moderate: '<span class="trending-badge">↑ Popular</span>',
+          Hard: '<span class="popular-badge">★ Remote Gem</span>'
+        };
+        return `
+          <a href="destination.html?id=${dest.id}" class="bnb-listing-card" aria-label="Explore ${dest.name}" style="animation-delay:${i * 0.05}s">
+            <div class="bnb-listing-card-img-wrap">
+              <img src="${img}" alt="${dest.name}" loading="lazy" width="400" height="400">
+              <button class="bnb-listing-card-heart" aria-label="Save ${dest.name}" onclick="event.preventDefault();this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'\u2665':'\u2661';">\u2661</button>
+              <span class="bnb-listing-card-type-badge">${dest.region}</span>
+              <div class="bnb-card-dots"><div class="bnb-card-dot active"></div><div class="bnb-card-dot"></div><div class="bnb-card-dot"></div></div>
             </div>
-            <div class="bnb-listing-card-loc">${dest.region}</div>
-            <div class="bnb-listing-card-snippet">${dest.tagline}</div>
-            <div class="bnb-listing-card-price"><strong>${fromPrice}</strong><span>/day from</span></div>
-          </div>
-        </a>`;
-    }).join('');
+            <div class="bnb-listing-card-body">
+              <div class="bnb-listing-card-top">
+                <div class="bnb-listing-card-name">${dest.icon} ${dest.name}</div>
+                <div class="bnb-listing-card-rating">\u2605 ${rating}</div>
+              </div>
+              <div class="bnb-listing-card-loc">${dest.region} &middot; ${dest.altitude}</div>
+              <div class="bnb-listing-card-snippet">${dest.tagline}</div>
+              <div class="bnb-listing-card-price"><strong>${fromPrice}</strong><span> /day from</span></div>
+              <div style="margin-top:8px;">${badges[dest.difficulty] || ''}</div>
+            </div>
+          </a>`;
+      }).join('');
+    }
+
+    renderHomeListings();
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -473,9 +547,6 @@
   // ═══════════════════════════════════════════════════════════
 
   function initDestinationsPage() {
-    // Apply light page background
-    const main = document.querySelector('main');
-    if (main) main.classList.add('bnb-page');
 
     function renderDest(filter) {
       const grid = document.getElementById('dest-grid');
@@ -568,9 +639,6 @@
   function initResortsPage() {
     const grid = document.getElementById('resorts-grid');
     if (!grid || typeof RESORTS === 'undefined') return;
-    // Apply light page background
-    const main = document.querySelector('main');
-    if (main) main.classList.add('bnb-page');
     grid.className = 'bnb-listing-grid';
     grid.innerHTML = RESORTS.map((r, i) => `
       <a href="destination.html?id=${r.location.toLowerCase().split(',')[0].trim().replace(/\s+/g,'-')}" class="bnb-listing-card" aria-label="View ${r.name}" style="animation-delay:${i * 0.05}s">
@@ -908,8 +976,8 @@
               <p>${s.description}</p>
               <span class="service-price">${s.price}</span>
               <div class="service-actions">
-                <a href="https://wa.me/${s.whatsapp}?text=Hi! I found you on Himachal BNB and want to book ${s.name}" target="_blank" rel="noopener" class="btn btn-whatsapp">&#128172; Book on WhatsApp</a>
-                <a href="tel:${s.phone}" class="btn btn-outline btn-call">&#128222; Call Now</a>
+                <a href="tel:${s.phone}" class="btn btn-primary btn-call">&#128222; Call to Book</a>
+                <a href="https://wa.me/${s.whatsapp}?text=Hi! I found you on Himachal BNB and want to enquire about ${s.name}" target="_blank" rel="noopener" class="btn btn-outline btn-call">WhatsApp</a>
               </div>
             </article></a>
           `).join('')}
@@ -1178,12 +1246,12 @@
 
       grid.innerHTML = filtered.map((item, i) => {
         let ctaHtml = '';
-        if (item.whatsapp) {
-          ctaHtml = `<a href="https://wa.me/${item.whatsapp}?text=Hi%21+I+found+${encodeURIComponent(item.name)}+on+Himachal+BNB+%E2%80%94+I%27d+like+to+book+for+my+${encodeURIComponent(dest.name)}+trip." class="bnb-listing-card-cta whatsapp" target="_blank" rel="noopener" onclick="event.stopPropagation()">\uD83D\uDCF2 Book on WhatsApp</a>`;
-        } else if (item.type === 'trek') {
-          ctaHtml = `<a href="${item.trekLink}" class="bnb-listing-card-cta outline" onclick="event.stopPropagation()">View Trek Details &rarr;</a>`;
+        if (item.type === 'trek') {
+          ctaHtml = `<a href="${item.trekLink}" class="bnb-listing-card-cta explore" onclick="event.stopPropagation()">View Trek &rarr;</a>`;
+        } else if (item.type === 'resort') {
+          ctaHtml = `<a href="resorts.html" class="bnb-listing-card-cta explore" onclick="event.stopPropagation()">View Stay &rarr;</a>`;
         } else {
-          ctaHtml = `<a href="services.html" class="bnb-listing-card-cta outline" onclick="event.stopPropagation()">Enquire Now &rarr;</a>`;
+          ctaHtml = `<a href="service.html?cat=${item.category === 'transport' ? 'cabs' : 'homestays'}" class="bnb-listing-card-cta outline" onclick="event.stopPropagation()">Explore &rarr;</a>`;
         }
         return `
           <div class="bnb-listing-card" style="animation-delay:${i * 0.04}s">
@@ -1344,12 +1412,11 @@
             <span class="sp-card-price">${s.price}</span>
           </div>
           <div class="sp-card-actions">
-            <a href="https://wa.me/${s.whatsapp}?text=Hi! I'd like to book ${s.name} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">Book on WhatsApp</a>
-            <a href="tel:${s.phone}" class="dp-btn dp-btn-call">Call</a>
+            <a href="tel:${s.phone}" class="dp-btn dp-btn-call">&#128222; Call to Book</a>
+            <a href="https://wa.me/${s.whatsapp}?text=Hi! I'd like to enquire about ${s.name} (via Himachal BNB)" class="dp-btn dp-btn-outline" target="_blank" rel="noopener">WhatsApp</a>
           </div>
         </div>
       </div>
-      </a>
     `).join('');
   }
 
@@ -1442,7 +1509,7 @@
               <a href="treks.html#${trek.id}" class="dp-btn dp-btn-outline">View Trek</a>
             </div>
           </div>
-        </a>
+        </div>
       `).join('');
     }
 
@@ -1554,15 +1621,18 @@
     renderDetailOverlay();
     renderFooter();
 
-    // Scroll-aware nav
+    // Scroll-aware nav + progress bar
     const nav = $('#main-nav');
-    if (nav) {
-      const updateNav = () => {
-        nav.classList.toggle('scrolled', window.scrollY > 40);
-      };
-      window.addEventListener('scroll', updateNav, { passive: true });
-      updateNav();
-    }
+    const progressBar = $('#scroll-progress');
+    const updateScroll = () => {
+      if (nav) nav.classList.toggle('scrolled', window.scrollY > 40);
+      if (progressBar) {
+        const scrolled = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+        progressBar.style.transform = `scaleX(${Math.min(scrolled, 1)})`;
+      }
+    };
+    window.addEventListener('scroll', updateScroll, { passive: true });
+    updateScroll();
 
     // Scroll reveal
     const revealEls = $$('.section, .feature-card, .service-card, .testimonial-card, .exp-card, .service-strip-card');

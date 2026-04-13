@@ -3,179 +3,205 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Himachal BNB — Your Gateway to Himachal Pradesh</title>
-  <meta name="description" content="Discover the best of Himachal Pradesh with locally curated destinations, handpicked luxury resorts, expert trek guides, and insider travel knowledge from the hills.">
-  <meta name="keywords" content="Himachal Pradesh, travel, Manali, Shimla, Spiti Valley, Dharamshala, Kasol, treks, resorts, hill stations, India travel">
-  <meta property="og:title" content="Himachal BNB — Your Gateway to Himachal Pradesh">
-  <meta property="og:description" content="Locally curated travel guide to Himachal Pradesh. Handpicked resorts, expert trek guides, and insider knowledge from the hills.">
+  <title>Himachal BNB — Stays, Treks & Experiences in Himachal Pradesh</title>
+  <meta name="description" content="Discover and compare the best stays, treks, and experiences across Himachal Pradesh. Verified local operators, real listings, no middlemen.">
+  <meta name="keywords" content="Himachal Pradesh, Manali, Shimla, Spiti, Dharamshala, Kasol, stays, treks, hostels, homestays, resorts">
+  <meta property="og:title" content="Himachal BNB — Stays & Experiences in Himachal Pradesh">
+  <meta property="og:description" content="Browse, compare and plan stays across Himachal. Verified listings from local operators.">
   <meta property="og:type" content="website">
   <link rel="canonical" href="https://himachalbnb.com/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
   <div class="scroll-progress" id="scroll-progress"></div>
 
   <main>
-    <h1 class="sr-only">Himachal BNB — Your Gateway to Himachal Pradesh</h1>
+    <h1 class="sr-only">Himachal BNB — Stays, Treks & Experiences in Himachal Pradesh</h1>
 
-    <!-- PARALLAX HERO -->
-    <header class="hero-parallax" id="hero-parallax">
-      <div class="hero-layer hero-bg" data-speed="0.3"></div>
-      <div class="hero-layer hero-mid" data-speed="0.6"></div>
-      <div class="hero-overlay"></div>
-      <div class="hero-content hero-layer" data-speed="1.2">
-        <h1 class="giant-title split-parent" id="hero-title"><span class="split-child">Into the</span> <br> <span class="split-child text-gradient">Himalayas</span></h1>
-        <p class="section-desc neu-text reveal-item delay-1" style="color:var(--text-primary); max-width:600px; margin: 1.5rem auto 2.5rem; font-size: 1.25rem;">Curated premium retreats, wild adventures, and untold stories from the actual locals.</p>
-        <a href="#destinations" class="btn btn-primary btn-lg brutalist-border reveal-item delay-2">Explore The Wild</a>
+    <!-- ① PHOTO HERO + SEARCH -->
+    <header class="hp-hero">
+      <div class="container">
+        <span class="hp-hero-eyebrow">Himachal Pradesh · 10 Destinations</span>
+        <h1>Find your perfect stay in <span class="text-gradient">Himachal</span></h1>
+        <p class="hp-hero-sub">Hostels, homestays, resorts, treks — verified by locals.</p>
+
+        <div class="hp-search-bar" id="hp-search-bar">
+          <div class="hp-search-field">
+            <label for="hp-dest-input">Destination</label>
+            <input id="hp-dest-input" type="text" placeholder="Manali, Kasol, Bir…" autocomplete="off">
+          </div>
+          <div class="hp-search-field">
+            <label for="hp-type-select">Stay type</label>
+            <select id="hp-type-select">
+              <option value="all">Any type</option>
+              <option value="Hostels">Hostels</option>
+              <option value="Homestays">Homestays</option>
+              <option value="Resorts">Resorts</option>
+              <option value="Treks">Treks</option>
+            </select>
+          </div>
+          <div class="hp-search-field">
+            <label for="hp-budget-select">Budget</label>
+            <select id="hp-budget-select">
+              <option value="all">Any price</option>
+              <option value="budget">Budget (under ₹2,000)</option>
+              <option value="mid">Mid (₹2,000–₹6,000)</option>
+              <option value="luxury">Luxury (₹6,000+)</option>
+            </select>
+          </div>
+          <button class="hp-search-btn" id="hp-search-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+        </div>
+      </div>
+      <!-- Scroll hint -->
+      <div class="hp-scroll-hint" aria-hidden="true">
+        <span>Scroll down</span>
+        <div class="hp-scroll-pill"></div>
       </div>
     </header>
 
-    <!-- DESTINATION CARDS — shown directly -->
-    <section id="destinations" class="section" style="padding-top: 5rem;" aria-label="Featured Destinations">
+    <!-- ② CATEGORY FILTER STRIP -->
+    <div class="hp-category-strip-wrapper">
+      <div class="hp-category-strip container" id="hp-category-strip">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- ③ LISTINGS GRID — immediate, product-first -->
+    <section class="section" id="listings-section" aria-label="Destinations & Stays" style="padding-top: 2.5rem;">
       <div class="container">
-        <span class="section-label">Destinations</span>
-        <h2 class="section-title">Explore <span class="text-gradient">Himachal Pradesh</span></h2>
-        <p class="section-desc">10 Himalayan worlds. Frozen deserts to flower valleys. Each with its own story.</p>
-        <div class="dest-grid" id="home-dest-grid"></div>
-        <div style="text-align:center; margin-top:2rem;">
-          <a href="destinations.html" class="btn btn-outline">View All Destinations</a>
+        <div class="hp-listings-header">
+          <h2 id="hp-listings-title">Stays &amp; Destinations</h2>
+          <div class="hp-sort-bar">
+            <button class="hp-sort-btn" id="hp-filter-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+              Filters
+            </button>
+          </div>
+        </div>
+        <div class="bnb-listing-grid" id="home-dest-grid"></div>
+        <div style="text-align:center;margin-top:2.5rem;">
+          <a href="destinations.html" class="btn btn-outline">Browse all destinations</a>
         </div>
       </div>
     </section>
 
-    <!-- STATS -->
-    <section class="stats-bar" aria-label="Key Numbers">
+    <!-- ④ STATS BAR -->
+    <section class="stats-bar" aria-label="Platform stats">
       <div class="container stats-grid">
         <div class="stat-item"><span class="stat-number">10</span><span class="stat-label">Destinations</span></div>
-        <div class="stat-item"><span class="stat-number">8</span><span class="stat-label">Curated Treks</span></div>
-        <div class="stat-item"><span class="stat-number">12+</span><span class="stat-label">Premium Resorts</span></div>
-        <div class="stat-item"><span class="stat-number">4.8</span><span class="stat-label">Avg. Rating</span></div>
+        <div class="stat-item"><span class="stat-number">8+</span><span class="stat-label">Curated Treks</span></div>
+        <div class="stat-item"><span class="stat-number">50+</span><span class="stat-label">Verified Stays</span></div>
+        <div class="stat-item"><span class="stat-number">4.8★</span><span class="stat-label">Avg Rating</span></div>
       </div>
     </section>
 
-    <!-- SERVICES STRIP -->
-    <section class="section" aria-label="Local Services">
+    <!-- ⑤ COLLECTIONS — curated picks -->
+    <section class="section hp-collections" id="collections-section" aria-label="Curated Collections">
       <div class="container">
-        <span class="section-label">Local Services</span>
-        <h2 class="section-title">Book <span class="text-gradient">Locally</span></h2>
-        <p class="section-desc">Direct from verified operators. No middlemen.</p>
-        <div class="service-strip">
-          <a href="services.html#bikes" class="service-strip-card">
-            <span class="service-icon">🏍️</span>
-            <h3>Bike Rentals</h3>
-            <p>Royal Enfield & more</p>
+        <span class="section-label">Curated For You</span>
+        <h2 class="section-title">Browse by <span class="text-gradient">Collection</span></h2>
+        <p class="section-desc">Hand-picked by locals who actually live here.</p>
+        <div class="hp-collections-grid" id="hp-collections-grid">
+          <a href="destination.html?id=bir" class="hp-collection-card">
+            <img src="https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop" alt="Best Hostels in Bir" loading="lazy">
+            <div class="hp-collection-overlay"></div>
+            <div class="hp-collection-content">
+              <span class="hp-collection-tag">Bir Billing</span>
+              <div class="hp-collection-title">Best Hostels in Bir</div>
+              <div class="hp-collection-count">5 listings</div>
+            </div>
           </a>
-          <a href="services.html#cabs" class="service-strip-card">
-            <span class="service-icon">🚖</span>
-            <h3>Cab Booking</h3>
-            <p>Airport & intercity</p>
+          <a href="destination.html?id=manali" class="hp-collection-card">
+            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop" alt="Luxury Stays in Manali" loading="lazy">
+            <div class="hp-collection-overlay"></div>
+            <div class="hp-collection-content">
+              <span class="hp-collection-tag">Manali</span>
+              <div class="hp-collection-title">Luxury Stays in Manali</div>
+              <div class="hp-collection-count">4 resorts</div>
+            </div>
           </a>
-          <a href="services.html#tempo" class="service-strip-card">
-            <span class="service-icon">🚐</span>
-            <h3>Tempo Traveller</h3>
-            <p>Group trips</p>
+          <a href="destination.html?id=kasol" class="hp-collection-card">
+            <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop" alt="Budget Stays Under ₹2000" loading="lazy">
+            <div class="hp-collection-overlay"></div>
+            <div class="hp-collection-content">
+              <span class="hp-collection-tag">Best Value</span>
+              <div class="hp-collection-title">Budget Stays Under ₹2,000</div>
+              <div class="hp-collection-count">8 listings</div>
+            </div>
           </a>
-          <a href="services.html#homestays" class="service-strip-card">
-            <span class="service-icon">🏠</span>
-            <h3>Homestays</h3>
-            <p>Stay with locals</p>
-          </a>
-          <a href="services.html#treks" class="service-strip-card">
-            <span class="service-icon">🥾</span>
-            <h3>Trek Operators</h3>
-            <p>Guided expeditions</p>
-          </a>
-          <a href="services.html#paragliding" class="service-strip-card">
-            <span class="service-icon">🪂</span>
-            <h3>Paragliding</h3>
-            <p>Tandem flights</p>
+          <a href="destination.html?id=dharamshala" class="hp-collection-card">
+            <img src="https://images.unsplash.com/photo-1537249010077-e2f0d96d2e90?w=800&auto=format&fit=crop" alt="Workation-Friendly" loading="lazy">
+            <div class="hp-collection-overlay"></div>
+            <div class="hp-collection-content">
+              <span class="hp-collection-tag">Workation</span>
+              <div class="hp-collection-title">Work from the Himalayas</div>
+              <div class="hp-collection-count">6 listings</div>
+            </div>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- WHY US STICKY -->
-    <section class="section" aria-label="Why Himachal BNB">
-      <div class="container sticky-section" id="sticky-section">
-        <div class="sticky-left glass-card" id="sticky-img" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&auto=format&fit=crop');"></div>
-        <div class="sticky-right">
-          <span class="section-label">Why Us</span>
-          <h2 class="section-title split-parent"><span class="split-child">Built by</span> <span class="split-child text-gradient">Locals.</span></h2>
-          <p class="section-desc">We grew up in these hills. Every resort visited, every trail walked.</p>
-          
-          <div class="sticky-feature active" data-img="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&auto=format&fit=crop">
-            <span class="giant-title text-gradient">01</span>
-            <h3 class="neu-text text-gradient">Locally Curated</h3>
-            <p>Every retreat personally inspected and handpicked by Himachali locals. We grew up in these hills.</p>
-          </div>
-          <div class="sticky-feature" data-img="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop">
-            <span class="giant-title text-gradient">02</span>
-            <h3 class="neu-text text-gradient">Luxury Standard</h3>
-            <p>Only 4.7+ rated properties. World-class service, mountain views.</p>
-          </div>
-          <div class="sticky-feature" data-img="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop">
-            <span class="giant-title text-gradient">03</span>
-            <h3 class="neu-text text-gradient">Expert Guidance</h3>
-            <p>Trek routes, seasonal guides, and insider knowledge in one place.</p>
-          </div>
+    <!-- ⑥ SERVICES — Bike + Cab only -->
+    <section class="section" aria-label="Transport Services">
+      <div class="container">
+        <span class="section-label">Get There</span>
+        <h2 class="section-title">Book Transport</h2>
+        <p class="section-desc">Direct from verified operators. No booking fees.</p>
+        <div class="hp-services-strip">
+          <a href="service.html?cat=bikes" class="hp-service-card">
+            <span class="hp-service-card-icon">🏍️</span>
+            <div class="hp-service-card-body">
+              <h3>Bike Rentals</h3>
+              <p>Royal Enfield, scooters &amp; more from verified operators</p>
+            </div>
+          </a>
+          <a href="service.html?cat=cabs" class="hp-service-card">
+            <span class="hp-service-card-icon">🚖</span>
+            <div class="hp-service-card-body">
+              <h3>Cab Booking</h3>
+              <p>Airport transfers, intercity rides &amp; tempo travellers</p>
+            </div>
+          </a>
         </div>
       </div>
     </section>
 
-    <!-- HORIZONTAL SCROLL EXPERIENCES -->
-    <section class="horizontal-scroll-wrapper" id="horizontal-sec" aria-label="Explore by Experience">
-      <div style="position:absolute; top:2rem; left:10vw; z-index:10;">
-        <span class="section-label" style="display:block;">Experiences</span>
-        <h2 class="section-title split-parent"><span class="split-child">Your <span class="text-gradient">Adventure</span></span></h2>
+    <!-- ⑦ TRUST BAR -->
+    <div class="hp-trust-bar container">
+      <div class="hp-trust-item">
+        <span class="hp-trust-icon">✓</span>
+        <span class="hp-trust-label">Verified Operators</span>
+        <span class="hp-trust-sub">All listings personally checked</span>
       </div>
-      <div class="horizontal-scroll-container" id="horizontal-container">
-        <a href="treks.html" class="horizontal-card brutalist-border">
-          <img src="https://images.unsplash.com/photo-1626714486580-08709e99a341?w=1200" alt="Treks">
-          <div class="horizontal-card-content">
-            <span class="exp-tag">Adventure</span>
-            <h3 class="giant-title" style="color:white;font-size:2rem;">Himalayan Treks</h3>
-            <p style="color:white;font-weight:700;">8 curated trails from easy walks to extreme passes</p>
-          </div>
-        </a>
-        <a href="destinations.html" class="horizontal-card brutalist-border">
-          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200" alt="Destinations">
-          <div class="horizontal-card-content">
-            <span class="exp-tag">Explore</span>
-            <h3 class="giant-title" style="color:white;font-size:2rem;">Hidden Valleys</h3>
-            <p style="color:white;font-weight:700;">10 extraordinary Himalayan destinations</p>
-          </div>
-        </a>
-        <a href="info.html" class="horizontal-card brutalist-border">
-          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200" alt="Seasons">
-          <div class="horizontal-card-content">
-            <span class="exp-tag">Seasonal</span>
-            <h3 class="giant-title" style="color:white;font-size:2rem;">When to Visit</h3>
-            <p style="color:white;font-weight:700;">Month-by-month travel intel</p>
-          </div>
-        </a>
-        <a href="info.html" class="horizontal-card brutalist-border">
-          <img src="https://images.unsplash.com/photo-1513220556209-66c30ddde66f?w=1200" alt="Wildlife">
-          <div class="horizontal-card-content">
-            <span class="exp-tag">Wildlife</span>
-            <h3 class="giant-title" style="color:white;font-size:2rem;">Rare Encounters</h3>
-            <p style="color:white;font-weight:700;">Snow leopards, monals & rare Himalayan species</p>
-          </div>
-        </a>
+      <div class="hp-trust-item">
+        <span class="hp-trust-icon">★</span>
+        <span class="hp-trust-label">Rated & Reviewed</span>
+        <span class="hp-trust-sub">Real guest reviews only</span>
       </div>
-    </section>
+      <div class="hp-trust-item">
+        <span class="hp-trust-icon">⛰</span>
+        <span class="hp-trust-label">Local Knowledge</span>
+        <span class="hp-trust-sub">Built by Himachalis</span>
+      </div>
+      <div class="hp-trust-item">
+        <span class="hp-trust-icon">⚡</span>
+        <span class="hp-trust-label">No Middlemen</span>
+        <span class="hp-trust-sub">Direct operator contact</span>
+      </div>
+    </div>
 
-    <!-- TESTIMONIALS -->
+    <!-- ⑧ TESTIMONIALS -->
     <section class="section" aria-label="Traveller Reviews">
       <div class="container">
-        <span class="section-label">Reviews</span>
-        <h2 class="section-title">Traveller <span class="text-gradient">Stories</span></h2>
+        <span class="section-label">Traveller Stories</span>
+        <h2 class="section-title">What guests say</h2>
         <div class="testimonials-grid">
           <article class="testimonial-card">
             <p>"We stayed at Wildflower Hall and it exceeded every expectation. The concierge arranged a private helicopter tour of the Dhauladhar range — unforgettable."</p>
@@ -192,22 +218,102 @@
             </div>
           </article>
           <article class="testimonial-card">
-            <p>"Neeralaya blew us away. Sitting by the Beas with a glass of wine at sunset — that's what luxury should feel like. Raw, simple, majestic."</p>
+            <p>"Sitting by the Beas at sunset with a glass of wine — that's what Himachal luxury should feel like. Raw, simple, majestic. Found it here."</p>
             <div class="testimonial-author">
               <div class="author-avatar">R</div>
-              <div><strong>Rahul & Meera</strong><span>Bangalore · stayed Mar 2025</span></div>
+              <div><strong>Rahul &amp; Meera</strong><span>Bangalore · stayed Mar 2025</span></div>
             </div>
           </article>
         </div>
       </div>
     </section>
 
-    <!-- CTA -->
-    <section class="section section-cta" aria-label="Plan Your Trip">
-      <div class="container" style="text-align: center;">
-        <h2 class="section-title">Ready to <span class="text-gradient">Explore?</span></h2>
-        <p class="section-desc" style="margin: 0 auto 2rem;">4 questions. Personalized Himalayan recommendations.</p>
-        <a href="planner.html" class="btn btn-primary btn-lg">Plan Your Trip</a>
+    <!-- ⑨ EDITORIAL FEATURE -->
+    <section class="hp-editorial" aria-label="Featured story">
+      <div class="container">
+        <div class="hp-editorial-content">
+          <span class="hp-editorial-eyebrow">Editor's Pick</span>
+          <h2>Why Spiti in Winter is the Most Honest Journey You'll Ever Make</h2>
+          <p>No crowds, no phone signal, no pretence. Just frozen monasteries, snow-blanketed passes, and locals who've lived at 4,000m for generations.</p>
+          <a href="destination.html?id=spiti" class="btn-white">Read the story</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑩ BLOG PREVIEW -->
+    <section class="section" aria-label="Travel stories">
+      <div class="container">
+        <span class="section-label">From the Hills</span>
+        <h2 class="section-title">Travel <span class="text-gradient">Stories</span></h2>
+        <div class="hp-blog-grid">
+          <article class="hp-blog-card">
+            <div class="hp-blog-card-img">
+              <img src="https://images.unsplash.com/photo-1591179893492-8c4e893a3e8b?w=800&auto=format&fit=crop" alt="Spiti Valley" loading="lazy">
+            </div>
+            <div class="hp-blog-card-body">
+              <span class="hp-blog-card-tag">High Altitude</span>
+              <h3><a href="destination.html?id=spiti">The Complete Guide to Spiti Valley in 2025</a></h3>
+              <p style="font-size:0.875rem;color:var(--text-secondary);line-height:1.6;margin-bottom:auto;">Road conditions, permits, the best guesthouses, and which monasteries are worth the detour.</p>
+              <div class="hp-blog-card-meta">
+                <span class="hp-blog-read-time">8 min read</span>
+                <span>Spiti Valley</span>
+              </div>
+            </div>
+          </article>
+          <article class="hp-blog-card">
+            <div class="hp-blog-card-img">
+              <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop" alt="Hampta Pass Trek" loading="lazy">
+            </div>
+            <div class="hp-blog-card-body">
+              <span class="hp-blog-card-tag">Trek</span>
+              <h3><a href="treks.html">Hampta Pass: Everything You Need to Know Before You Go</a></h3>
+              <p style="font-size:0.875rem;color:var(--text-secondary);line-height:1.6;margin-bottom:auto;">Difficulty, gear list, acclimatisation days, and the one camp spot that changes everything at golden hour.</p>
+              <div class="hp-blog-card-meta">
+                <span class="hp-blog-read-time">5 min read</span>
+                <span>Manali</span>
+              </div>
+            </div>
+          </article>
+          <article class="hp-blog-card">
+            <div class="hp-blog-card-img">
+              <img src="https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop" alt="Bir Billing paragliding" loading="lazy">
+            </div>
+            <div class="hp-blog-card-body">
+              <span class="hp-blog-card-tag">Adventure</span>
+              <h3><a href="destination.html?id=bir">First Time Paragliding? Bir Billing is Your Answer</a></h3>
+              <p style="font-size:0.875rem;color:var(--text-secondary);line-height:1.6;margin-bottom:auto;">The world's second-highest paragliding site is also its most forgiving for first-timers.</p>
+              <div class="hp-blog-card-meta">
+                <span class="hp-blog-read-time">4 min read</span>
+                <span>Bir Billing</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑪ NEWSLETTER -->
+    <section class="hp-newsletter" aria-label="Newsletter signup">
+      <div class="container">
+        <div class="hp-newsletter-inner">
+          <div class="hp-newsletter-text">
+            <h2>The Himachal Dispatch</h2>
+            <p>Monthly: best new stays, trail conditions, local events, and hidden spots — straight from the hills.</p>
+          </div>
+          <form class="hp-newsletter-form" onsubmit="return false;">
+            <input type="email" placeholder="your@email.com" aria-label="Email address" required>
+            <button type="submit" class="btn btn-primary">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑫ PLANNER CTA -->
+    <section class="section section-cta" aria-label="Plan your trip">
+      <div class="container" style="text-align:center;">
+        <h2 class="section-title">Not sure where to go?</h2>
+        <p class="section-desc" style="margin: 0 auto 2rem;">Answer 4 quick questions and get personalized recommendations.</p>
+        <a href="planner.html" class="btn btn-primary btn-lg">Plan My Trip</a>
       </div>
     </section>
   </main>
