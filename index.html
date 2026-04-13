@@ -13,16 +13,32 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 <body>
+  <div class="scroll-progress" id="scroll-progress"></div>
 
   <main>
     <h1 class="sr-only">Himachal BNB — Your Gateway to Himachal Pradesh</h1>
 
+    <!-- PARALLAX HERO -->
+    <header class="hero-parallax" id="hero-parallax">
+      <div class="hero-layer hero-bg" data-speed="0.3"></div>
+      <div class="hero-layer hero-mid" data-speed="0.6"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content hero-layer" data-speed="1.2">
+        <h1 class="giant-title split-parent" id="hero-title"><span class="split-child">Into the</span> <br> <span class="split-child text-gradient">Himalayas</span></h1>
+        <p class="section-desc neu-text reveal-item delay-1" style="color:var(--text-primary); max-width:600px; margin: 1.5rem auto 2.5rem; font-size: 1.25rem;">Curated premium retreats, wild adventures, and untold stories from the actual locals.</p>
+        <a href="#destinations" class="btn btn-primary btn-lg brutalist-border reveal-item delay-2">Explore The Wild</a>
+      </div>
+    </header>
+
     <!-- DESTINATION CARDS — shown directly -->
-    <section class="section" style="padding-top: 5rem;" aria-label="Featured Destinations">
+    <section id="destinations" class="section" style="padding-top: 5rem;" aria-label="Featured Destinations">
       <div class="container">
         <span class="section-label">Destinations</span>
         <h2 class="section-title">Explore <span class="text-gradient">Himachal Pradesh</span></h2>
@@ -85,71 +101,73 @@
       </div>
     </section>
 
-    <!-- WHY US -->
+    <!-- WHY US STICKY -->
     <section class="section" aria-label="Why Himachal BNB">
-      <div class="container">
-        <span class="section-label">Why Us</span>
-        <h2 class="section-title">Built by <span class="text-gradient">Locals.</span></h2>
-        <p class="section-desc">We grew up in these hills. Every resort visited, every trail walked.</p>
-        <div class="features-grid">
-          <div class="feature-card">
-            <span class="feature-icon">🏔️</span>
-            <h3>Locally Curated</h3>
-            <p>Every retreat personally inspected and handpicked by Himachali locals.</p>
+      <div class="container sticky-section" id="sticky-section">
+        <div class="sticky-left glass-card" id="sticky-img" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&auto=format&fit=crop');"></div>
+        <div class="sticky-right">
+          <span class="section-label">Why Us</span>
+          <h2 class="section-title split-parent"><span class="split-child">Built by</span> <span class="split-child text-gradient">Locals.</span></h2>
+          <p class="section-desc">We grew up in these hills. Every resort visited, every trail walked.</p>
+          
+          <div class="sticky-feature active" data-img="https://images.unsplash.com/photo-1448375240586-882707db888b?w=800&auto=format&fit=crop">
+            <span class="giant-title text-gradient">01</span>
+            <h3 class="neu-text text-gradient">Locally Curated</h3>
+            <p>Every retreat personally inspected and handpicked by Himachali locals. We grew up in these hills.</p>
           </div>
-          <div class="feature-card">
-            <span class="feature-icon">✨</span>
-            <h3>Luxury Standard</h3>
+          <div class="sticky-feature" data-img="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop">
+            <span class="giant-title text-gradient">02</span>
+            <h3 class="neu-text text-gradient">Luxury Standard</h3>
             <p>Only 4.7+ rated properties. World-class service, mountain views.</p>
           </div>
-          <div class="feature-card">
-            <span class="feature-icon">🗺️</span>
-            <h3>Expert Guidance</h3>
+          <div class="sticky-feature" data-img="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop">
+            <span class="giant-title text-gradient">03</span>
+            <h3 class="neu-text text-gradient">Expert Guidance</h3>
             <p>Trek routes, seasonal guides, and insider knowledge in one place.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- EXPERIENCES -->
-    <section class="section section-dark" aria-label="Explore by Experience">
-      <div class="container">
-        <span class="section-label">Experiences</span>
-        <h2 class="section-title">Your <span class="text-gradient">Adventure</span></h2>
-        <div class="experience-grid">
-          <a href="treks.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1626714486580-08709e99a341?w=800&auto=format&fit=crop');">
-            <div class="exp-overlay"></div>
-            <div class="exp-content">
-              <span class="exp-tag">Adventure</span>
-              <h3>Himalayan Treks</h3>
-              <p>8 curated trails from easy walks to extreme passes</p>
-            </div>
-          </a>
-          <a href="destinations.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop');">
-            <div class="exp-overlay"></div>
-            <div class="exp-content">
-              <span class="exp-tag">Explore</span>
-              <h3>Hidden Valleys</h3>
-              <p>10 extraordinary Himalayan destinations</p>
-            </div>
-          </a>
-          <a href="info.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop');">
-            <div class="exp-overlay"></div>
-            <div class="exp-content">
-              <span class="exp-tag">Seasonal</span>
-              <h3>When to Visit</h3>
-              <p>Month-by-month travel intel</p>
-            </div>
-          </a>
-          <a href="info.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1513220556209-66c30ddde66f?w=800&auto=format&fit=crop');">
-            <div class="exp-overlay"></div>
-            <div class="exp-content">
-              <span class="exp-tag">Wildlife</span>
-              <h3>Rare Encounters</h3>
-              <p>Snow leopards, monals & rare Himalayan species</p>
-            </div>
-          </a>
-        </div>
+    <!-- HORIZONTAL SCROLL EXPERIENCES -->
+    <section class="horizontal-scroll-wrapper" id="horizontal-sec" aria-label="Explore by Experience">
+      <div style="position:absolute; top:2rem; left:10vw; z-index:10;">
+        <span class="section-label" style="display:block;">Experiences</span>
+        <h2 class="section-title split-parent"><span class="split-child">Your <span class="text-gradient">Adventure</span></span></h2>
+      </div>
+      <div class="horizontal-scroll-container" id="horizontal-container">
+        <a href="treks.html" class="horizontal-card brutalist-border">
+          <img src="https://images.unsplash.com/photo-1626714486580-08709e99a341?w=1200" alt="Treks">
+          <div class="horizontal-card-content">
+            <span class="exp-tag">Adventure</span>
+            <h3 class="giant-title" style="color:white;font-size:2rem;">Himalayan Treks</h3>
+            <p style="color:white;font-weight:700;">8 curated trails from easy walks to extreme passes</p>
+          </div>
+        </a>
+        <a href="destinations.html" class="horizontal-card brutalist-border">
+          <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200" alt="Destinations">
+          <div class="horizontal-card-content">
+            <span class="exp-tag">Explore</span>
+            <h3 class="giant-title" style="color:white;font-size:2rem;">Hidden Valleys</h3>
+            <p style="color:white;font-weight:700;">10 extraordinary Himalayan destinations</p>
+          </div>
+        </a>
+        <a href="info.html" class="horizontal-card brutalist-border">
+          <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200" alt="Seasons">
+          <div class="horizontal-card-content">
+            <span class="exp-tag">Seasonal</span>
+            <h3 class="giant-title" style="color:white;font-size:2rem;">When to Visit</h3>
+            <p style="color:white;font-weight:700;">Month-by-month travel intel</p>
+          </div>
+        </a>
+        <a href="info.html" class="horizontal-card brutalist-border">
+          <img src="https://images.unsplash.com/photo-1513220556209-66c30ddde66f?w=1200" alt="Wildlife">
+          <div class="horizontal-card-content">
+            <span class="exp-tag">Wildlife</span>
+            <h3 class="giant-title" style="color:white;font-size:2rem;">Rare Encounters</h3>
+            <p style="color:white;font-weight:700;">Snow leopards, monals & rare Himalayan species</p>
+          </div>
+        </a>
       </div>
     </section>
 

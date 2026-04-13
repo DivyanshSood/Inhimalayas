@@ -516,7 +516,7 @@
       if (!grid) return;
       const filtered = filter === 'all' ? TREKS : TREKS.filter(t => t.difficulty === filter);
       grid.innerHTML = filtered.map(trek => `
-        <div class="trek-card" data-trek-id="${trek.id}" tabindex="0" role="button" aria-label="View details for ${trek.name}">
+        <a href="destination.html?type=trek&id=${trek.id}" class="trek-card" data-trek-id="${trek.id}" tabindex="0" role="button" aria-label="View details for ${trek.name}">
           <div class="trek-card-img"><img src="${trek.image}" alt="${trek.name}" loading="lazy" width="400" height="260"></div>
           <div class="trek-card-content">
             <span class="difficulty-badge ${trek.difficulty}">${trek.difficulty}</span>
@@ -527,7 +527,7 @@
               <span>&#128207; ${trek.distance}</span>
             </div>
           </div>
-        </div>
+        </a>
       `).join('');
 
       grid.querySelectorAll('.trek-card').forEach(card => {
@@ -559,6 +559,7 @@
     const grid = document.getElementById('resorts-grid');
     if (!grid || typeof RESORTS === 'undefined') return;
     grid.innerHTML = RESORTS.map(r => `
+      <a href="destination.html?type=resort&id=${r.id}" style="text-decoration:none; color:inherit; display:block;">
       <div class="resort-card">
         <div class="resort-img-wrapper">
           <img src="${r.image}" alt="${r.name}" loading="lazy" width="400" height="240">
@@ -578,6 +579,7 @@
           </div>
         </div>
       </div>
+      </a>
     `).join('');
   }
 
@@ -848,11 +850,11 @@
       etiquette: () => `<div class="culture-cards-grid">${CULTURE.etiquette.map(e => `
         <div class="culture-card"><span class="culture-card-icon">${e.icon}</span><h3>${e.title}</h3><p>${e.text}</p></div>
       `).join('')}</div>`,
-      food: () => `<div class="food-grid">${CULTURE.foods.map(f => `
-        <article class="food-card"><h3>${f.name}</h3><p>${f.desc}</p><span class="food-region">&#128205; ${f.region}</span></article>
+      food: () => `<div class="food-grid">${CULTURE.foods.map(f => `<a href="destination.html?type=food&id=${f.id}" style="text-decoration:none;color:inherit;display:block;">
+        <article class="food-card"><h3>${f.name}</h3><p>${f.desc}</p><span class="food-region">&#128205; ${f.region}</span></article></a>
       `).join('')}</div>`,
-      festivals: () => `<div class="festival-grid">${FESTIVALS.map(f => `
-        <article class="festival-card"><div class="festival-header"><span class="festival-icon">${f.icon}</span><div><h3>${f.name}</h3><span class="festival-meta">${f.month} · ${f.location}</span></div></div><p>${f.desc}</p></article>
+      festivals: () => `<div class="festival-grid">${FESTIVALS.map(f => `<a href="destination.html?type=festival&id=${f.id}" style="text-decoration:none;color:inherit;display:block;">
+        <article class="festival-card"><div class="festival-header"><span class="festival-icon">${f.icon}</span><div><h3>${f.name}</h3><span class="festival-meta">${f.month} · ${f.location}</span></div></div><p>${f.desc}</p></article></a>
       `).join('')}</div>`,
       languages: () => `<div class="language-grid">${LANGUAGES.map(l => `
         <article class="language-card"><div class="lang-header"><span class="lang-script">${l.script}</span><div><h3>${l.name}</h3><span class="lang-region">${l.region}</span></div></div>
@@ -888,7 +890,7 @@
         <h2 class="service-cat-title">${items[0].icon} ${CATEGORY_LABELS[cat]}</h2>
         <div class="services-grid">
           ${items.map(s => `
-            <article class="service-card" id="${s.id}">
+            <a href="destination.html?type=service&id=${s.id}" style="text-decoration:none;color:inherit;display:block;"><article class="service-card" id="${s.id}">
               <span class="service-icon">${s.icon}</span>
               <h3>${s.name}</h3>
               <div class="service-area">&#128205; ${s.area}</div>
@@ -898,7 +900,7 @@
                 <a href="https://wa.me/${s.whatsapp}?text=Hi! I found you on Himachal BNB and want to book ${s.name}" target="_blank" rel="noopener" class="btn btn-whatsapp">&#128172; Book on WhatsApp</a>
                 <a href="tel:${s.phone}" class="btn btn-outline btn-call">&#128222; Call Now</a>
               </div>
-            </article>
+            </article></a>
           `).join('')}
         </div>
       </div>`;
@@ -928,15 +930,18 @@
     const header = $('#dp-page-header');
     if (header) {
       const regionLabel = $('#dp-region-label');
-      if (regionLabel) regionLabel.textContent = dest.region;
-      $('#dp-title').textContent = dest.name;
-      $('#dp-tagline').textContent = dest.tagline;
-      $('#dp-badges').innerHTML = `
-        <span class="dp-page-badge">&#8593; ${dest.altitude}</span>
-        <span class="dp-page-badge"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>
-        <span class="dp-page-badge">&#127777; ${dest.temp}</span>
-        <span class="dp-page-badge">&#128205; ${dest.region}</span>
-      `;
+      if (regionLabel) regionLabel.textContent = dest.region || dest.category || dest.status || dest.month || 'Detail View';
+      $('#dp-title').textContent = dest.name || 'Information';
+      $('#dp-tagline').textContent = dest.tagline || dest.description || dest.desc || dest.latin || '';
+      
+      let badgesHTML = '';
+      if(dest.altitude) badgesHTML += `<span class="dp-page-badge">&#8593; ${dest.altitude}</span>`;
+      if(dest.difficulty) badgesHTML += `<span class="dp-page-badge"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>`;
+      if(dest.temp) badgesHTML += `<span class="dp-page-badge">&#127777; ${dest.temp}</span>`;
+      if(dest.region || dest.area || dest.location) badgesHTML += `<span class="dp-page-badge">&#128205; ${dest.region || dest.area || dest.location}</span>`;
+      if(dest.price) badgesHTML += `<span class="dp-page-badge" style="color:var(--accent); font-weight:bold;">${dest.price}</span>`;
+
+      $('#dp-badges').innerHTML = badgesHTML;
     }
 
     // --- SERVICE MATCHING ---
@@ -1031,7 +1036,7 @@
               <a href="tel:${svc.phone}" class="dp-btn dp-btn-call">Call Now</a>
             </div>
           </div>
-        </div>
+        </a>
       `).join('');
     } else {
       bookingGrid.innerHTML = `
@@ -1088,7 +1093,7 @@
               <a href="treks.html#${trek.id}" class="dp-btn dp-btn-outline">View Trek</a>
             </div>
           </div>
-        </div>
+        </a>
       `).join('');
     } else {
       treksSection.style.display = 'none';
@@ -1276,6 +1281,7 @@
           </div>
         </div>
       </div>
+      </a>
     `).join('');
   }
 
@@ -1340,7 +1346,7 @@
               <a href="tel:${s.phone}" class="dp-btn dp-btn-call">Call</a>
             </div>
           </div>
-        </div>
+        </a>
       `).join('');
     } else {
       $('#ap-operators-grid').innerHTML = `
@@ -1368,7 +1374,7 @@
               <a href="treks.html#${trek.id}" class="dp-btn dp-btn-outline">View Trek</a>
             </div>
           </div>
-        </div>
+        </a>
       `).join('');
     }
 
