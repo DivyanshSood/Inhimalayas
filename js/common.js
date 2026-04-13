@@ -954,55 +954,74 @@
       return haystack.includes(destName) || haystack.includes(destId2) || haystack.includes(destRegion.split(' ')[0]);
     };
 
-    const bookableServices = typeof SERVICES !== 'undefined' ? SERVICES.filter(matchService) : [];
+    let bookableServices = typeof SERVICES !== 'undefined' ? SERVICES.filter(matchService) : [];
+    
+    // Subpage theme filtering
+    if (type === 'subpage' && theme) {
+      bookableServices = bookableServices.filter(s => {
+         if(theme === 'luxury') return s.category === 'cabs' || (s.category === 'homestays' && s.price.includes('15') || s.price.includes('16')); // higher priced or premium transport
+         if(theme === 'adventure') return s.category === 'bikes' || s.category === 'paragliding' || s.category === 'treks';
+         if(theme === 'quiet') return s.category === 'homestays' || s.category === 'tempo';
+         return true;
+      });
+    }
     const allServices = typeof SERVICES !== 'undefined' ? SERVICES : [];
 
-    // --- ALL-IN-ONE PACKAGE ---
-    const packageCard = $('#dp-package-card');
-    if (packageCard) {
-      const hasStay = bookableServices.some(s => s.category === 'homestays');
-      const hasTransport = bookableServices.some(s => s.category === 'bikes' || s.category === 'cabs' || s.category === 'tempo');
-      const hasTreks = (typeof TREKS !== 'undefined' && TREKS.some(t => {
-        const loc = t.location.toLowerCase();
-        return loc.includes(destName) || loc.includes(destId2);
-      }));
-      const hasAdventure = bookableServices.some(s => s.category === 'paragliding' || s.category === 'treks');
+    // --- THEMATIC PACKAGES / SUBPAGE ROUTING ---
+    const packageSection = $('#dp-package-section');
+    if (packageSection) {
+      if (type === 'destination') {
+        const pdCards = [];
+        // 1. Luxury Package
+        pdCards.push(`<div class="package-card glass-card" style="margin-bottom: 2rem;">
+          <span class="package-label" style="background:var(--accent);color:#000;">&#9733; Premium Themes</span>
+          <div class="package-title">Luxury & Relaxation in ${dest.name}</div>
+          <div class="package-tagline">Experience the finest comfort, 5-star resorts, and curated stays in ${dest.name}.</div>
+          <div class="package-price" style="color:var(--accent);">Starting from ₹12,000/day</div>
+          <div class="package-actions" style="margin-top:1.5rem;">
+            <a href="destination.html?type=subpage&id=${destId}&theme=luxury" class="dp-btn dp-btn-whatsapp" style="background:#fff;color:#000;">View Luxury Stays & Cabs</a>
+          </div>
+        </div>`);
 
-      const packageItems = [];
-      packageItems.push({ icon: '🏠', text: 'Accommodation', sub: hasStay ? 'Homestay / Resort included' : 'Homestay or resort options' });
-      packageItems.push({ icon: '🚖', text: 'Transport', sub: hasTransport ? 'Cab or bike rental included' : 'Cab & bike options available' });
-      if (hasTreks || hasAdventure) {
-        packageItems.push({ icon: '🥾', text: 'Activities', sub: 'Treks, tours & adventures' });
+        // 2. Adventure Package
+        pdCards.push(`<div class="package-card glass-card" style="margin-bottom: 2rem;">
+          <span class="package-label" style="background:#e8764a;color:#fff;">&#9889; Thrill Seekers</span>
+          <div class="package-title">Adventure & Thrills in ${dest.name}</div>
+          <div class="package-tagline">Treks, camping, river rafting, and adrenaline-pumping activities.</div>
+          <div class="package-price" style="color:#e8764a;">Starting from ₹2,500/day</div>
+          <div class="package-actions" style="margin-top:1.5rem;">
+            <a href="destination.html?type=subpage&id=${destId}&theme=adventure" class="dp-btn dp-btn-whatsapp" style="background:#e8764a;color:#fff;border:none;">View Treks & Moto</a>
+          </div>
+        </div>`);
+
+        // 3. Quiet/Offbeat Package
+        pdCards.push(`<div class="package-card glass-card" style="margin-bottom: 2rem;">
+          <span class="package-label" style="background:#5B9BD5;color:#fff;">&#127807; Offbeat Travels</span>
+          <div class="package-title">Quiet Stays in ${dest.name}</div>
+          <div class="package-tagline">Discover the hidden, peaceful side away from the crowds. Farmhouses and remote homestays.</div>
+          <div class="package-price" style="color:#5B9BD5;">Starting from ₹1,500/day</div>
+          <div class="package-actions" style="margin-top:1.5rem;">
+            <a href="destination.html?type=subpage&id=${destId}&theme=quiet" class="dp-btn dp-btn-whatsapp" style="background:#5B9BD5;color:#fff;border:none;">View Homestays & Walks</a>
+          </div>
+        </div>`);
+        
+        document.querySelector('#dp-package-card').style.display = 'none';
+        packageSection.querySelector('.container').innerHTML = pdCards.join('');
+        
+        // Hide individual grids because we are acting as a funnel
+        if ($('#dp-booking-strip')) $('#dp-booking-strip').style.display = 'none';
+        if ($('#dp-adventures')) $('#dp-adventures').style.display = 'none';
+        if ($('#dp-treks')) $('#dp-treks').style.display = 'none';
+        if ($('#dp-resorts')) $('#dp-resorts').style.display = 'none';
+      } else if (type === 'subpage') {
+        // Hide the package cards, show the grids but filtered
+        packageSection.style.display = 'none';
+        // Overwrite page title
+        const niceTheme = theme.charAt(0).toUpperCase() + theme.slice(1);
+        $('#dp-title').innerHTML = `${niceTheme} Travel <span style="font-weight:300;opacity:0.7">in ${dest.name}</span>`;
+        $('#dp-tagline').textContent = `Filtered results for ${niceTheme} experiences.`;
+        if ($('.dp-info-box')) $('.dp-info-box').style.display = 'none'; // hide generic info
       }
-      packageItems.push({ icon: '🍽️', text: 'Local Food', sub: 'Recommended local eateries' });
-      packageItems.push({ icon: '🗺️', text: 'Guided Itinerary', sub: 'Day-by-day plan for your trip' });
-      packageItems.push({ icon: '📞', text: '24/7 Support', sub: 'Local contact throughout your stay' });
-
-      packageCard.innerHTML = `
-        <span class="package-label">&#9733; All-in-One Package</span>
-        <div class="package-title">Complete ${dest.name} Experience</div>
-        <div class="package-tagline">Everything you need for the perfect ${dest.name} trip — stay, transport, activities, and local guidance bundled together.</div>
-        <div class="package-includes">
-          ${packageItems.map(item => `
-            <div class="package-item">
-              <span class="package-item-icon">${item.icon}</span>
-              <div>
-                <span class="package-item-text">${item.text}</span>
-                <span class="package-item-sub">${item.sub}</span>
-              </div>
-            </div>
-          `).join('')}
-        </div>
-        <div class="package-price">From ${dest.budget.mid}</div>
-        <div class="package-note">Price varies by season, group size, and preferences. Contact us for a custom quote.</div>
-        <div class="package-actions">
-          <a href="https://wa.me/919876543210?text=Hi! I want to book the complete ${dest.name} package (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.789l4.94-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.115 0-4.09-.57-5.793-1.564l-.415-.248-2.93.868.832-2.827-.272-.432A9.706 9.706 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/></svg>
-            Book Complete Package
-          </a>
-          <a href="planner.html" class="dp-btn dp-btn-call">Plan Custom Trip</a>
-        </div>
-      `;
     }
 
     // --- INDIVIDUAL BOOKING SERVICES (with photos) ---
@@ -1074,10 +1093,13 @@
       const reg = t.region.toLowerCase();
       return loc.includes(destName) || loc.includes(destId2) || reg.includes(destName) || reg.includes(destRegion.split(' ')[0]);
     }) : [];
+    let localTreks = nearbyTreks;
     const treksSection = $('#dp-treks');
-    if (nearbyTreks.length > 0) {
+    if (type === 'subpage' && theme !== 'adventure') localTreks = []; // Only show treks in adventure mode
+
+    if (localTreks.length > 0) {
       $('#dp-treks-title').textContent = dest.name;
-      $('#dp-trek-grid').innerHTML = nearbyTreks.map(trek => `
+      $('#dp-trek-grid').innerHTML = localTreks.map(trek => `
         <div class="dp-trek-card">
           <div class="dp-trek-card-img"><img src="${trek.image}" alt="${trek.name}" loading="lazy" width="400" height="220"></div>
           <div class="dp-trek-content">
@@ -1100,11 +1122,13 @@
     }
 
     // --- RESORTS ---
-    const nearbyResorts = typeof RESORTS !== 'undefined' ? RESORTS.filter(r => {
+    let nearbyResorts = typeof RESORTS !== 'undefined' ? RESORTS.filter(r => {
       const loc = r.location.toLowerCase();
       return loc.includes(destName) || loc.includes(destId2) || loc.includes(destRegion.split(',')[0].toLowerCase().trim());
     }) : [];
     const resortsSection = $('#dp-resorts');
+    if (type === 'subpage' && theme !== 'luxury') nearbyResorts = []; // Only show resorts in luxury mode
+
     if (nearbyResorts.length > 0) {
       $('#dp-resort-grid').innerHTML = nearbyResorts.map(r => `
         <div class="dp-resort-card">
