@@ -989,3 +989,319 @@ a { cursor: pointer; }
   .horizontal-scroll-container { flex-direction: column; width: 100%; padding: 0 20px; height: auto; }
   .horizontal-card { width: 100%; height: 40vh; margin-bottom: 2rem; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   AIRBNB-STYLE LISTING UI — HimachalBNB
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Page wrapper — light mode */
+.bnb-page { background: #f7f7f7; color: #222; }
+.bnb-page .container { padding-bottom: 4rem; }
+.bnb-page .section-label { color: #717171; }
+/* Nav stays dark — we only invert the page content area */
+
+/* ── Photo Mosaic ─────────────────────────────────────────────── */
+.bnb-mosaic {
+  position: relative;
+  margin: 1.5rem 0 2rem;
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+}
+.bnb-mosaic-grid {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-rows: 220px 220px;
+  gap: 8px;
+  height: 448px;
+}
+.bnb-mosaic-img { overflow: hidden; background: #ddd; }
+.bnb-mosaic-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.bnb-mosaic-img:hover img { transform: scale(1.04); }
+.bnb-mosaic-img:first-child { grid-row: 1/3; border-radius: 16px 0 0 16px; }
+.bnb-mosaic-img:nth-child(3) { border-radius: 0 16px 0 0; }
+.bnb-mosaic-img:nth-child(5) { border-radius: 0 0 16px 0; }
+.bnb-mosaic-show-all {
+  position: absolute; bottom: 16px; right: 16px;
+  background: #fff; border: 1px solid #222; border-radius: 8px;
+  padding: 8px 18px; font-size: 13px; font-weight: 700; color: #222;
+  cursor: pointer; transition: background 0.2s; font-family: var(--font-body);
+  display: flex; align-items: center; gap: 6px;
+}
+.bnb-mosaic-show-all:hover { background: #f7f7f7; }
+
+/* ── Destination Header ───────────────────────────────────────── */
+.bnb-dest-header {
+  padding: 0.5rem 0 1rem;
+  border-bottom: 1px solid #ebebeb;
+  margin-bottom: 1.5rem;
+}
+.bnb-dest-header h1 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 800; color: #222; margin-bottom: 0.3rem;
+}
+.bnb-dest-tagline { font-size: 15px; color: #717171; font-weight: 400; margin-bottom: 0.8rem; }
+.bnb-dest-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+.bnb-dest-badge {
+  background: #f7f7f7; border: 1px solid #ebebeb; border-radius: 20px;
+  padding: 5px 13px; font-size: 12px; font-weight: 700; color: #717171;
+}
+/* Override difficulty badge contrast for light bg */
+.bnb-page .difficulty-badge.Easy { background: #d1fae5; color: #059669; }
+.bnb-page .difficulty-badge.Moderate { background: #fef3c7; color: #b45309; }
+.bnb-page .difficulty-badge.Hard { background: #fee2e2; color: #dc2626; }
+
+/* ── Info Grid ────────────────────────────────────────────────── */
+.bnb-info-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+  background: #ebebeb; border-radius: 12px; overflow: hidden;
+  border: 1px solid #ebebeb; margin: 1rem 0;
+}
+.bnb-info-item {
+  text-align: center; padding: 1rem;
+  background: #fff;
+}
+.bnb-info-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: #717171; font-weight: 700; margin-bottom: 4px; display: block; }
+.bnb-info-value { font-size: 15px; font-weight: 800; color: #222; }
+
+/* ── Search Bar ───────────────────────────────────────────────── */
+.bnb-search-bar {
+  display: flex; align-items: stretch;
+  background: #fff; border: 1px solid #ebebeb; border-radius: 40px;
+  padding: 4px; padding-left: 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05), 0 6px 16px rgba(0,0,0,0.08);
+  margin: 1.5rem 0; gap: 0; max-width: 900px;
+}
+.bnb-search-field-wrap {
+  flex: 1; min-width: 0; padding: 14px 20px;
+  border-right: 1px solid #ebebeb; cursor: text;
+  transition: background 0.15s; border-radius: 40px;
+}
+.bnb-search-field-wrap:last-of-type { border-right: none; }
+.bnb-search-field-wrap:hover { background: #f7f7f7; }
+.bnb-search-field-label { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #222; display: block; margin-bottom: 2px; }
+.bnb-search-field {
+  width: 100%; background: transparent; border: none; outline: none;
+  font-family: var(--font-body); font-size: 14px; font-weight: 400; color: #717171;
+}
+.bnb-search-field::placeholder { color: #b0b0b0; }
+.bnb-search-btn {
+  width: 50px; height: 50px; background: #FF385C; color: #fff;
+  border: none; border-radius: 50%; display: flex; align-items: center;
+  justify-content: center; cursor: pointer; flex-shrink: 0;
+  align-self: center; margin-right: 2px; transition: background 0.2s, transform 0.2s;
+}
+.bnb-search-btn:hover { background: #e0304f; transform: scale(1.05); }
+.bnb-search-btn svg { width: 18px; height: 18px; }
+
+/* ── Category Strip ───────────────────────────────────────────── */
+.bnb-category-strip-wrapper {
+  position: sticky; top: 64px; z-index: 50;
+  background: #f7f7f7; padding: 4px 0;
+  margin-bottom: 0; border-bottom: 1px solid #ebebeb;
+}
+.bnb-category-strip {
+  display: flex; gap: 0; overflow-x: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+  padding: 4px 0;
+}
+.bnb-category-strip::-webkit-scrollbar { display: none; }
+.bnb-category-pill {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  padding: 10px 18px; border-radius: 0; border: none; border-bottom: 2px solid transparent;
+  background: transparent; cursor: pointer; white-space: nowrap;
+  font-family: var(--font-body); font-size: 12px; font-weight: 600; color: #717171;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.bnb-category-pill:hover { color: #222; border-bottom-color: #d0d0d0; }
+.bnb-category-pill.active { color: #222; border-bottom-color: #222; font-weight: 800; }
+.bnb-category-pill-icon { font-size: 1.4rem; }
+
+/* ── Results Header ───────────────────────────────────────────── */
+.bnb-results-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 1.2rem 0;
+}
+.bnb-results-count { font-size: 14px; font-weight: 600; color: #222; }
+.bnb-filter-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: #fff; border: 1px solid #ebebeb; border-radius: 8px;
+  padding: 9px 16px; font-size: 13px; font-weight: 700; color: #222;
+  cursor: pointer; font-family: var(--font-body); transition: box-shadow 0.2s;
+}
+.bnb-filter-btn:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.12); }
+
+/* ── Listing Grid ─────────────────────────────────────────────── */
+.bnb-listing-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  margin-bottom: 3rem;
+}
+
+/* ── Listing Card ─────────────────────────────────────────────── */
+.bnb-listing-card {
+  text-decoration: none; color: inherit; display: block;
+  cursor: pointer; animation: bnbFadeIn 0.4s ease both;
+}
+@keyframes bnbFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.bnb-listing-card-img-wrap {
+  position: relative; border-radius: 14px; overflow: hidden;
+  background: #e0e0e0; aspect-ratio: 1 / 1;
+}
+.bnb-listing-card-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.4s ease;
+  display: block;
+}
+.bnb-listing-card:hover .bnb-listing-card-img-wrap img { transform: scale(1.04); }
+
+/* Heart */
+.bnb-listing-card-heart {
+  position: absolute; top: 12px; right: 12px;
+  background: none; border: none; cursor: pointer; font-size: 1.4rem;
+  line-height: 1; z-index: 2; color: rgba(255,255,255,0.85);
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.6));
+  transition: transform 0.2s, color 0.2s;
+}
+.bnb-listing-card-heart:hover { transform: scale(1.2); }
+.bnb-listing-card-heart.liked { color: #FF385C; filter: none; }
+
+/* Badge */
+.bnb-listing-card-type-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: rgba(255,255,255,0.93);
+  color: #222; padding: 4px 10px; border-radius: 6px;
+  font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
+}
+
+/* Nav dots */
+.bnb-card-dots {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 4px; opacity: 0; transition: opacity 0.2s;
+}
+.bnb-listing-card:hover .bnb-card-dots { opacity: 1; }
+.bnb-card-dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.55); }
+.bnb-card-dot.active { background: #fff; }
+
+/* Body */
+.bnb-listing-card-body { padding: 12px 2px 0; }
+.bnb-listing-card-top {
+  display: flex; justify-content: space-between; align-items: flex-start; gap: 8px;
+}
+.bnb-listing-card-name {
+  font-size: 14px; font-weight: 700; color: #222; line-height: 1.3;
+}
+.bnb-listing-card-rating {
+  display: flex; align-items: center; gap: 2px;
+  font-size: 13px; font-weight: 600; color: #222; flex-shrink: 0;
+}
+.bnb-listing-card-loc { font-size: 13px; color: #717171; font-weight: 400; margin-top: 2px; }
+.bnb-listing-card-snippet {
+  font-size: 13px; color: #717171; margin-top: 3px;
+  display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;
+}
+.bnb-listing-card-price { margin-top: 7px; font-size: 14px; color: #222; }
+.bnb-listing-card-price strong { font-weight: 700; }
+.bnb-listing-card-price span { font-weight: 400; color: #717171; }
+
+/* CTA Buttons */
+.bnb-listing-card-cta {
+  display: block; margin-top: 10px; text-align: center;
+  padding: 10px 14px; border-radius: 8px;
+  font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em;
+  text-decoration: none; transition: background 0.2s, transform 0.15s;
+}
+.bnb-listing-card-cta.whatsapp { background: #25D366; color: #fff; }
+.bnb-listing-card-cta.whatsapp:hover { background: #1da851; transform: translateY(-1px); }
+.bnb-listing-card-cta.outline { background: #fff; color: #222; border: 1.5px solid #ebebeb; }
+.bnb-listing-card-cta.outline:hover { border-color: #222; background: #f7f7f7; }
+
+/* ── About / Guide Section ────────────────────────────────────── */
+.bnb-about-section { border-top: 1px solid #ebebeb; padding: 2rem 0; }
+.bnb-about-header {
+  display: flex; align-items: center; justify-content: space-between; cursor: pointer;
+}
+.bnb-about-section h2 {
+  font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: #222;
+}
+.bnb-toggle-btn {
+  background: none; border: 1px solid #222; border-radius: 50%;
+  width: 32px; height: 32px; cursor: pointer; font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center; color: #222;
+  transition: background 0.2s;
+}
+.bnb-toggle-btn:hover { background: #f7f7f7; }
+.bnb-about-body {
+  max-height: 0; overflow: hidden; transition: max-height 0.45s ease;
+}
+.bnb-about-section.open .bnb-about-body { max-height: 3000px; }
+.bnb-about-desc {
+  font-size: 15px; line-height: 1.75; color: #717171; margin: 1.2rem 0;
+}
+.bnb-highlights-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 0;
+  border-top: 1px solid #ebebeb; margin-top: 1rem;
+}
+.bnb-highlight-item {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 1rem; border-bottom: 1px solid #ebebeb; font-size: 14px; color: #717171;
+}
+.bnb-highlight-item:nth-child(odd) { border-right: 1px solid #ebebeb; }
+.bnb-highlight-item::before { content: '↗'; color: #222; font-weight: 800; flex-shrink: 0; }
+.bnb-info-row { 
+  padding: 1rem 0; border-bottom: 1px solid #ebebeb;
+  display: grid; grid-template-columns: 140px 1fr; gap: 1rem; align-items: center;
+}
+.bnb-info-row-label { font-size: 13px; font-weight: 700; color: #222; }
+.bnb-info-row-value { font-size: 14px; color: #717171; }
+
+/* Empty State */
+.bnb-empty {
+  grid-column: 1 / -1; text-align: center;
+  padding: 3rem; color: #717171; font-size: 15px;
+}
+.bnb-empty p { margin-bottom: 1.2rem; }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .bnb-listing-grid { grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 900px) {
+  .bnb-listing-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .bnb-mosaic-grid {
+    grid-template-columns: 2fr 1fr; grid-template-rows: 180px 180px; height: 368px;
+  }
+  .bnb-mosaic-img:nth-child(4), .bnb-mosaic-img:nth-child(5) { display: none; }
+  .bnb-info-grid { grid-template-columns: repeat(2, 1fr); }
+  .bnb-highlights-grid { grid-template-columns: 1fr; }
+  .bnb-highlight-item:nth-child(odd) { border-right: none; }
+}
+@media (max-width: 600px) {
+  .bnb-listing-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .bnb-mosaic-grid {
+    grid-template-columns: 1fr; grid-template-rows: 260px; height: 260px;
+  }
+  .bnb-mosaic-img:not(:first-child) { display: none; }
+  .bnb-mosaic-img:first-child { border-radius: 16px; }
+  .bnb-search-bar {
+    flex-wrap: wrap; border-radius: 16px; padding: 8px;
+  }
+  .bnb-search-field-wrap {
+    flex: unset; width: 100%; border-right: none; border-bottom: 1px solid #ebebeb;
+    padding: 10px 14px;
+  }
+  .bnb-search-field-wrap:last-of-type { border-bottom: none; }
+  .bnb-search-btn { align-self: flex-end; margin: 6px auto 2px; }
+  .bnb-info-grid { grid-template-columns: repeat(2, 1fr); }
+  .bnb-info-row { grid-template-columns: 1fr; gap: 4px; }
+}
+

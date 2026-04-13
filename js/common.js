@@ -440,24 +440,29 @@
   function initHomePage() {
     const grid = document.getElementById('home-dest-grid');
     if (!grid || typeof DESTINATIONS === 'undefined') return;
-
-    // Show top 5 destinations as cards with photos
-    const top = DESTINATIONS.slice(0, 5);
+    // Override grid class to Airbnb style
+    grid.className = 'bnb-listing-grid';
+    const top = DESTINATIONS.slice(0, 8);
     grid.innerHTML = top.map((dest, i) => {
       const img = dest.images ? dest.images[0] : dest.image;
+      const fromPrice = dest.budget.backpacker.split('\u2013')[0];
+      const rating = dest.difficulty === 'Hard' ? '4.9' : dest.difficulty === 'Moderate' ? '4.8' : '4.7';
       return `
-        <a href="destination.html?id=${dest.id}" class="dest-card" aria-label="View ${dest.name}" style="animation-delay:${i * 0.06}s">
-          <div class="dest-card-img"><img src="${img}" alt="${dest.name}" loading="lazy" width="400" height="260"></div>
-          <div class="dest-card-body">
-            <span class="dest-card-icon">${dest.icon}</span>
-            <div class="dest-card-name">${dest.name}</div>
-            <div class="dest-card-region">${dest.region}</div>
-            <div class="dest-card-tagline">${dest.tagline}</div>
-            <div class="dest-card-meta">
-              <span>&#8593; ${dest.altitude}</span>
-              <span><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>
-              <span>&#127777; ${dest.temp}</span>
+        <a href="destination.html?id=${dest.id}" class="bnb-listing-card" aria-label="Explore ${dest.name}" style="animation-delay:${i * 0.05}s">
+          <div class="bnb-listing-card-img-wrap">
+            <img src="${img}" alt="${dest.name}" loading="lazy" width="400" height="400">
+            <button class="bnb-listing-card-heart" aria-label="Save ${dest.name}" onclick="event.preventDefault();this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'\u2665':'\u2661';">\u2661</button>
+            <span class="bnb-listing-card-type-badge">${dest.difficulty}</span>
+            <div class="bnb-card-dots"><div class="bnb-card-dot active"></div><div class="bnb-card-dot"></div><div class="bnb-card-dot"></div></div>
+          </div>
+          <div class="bnb-listing-card-body">
+            <div class="bnb-listing-card-top">
+              <div class="bnb-listing-card-name">${dest.name}</div>
+              <div class="bnb-listing-card-rating">\u2605 ${rating}</div>
             </div>
+            <div class="bnb-listing-card-loc">${dest.region}</div>
+            <div class="bnb-listing-card-snippet">${dest.tagline}</div>
+            <div class="bnb-listing-card-price"><strong>${fromPrice}</strong><span>/day from</span></div>
           </div>
         </a>`;
     }).join('');
@@ -468,33 +473,38 @@
   // ═══════════════════════════════════════════════════════════
 
   function initDestinationsPage() {
+    // Apply light page background
+    const main = document.querySelector('main');
+    if (main) main.classList.add('bnb-page');
+
     function renderDest(filter) {
       const grid = document.getElementById('dest-grid');
       if (!grid) return;
+      grid.className = 'bnb-listing-grid';
       const filtered = filter === 'all' ? DESTINATIONS : DESTINATIONS.filter(d => d.difficulty === filter);
-      grid.innerHTML = '';
-      filtered.forEach((dest, i) => {
+      grid.innerHTML = filtered.map((dest, i) => {
         const img = dest.images ? dest.images[0] : dest.image;
-        const card = document.createElement('a');
-        card.className = 'dest-card';
-        card.href = `destination.html?id=${dest.id}`;
-        card.setAttribute('aria-label', `View details for ${dest.name}`);
-        card.style.animationDelay = `${i * 0.06}s`;
-        card.innerHTML = `
-          <div class="dest-card-img"><img src="${img}" alt="${dest.name}" loading="lazy" width="400" height="260"></div>
-          <div class="dest-card-body">
-            <span class="dest-card-icon">${dest.icon}</span>
-            <div class="dest-card-name">${dest.name}</div>
-            <div class="dest-card-region">${dest.region}</div>
-            <div class="dest-card-tagline">${dest.tagline}</div>
-            <div class="dest-card-meta">
-              <span>&#8593; ${dest.altitude}</span>
-              <span><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>
-              <span>&#127777; ${dest.temp}</span>
+        const fromPrice = dest.budget.backpacker.split('\u2013')[0];
+        const rating = dest.difficulty === 'Hard' ? '4.9' : dest.difficulty === 'Moderate' ? '4.8' : '4.7';
+        return `
+          <a href="destination.html?id=${dest.id}" class="bnb-listing-card" aria-label="Explore ${dest.name}" style="animation-delay:${i * 0.05}s">
+            <div class="bnb-listing-card-img-wrap">
+              <img src="${img}" alt="${dest.name}" loading="lazy" width="400" height="400">
+              <button class="bnb-listing-card-heart" aria-label="Save" onclick="event.preventDefault();this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'\u2665':'\u2661';">\u2661</button>
+              <span class="bnb-listing-card-type-badge">${dest.region}</span>
+              <div class="bnb-card-dots"><div class="bnb-card-dot active"></div><div class="bnb-card-dot"></div><div class="bnb-card-dot"></div></div>
             </div>
-          </div>`;
-        grid.appendChild(card);
-      });
+            <div class="bnb-listing-card-body">
+              <div class="bnb-listing-card-top">
+                <div class="bnb-listing-card-name">${dest.icon} ${dest.name}</div>
+                <div class="bnb-listing-card-rating">\u2605 ${rating}</div>
+              </div>
+              <div class="bnb-listing-card-loc">${dest.region} &middot; ${dest.altitude}</div>
+              <div class="bnb-listing-card-snippet">${dest.tagline}</div>
+              <div class="bnb-listing-card-price"><strong>${fromPrice}</strong><span>/day from</span></div>
+            </div>
+          </a>`;
+      }).join('');
     }
     renderDest('all');
     $$('#dest-filters .filter-btn').forEach(btn => {
@@ -558,27 +568,28 @@
   function initResortsPage() {
     const grid = document.getElementById('resorts-grid');
     if (!grid || typeof RESORTS === 'undefined') return;
-    grid.innerHTML = RESORTS.map(r => `
-      <a href="destination.html?type=resort&id=${r.id}" style="text-decoration:none; color:inherit; display:block;">
-      <div class="resort-card">
-        <div class="resort-img-wrapper">
-          <img src="${r.image}" alt="${r.name}" loading="lazy" width="400" height="240">
-          <div class="resort-price-tag">${r.price}</div>
+    // Apply light page background
+    const main = document.querySelector('main');
+    if (main) main.classList.add('bnb-page');
+    grid.className = 'bnb-listing-grid';
+    grid.innerHTML = RESORTS.map((r, i) => `
+      <a href="destination.html?id=${r.location.toLowerCase().split(',')[0].trim().replace(/\s+/g,'-')}" class="bnb-listing-card" aria-label="View ${r.name}" style="animation-delay:${i * 0.05}s">
+        <div class="bnb-listing-card-img-wrap">
+          <img src="${r.image}" alt="${r.name}" loading="lazy" width="400" height="400">
+          <button class="bnb-listing-card-heart" aria-label="Save" onclick="event.preventDefault();this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'\u2665':'\u2661';">\u2661</button>
+          <span class="bnb-listing-card-type-badge">LUXURY RESORT</span>
+          <div class="bnb-card-dots"><div class="bnb-card-dot active"></div><div class="bnb-card-dot"></div></div>
         </div>
-        <div class="resort-info">
-          <div>
-            <h3 class="resort-name">${r.name}</h3>
-            <span class="resort-loc">&#128205; ${r.location}</span>
+        <div class="bnb-listing-card-body">
+          <div class="bnb-listing-card-top">
+            <div class="bnb-listing-card-name">${r.name}</div>
+            <div class="bnb-listing-card-rating">\u2605 ${r.rating}</div>
           </div>
-          <p class="resort-desc">${r.description}</p>
-          <div class="resort-meta">
-            <span class="resort-rating">&#9733; ${r.rating}</span>
-            <div class="resort-features" style="display:flex;gap:0.5rem;font-size:0.8rem;color:var(--text-muted);">
-              ${r.features.slice(0, 2).map(f => `<span>&#8226; ${f}</span>`).join('')}
-            </div>
-          </div>
+          <div class="bnb-listing-card-loc">${r.location}</div>
+          <div class="bnb-listing-card-snippet">${r.description.slice(0, 80)}...</div>
+          <div class="bnb-listing-card-price"><strong>${r.price}</strong><span> / night</span></div>
+          <span class="bnb-listing-card-cta outline">View Details \u2192</span>
         </div>
-      </div>
       </a>
     `).join('');
   }
@@ -909,42 +920,20 @@
   }
 
   // ═══════════════════════════════════════════════════════════
-  // PAGE: INDIVIDUAL DESTINATION — All-in-one package + cards
+  // PAGE: INDIVIDUAL DESTINATION — Airbnb-style listing browser
   // ═══════════════════════════════════════════════════════════
 
   function initDestinationPage() {
     const params = new URLSearchParams(window.location.search);
     const destId = params.get('id');
     const dest = typeof DESTINATIONS !== 'undefined' && DESTINATIONS.find(d => d.id === destId);
-    if (!dest) {
-      window.location.href = 'destinations.html';
-      return;
-    }
+    if (!dest) { window.location.href = 'destinations.html'; return; }
 
-    // Update page title and meta
-    document.title = `${dest.name} — Book Stays, Activities & More | Himachal BNB`;
+    // ── Meta ─────────────────────────────────────────────────────
+    document.title = `${dest.name} — Stays, Treks & Activities | Himachal BNB`;
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.content = `Explore ${dest.name} in ${dest.region}. Book resorts, homestays, bike rentals, cabs, and adventure activities directly from verified local operators.`;
+    if (metaDesc) metaDesc.content = `Book stays, treks, adventure activities, and transport in ${dest.name}, ${dest.region}. Verified local operators. Instant WhatsApp booking.`;
 
-    // Page header (replaces hero)
-    const header = $('#dp-page-header');
-    if (header) {
-      const regionLabel = $('#dp-region-label');
-      if (regionLabel) regionLabel.textContent = dest.region || dest.category || dest.status || dest.month || 'Detail View';
-      $('#dp-title').textContent = dest.name || 'Information';
-      $('#dp-tagline').textContent = dest.tagline || dest.description || dest.desc || dest.latin || '';
-      
-      let badgesHTML = '';
-      if(dest.altitude) badgesHTML += `<span class="dp-page-badge">&#8593; ${dest.altitude}</span>`;
-      if(dest.difficulty) badgesHTML += `<span class="dp-page-badge"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>`;
-      if(dest.temp) badgesHTML += `<span class="dp-page-badge">&#127777; ${dest.temp}</span>`;
-      if(dest.region || dest.area || dest.location) badgesHTML += `<span class="dp-page-badge">&#128205; ${dest.region || dest.area || dest.location}</span>`;
-      if(dest.price) badgesHTML += `<span class="dp-page-badge" style="color:var(--accent); font-weight:bold;">${dest.price}</span>`;
-
-      $('#dp-badges').innerHTML = badgesHTML;
-    }
-
-    // --- SERVICE MATCHING ---
     const destName = dest.name.toLowerCase();
     const destId2 = dest.id.toLowerCase();
     const destRegion = dest.region.toLowerCase();
@@ -954,271 +943,323 @@
       return haystack.includes(destName) || haystack.includes(destId2) || haystack.includes(destRegion.split(' ')[0]);
     };
 
-    let bookableServices = typeof SERVICES !== 'undefined' ? SERVICES.filter(matchService) : [];
-    
-    // Subpage theme filtering
-    if (type === 'subpage' && theme) {
-      bookableServices = bookableServices.filter(s => {
-         // Luxury: Cabs and any homestay with 'luxury', '12,000', etc.
-         if (theme === 'luxury') return s.category === 'cabs' || s.tags?.includes('luxury') || (s.price.includes('1') && s.price.length > 10);
-         // Adventure: Bikes, paragliding (including rafting), treks
-         if (theme === 'adventure') return s.category === 'bikes' || s.category === 'paragliding' || s.category === 'treks';
-         // Quiet: non-luxury homestays, tempos
-         if (theme === 'quiet') return s.category === 'homestays' || s.category === 'tempo';
-         return true;
-      });
-    }
-    const allServices = typeof SERVICES !== 'undefined' ? SERVICES : [];
-
-    // --- THEMATIC PACKAGES / SUBPAGE ROUTING ---
-    const packageSection = $('#dp-package-section');
-    if (packageSection) {
-      if (type === 'destination') {
-        const pdCards = [];
-        // 1. Luxury Package
-        pdCards.push(`<div class="package-card glass-card" style="margin-bottom: 2rem;">
-          <span class="package-label" style="background:var(--accent);color:#000;">&#9733; Premium Themes</span>
-          <div class="package-title">Luxury & Relaxation in ${dest.name}</div>
-          <div class="package-tagline">Experience the finest comfort, 5-star resorts, and curated stays in ${dest.name}.</div>
-          <div class="package-price" style="color:var(--accent);">Starting from ₹12,000/day</div>
-          <div class="package-actions" style="margin-top:1.5rem;">
-            <a href="destination.html?type=subpage&id=${destId}&theme=luxury" class="dp-btn dp-btn-whatsapp" style="background:#fff;color:#000;">View Luxury Stays & Cabs</a>
-          </div>
-        </div>`);
-
-        // 2. Adventure Package
-        pdCards.push(`<div class="package-card glass-card" style="margin-bottom: 2rem;">
-          <span class="package-label" style="background:#e8764a;color:#fff;">&#9889; Thrill Seekers</span>
-          <div class="package-title">Adventure & Thrills in ${dest.name}</div>
-          <div class="package-tagline">Treks, camping, river rafting, and adrenaline-pumping activities.</div>
-          <div class="package-price" style="color:#e8764a;">Starting from ₹2,500/day</div>
-          <div class="package-actions" style="margin-top:1.5rem;">
-            <a href="destination.html?type=subpage&id=${destId}&theme=adventure" class="dp-btn dp-btn-whatsapp" style="background:#e8764a;color:#fff;border:none;">View Treks & Moto</a>
-          </div>
-        </div>`);
-
-        // 3. Quiet/Offbeat Package
-        pdCards.push(`<div class="package-card glass-card" style="margin-bottom: 2rem;">
-          <span class="package-label" style="background:#5B9BD5;color:#fff;">&#127807; Offbeat Travels</span>
-          <div class="package-title">Quiet Stays in ${dest.name}</div>
-          <div class="package-tagline">Discover the hidden, peaceful side away from the crowds. Farmhouses and remote homestays.</div>
-          <div class="package-price" style="color:#5B9BD5;">Starting from ₹1,500/day</div>
-          <div class="package-actions" style="margin-top:1.5rem;">
-            <a href="destination.html?type=subpage&id=${destId}&theme=quiet" class="dp-btn dp-btn-whatsapp" style="background:#5B9BD5;color:#fff;border:none;">View Homestays & Walks</a>
-          </div>
-        </div>`);
-        
-        document.querySelector('#dp-package-card').style.display = 'none';
-        packageSection.querySelector('.container').innerHTML = pdCards.join('');
-        
-        // Hide individual grids because we are acting as a funnel
-        if ($('#dp-booking-strip')) $('#dp-booking-strip').style.display = 'none';
-        if ($('#dp-adventures')) $('#dp-adventures').style.display = 'none';
-        if ($('#dp-treks')) $('#dp-treks').style.display = 'none';
-        if ($('#dp-resorts')) $('#dp-resorts').style.display = 'none';
-      } else if (type === 'subpage') {
-        // Hide the package cards, show the grids but filtered
-        packageSection.style.display = 'none';
-        // Overwrite page title
-        const niceTheme = theme.charAt(0).toUpperCase() + theme.slice(1);
-        $('#dp-title').innerHTML = `${niceTheme} Travel <span style="font-weight:300;opacity:0.7">in ${dest.name}</span>`;
-        $('#dp-tagline').textContent = `Filtered results for ${niceTheme} experiences.`;
-        if ($('.dp-info-box')) $('.dp-info-box').style.display = 'none'; // hide generic info
-      }
-    }
-
-    // --- INDIVIDUAL BOOKING SERVICES (with photos) ---
-    const bookingGrid = $('#dp-booking-grid');
-    if (bookableServices.length > 0) {
-      // Service category images for card photos
-      const catImages = {
-        bikes: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop',
-        cabs: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
-        tempo: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
-        homestays: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&auto=format&fit=crop',
-        treks: 'https://images.unsplash.com/photo-1626714486580-08709e99a341?w=800&auto=format&fit=crop',
-        paragliding: 'https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop'
-      };
-
-      bookingGrid.innerHTML = bookableServices.map(svc => `
-        <div class="dp-booking-card">
-          <div class="dp-booking-card-img"><img src="${catImages[svc.category] || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop'}" alt="${svc.name}" loading="lazy" width="400" height="200"></div>
-          <div class="dp-booking-card-body">
-            <div class="dp-booking-header">
-              <span class="dp-booking-icon">${svc.icon}</span>
-              <div>
-                <h3 class="dp-booking-name">${svc.name}</h3>
-                <span class="dp-booking-area">${svc.area}</span>
-              </div>
-            </div>
-            <p class="dp-booking-desc">${svc.description}</p>
-            <div class="dp-booking-price"><strong>${svc.price}</strong></div>
-            <div class="dp-booking-actions">
-              <a href="https://wa.me/${svc.whatsapp}?text=Hi! I'd like to book ${svc.name} for my ${dest.name} trip (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">Book on WhatsApp</a>
-              <a href="tel:${svc.phone}" class="dp-btn dp-btn-call">Call Now</a>
-            </div>
-          </div>
-        </a>
-      `).join('');
-    } else {
-      bookingGrid.innerHTML = `
-        <div class="dp-booking-empty">
-          <p>Direct operator listings for ${dest.name} coming soon.</p>
-          <div class="dp-booking-actions" style="margin-top:1rem;">
-            <a href="services.html" class="dp-btn dp-btn-whatsapp">Browse All Services</a>
-          </div>
+    // ── Mosaic images ─────────────────────────────────────────────
+    const FALLBACK_IMGS = [
+      'https://images.unsplash.com/photo-1537249010077-e2f0d96d2e90?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop'
+    ];
+    const mosaicImgs = [dest.image, ...FALLBACK_IMGS].slice(0, 5);
+    const mosaicEl = document.getElementById('bnb-mosaic');
+    if (mosaicEl) {
+      mosaicEl.innerHTML = `
+        <div class="bnb-mosaic-grid">
+          ${mosaicImgs.map((img, i) => `
+            <div class="bnb-mosaic-img">
+              <img src="${img}" alt="${dest.name} ${i + 1}" loading="${i === 0 ? 'eager' : 'lazy'}">
+            </div>`).join('')}
         </div>
-      `;
+        <button class="bnb-mosaic-show-all" id="bnb-show-all">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+          Show all photos
+        </button>`;
     }
 
-    // --- ADVENTURE ACTIVITIES ---
-    const adventureServices = allServices.filter(s => (s.category === 'paragliding' || s.category === 'treks') && matchService(s));
-    const adventureSection = $('#dp-adventures');
-    if (adventureServices.length > 0) {
-      $('#dp-adventure-grid').innerHTML = adventureServices.map(svc => `
-        <div class="dp-adventure-card">
-          <span class="dp-adventure-icon">${svc.icon}</span>
-          <div class="dp-adventure-body">
-            <h3>${svc.name}</h3>
-            <p>${svc.description}</p>
-            <div class="dp-booking-price"><strong>${svc.price}</strong></div>
-          </div>
-          <a href="https://wa.me/${svc.whatsapp}?text=Hi! I want to book ${svc.name} in ${dest.name} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">Book Now</a>
-        </div>
-      `).join('');
-    } else {
-      adventureSection.style.display = 'none';
-    }
-
-    // --- NEARBY TREKS (with photos) ---
-    const nearbyTreks = typeof TREKS !== 'undefined' ? TREKS.filter(t => {
-      const loc = t.location.toLowerCase();
-      const reg = t.region.toLowerCase();
-      return loc.includes(destName) || loc.includes(destId2) || reg.includes(destName) || reg.includes(destRegion.split(' ')[0]);
-    }) : [];
-    let localTreks = nearbyTreks;
-    const treksSection = $('#dp-treks');
-    if (type === 'subpage' && theme !== 'adventure') localTreks = []; // Only show treks in adventure mode
-
-    if (localTreks.length > 0) {
-      $('#dp-treks-title').textContent = dest.name;
-      $('#dp-trek-grid').innerHTML = localTreks.map(trek => `
-        <div class="dp-trek-card">
-          <div class="dp-trek-card-img"><img src="${trek.image}" alt="${trek.name}" loading="lazy" width="400" height="220"></div>
-          <div class="dp-trek-content">
-            <span class="difficulty-badge ${trek.difficulty}">${trek.difficulty}</span>
-            <h3>${trek.name}</h3>
-            <div class="dp-trek-meta">
-              <span>&#9201; ${trek.duration}</span>
-              <span>&#8593; ${trek.maxAltitude}</span>
-              <span>&#128207; ${trek.distance}</span>
-            </div>
-            <p>${trek.description.slice(0, 120)}...</p>
-            <div class="dp-booking-actions" style="margin-top:0.75rem;">
-              <a href="treks.html#${trek.id}" class="dp-btn dp-btn-outline">View Trek</a>
-            </div>
-          </div>
-        </a>
-      `).join('');
-    } else {
-      treksSection.style.display = 'none';
-    }
-
-    // --- RESORTS ---
-    let nearbyResorts = typeof RESORTS !== 'undefined' ? RESORTS.filter(r => {
-      const loc = r.location.toLowerCase();
-      return loc.includes(destName) || loc.includes(destId2) || loc.includes(destRegion.split(',')[0].toLowerCase().trim());
-    }) : [];
-    const resortsSection = $('#dp-resorts');
-    if (type === 'subpage' && theme !== 'luxury') nearbyResorts = []; // Only show resorts in luxury mode
-
-    if (nearbyResorts.length > 0) {
-      $('#dp-resort-grid').innerHTML = nearbyResorts.map(r => `
-        <div class="dp-resort-card">
-          <div class="dp-resort-img" style="background-image: url(${r.image});"></div>
-          <div class="dp-resort-body">
-            <h3>${r.name}</h3>
-            <span class="dp-resort-loc">${r.location}</span>
-            <p>${r.description}</p>
-            <div class="dp-resort-meta">
-              <span class="dp-resort-price">${r.price}</span>
-              <span class="dp-resort-rating">&#9733; ${r.rating}</span>
-            </div>
-            <div class="dp-resort-features">${r.features.map(f => `<span class="dp-feature-tag">${f}</span>`).join('')}</div>
-          </div>
-        </div>
-      `).join('');
-    } else {
-      resortsSection.style.display = 'none';
-    }
-
-    // --- INFO BOX ---
+    // ── Destination header ────────────────────────────────────────
     const bestMonths = dest.bestMonths.map(m => {
       const s = typeof SEASONS !== 'undefined' ? SEASONS.find(s => s.month === m) : null;
       return s ? s.name.slice(0, 3) : m;
     }).join(', ');
+    const fromDelhi = dest.gettingThere.match(/(\d+)\s*hr/i);
+    const travelTime = fromDelhi ? fromDelhi[0] : '~12hr';
+    
+    const headerEl = document.getElementById('bnb-dest-header');
+    if (headerEl) {
+      headerEl.innerHTML = `
+        <h1>${dest.icon} ${dest.name}</h1>
+        <div class="bnb-dest-tagline">${dest.tagline} &middot; ${dest.region}</div>
+        <div class="bnb-dest-badges">
+          <span class="bnb-dest-badge">&uarr; ${dest.altitude}</span>
+          <span class="bnb-dest-badge"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty} Access</span></span>
+          <span class="bnb-dest-badge">&#127777; ${dest.temp}</span>
+          <span class="bnb-dest-badge">&#128197; Best: ${bestMonths.split(',').slice(0,3).join(',')}...</span>
+        </div>
+        <div class="bnb-info-grid">
+          <div class="bnb-info-item"><span class="bnb-info-label">Altitude</span><div class="bnb-info-value">${dest.altitude}</div></div>
+          <div class="bnb-info-item"><span class="bnb-info-label">Best Visit</span><div class="bnb-info-value">${bestMonths.split(',')[0].trim()}</div></div>
+          <div class="bnb-info-item"><span class="bnb-info-label">From Delhi</span><div class="bnb-info-value">${travelTime}</div></div>
+          <div class="bnb-info-item"><span class="bnb-info-label">Budget/day</span><div class="bnb-info-value">${dest.budget.backpacker.split('\u2013')[0]}</div></div>
+        </div>`;
+    }
 
-    $('#dp-info-grid').innerHTML = `
-      <div class="dp-info-item"><div class="dp-info-label">Altitude</div><div class="dp-info-value">${dest.altitude}</div></div>
-      <div class="dp-info-item"><div class="dp-info-label">Difficulty</div><div class="dp-info-value"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></div></div>
-      <div class="dp-info-item"><div class="dp-info-label">Best Months</div><div class="dp-info-value">${bestMonths}</div></div>
-      <div class="dp-info-item"><div class="dp-info-label">Temperature</div><div class="dp-info-value">${dest.temp}</div></div>
-    `;
+    // ── Search bar ────────────────────────────────────────────────
+    const searchContainer = document.getElementById('bnb-search-container');
+    if (searchContainer) {
+      searchContainer.innerHTML = `
+        <div class="bnb-search-bar">
+          <div class="bnb-search-field-wrap">
+            <span class="bnb-search-field-label">Destination</span>
+            <div style="font-size:14px;color:#222;font-weight:500;margin-top:1px;">${dest.name}, ${dest.region}</div>
+          </div>
+          <div class="bnb-search-field-wrap">
+            <span class="bnb-search-field-label">What are you looking for?</span>
+            <input class="bnb-search-field" id="bnb-type-input" type="text" placeholder="Stays, treks, activities...">
+          </div>
+          <div class="bnb-search-field-wrap">
+            <span class="bnb-search-field-label">Budget</span>
+            <input class="bnb-search-field" id="bnb-budget-input" type="text" placeholder="Any price range...">
+          </div>
+          <button class="bnb-search-btn" id="bnb-search-btn" aria-label="Search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </button>
+        </div>`;
+    }
 
-    $('#dp-highlights').innerHTML = `
-      <div class="dp-detail-desc">${dest.description}</div>
-      <h4>Highlights</h4>
-      <ul class="dp-list">${dest.highlights.map(h => `<li>${h}</li>`).join('')}</ul>
-      <h4>Must-Do Experiences</h4>
-      <ul class="dp-list">${dest.mustDo.map(m => `<li>${m}</li>`).join('')}</ul>
-    `;
+    // ── Build listings ────────────────────────────────────────────
+    const CAT_IMG = {
+      bikes:      'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop',
+      cabs:       'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+      tempo:      'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&auto=format&fit=crop',
+      homestays:  'https://images.unsplash.com/photo-1510798831971-661eb04b3739?w=800&auto=format&fit=crop',
+      treks:      'https://images.unsplash.com/photo-1626714486580-08709e99a341?w=800&auto=format&fit=crop',
+      paragliding:'https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop'
+    };
 
-    $('#dp-budget').innerHTML = `
-      <div class="dp-budget-grid">
-        <div class="dp-budget-tier"><span class="dp-budget-label">Backpacker</span><span class="dp-budget-value">${dest.budget.backpacker}</span></div>
-        <div class="dp-budget-tier"><span class="dp-budget-label">Mid-Range</span><span class="dp-budget-value">${dest.budget.mid}</span></div>
-        <div class="dp-budget-tier"><span class="dp-budget-label">Luxury</span><span class="dp-budget-value">${dest.budget.luxury}</span></div>
-      </div>
-    `;
-
-    $('#dp-practical').innerHTML = `
-      <div class="dp-practical-grid">
-        <div><strong>Permits</strong><p>${dest.permits}</p></div>
-        <div><strong>Getting There</strong><p>${dest.gettingThere}</p></div>
-      </div>
-    `;
-
-    $('#dp-climate').innerHTML = `
-      <div class="dp-practical-grid">
-        <div><strong>Summer</strong><p>${dest.climate.summer}</p></div>
-        <div><strong>Winter</strong><p>${dest.climate.winter}</p></div>
-      </div>
-      <p style="margin-top:1rem;color:var(--text-secondary);font-size:14px;font-weight:600;"><strong>Best time to visit:</strong> ${bestMonths}</p>
-    `;
-
-    // Collapsible toggles
-    $$('.dp-collapsible').forEach(section => {
-      const trigger = $('.dp-collapsible-trigger', section);
-      const content = $('.dp-collapsible-content', section);
-      const isOpen = section.dataset.open === 'true';
-      if (isOpen) {
-        section.classList.add('open');
-        content.style.maxHeight = content.scrollHeight + 'px';
+    function getSvcCategory(s) {
+      if (s.category === 'bikes' || s.category === 'cabs' || s.category === 'tempo') return 'transport';
+      if (s.category === 'paragliding') return 'adventure';
+      if (s.category === 'treks') return 'treks';
+      if (s.category === 'homestays') {
+        const p = parseFloat(s.price.replace(/[^\d.]/g, ''));
+        if (s.tags && (s.tags.includes('luxury')) || p >= 8000) return 'luxury';
+        if (s.tags && (s.tags.includes('quiet') || s.tags.includes('nature') || s.tags.includes('ghnp'))) return 'quiet';
+        return 'stays';
       }
-      trigger.addEventListener('click', () => {
-        section.classList.toggle('open');
-        if (section.classList.contains('open')) {
-          content.style.maxHeight = content.scrollHeight + 'px';
-        } else {
-          content.style.maxHeight = '0';
-        }
-      });
-    });
-  }
+      return 'stays';
+    }
+    function getSvcBadge(s) {
+      const badges = { bikes: 'BIKE RENTAL', cabs: 'CAB', tempo: 'GROUP TRAVEL', treks: 'GUIDED TREK', paragliding: 'ADVENTURE' };
+      if (s.category === 'homestays') {
+        const p = parseFloat(s.price.replace(/[^\d.]/g, ''));
+        if ((s.tags && s.tags.includes('luxury')) || p >= 8000) return 'LUXURY STAY';
+        if (s.tags && (s.tags.includes('quiet') || s.tags.includes('nature'))) return 'QUIET RETREAT';
+        return 'HOMESTAY';
+      }
+      return badges[s.category] || s.category.toUpperCase();
+    }
+    function getSvcPriceUnit(cat) {
+      if (cat === 'bikes') return '/day';
+      if (cat === 'cabs' || cat === 'tempo') return '/trip';
+      if (cat === 'paragliding') return '/flight';
+      if (cat === 'treks') return '/day';
+      return '/night';
+    }
+    const FAKE_RATINGS = [4.7, 4.8, 4.9, 4.8, 4.7, 4.9, 4.8, 4.9];
 
-  // ═══════════════════════════════════════════════════════════
-  // PAGE: INDIVIDUAL SERVICE CATEGORY (no hero)
-  // ═══════════════════════════════════════════════════════════
+    const allListings = [];
+
+    // 1. Services
+    if (typeof SERVICES !== 'undefined') {
+      SERVICES.filter(matchService).forEach((s, i) => {
+        allListings.push({
+          id: s.id, type: 'service',
+          category: getSvcCategory(s),
+          name: s.name, location: s.area,
+          image: CAT_IMG[s.category] || CAT_IMG.homestays,
+          price: s.price, priceUnit: getSvcPriceUnit(s.category),
+          rating: FAKE_RATINGS[i % FAKE_RATINGS.length],
+          badge: getSvcBadge(s),
+          whatsapp: s.whatsapp, phone: s.phone,
+          snippet: s.description
+        });
+      });
+    }
+
+    // 2. Resorts
+    if (typeof RESORTS !== 'undefined') {
+      RESORTS.filter(r => {
+        const loc = r.location.toLowerCase();
+        return loc.includes(destName) || loc.includes(destId2) || loc.includes(destRegion.split(',')[0].trim());
+      }).forEach(r => {
+        allListings.push({
+          id: r.id, type: 'resort', category: 'luxury',
+          name: r.name, location: r.location,
+          image: r.image, price: r.price, priceUnit: '/night',
+          rating: parseFloat(r.rating), badge: 'LUXURY RESORT',
+          snippet: r.description.slice(0, 90) + '...'
+        });
+      });
+    }
+
+    // 3. Treks
+    if (typeof TREKS !== 'undefined') {
+      TREKS.filter(t => {
+        const loc = t.location.toLowerCase();
+        const reg = t.region.toLowerCase();
+        return loc.includes(destName) || loc.includes(destId2) || reg.includes(destName) || reg.includes(destRegion.split(' ')[0]);
+      }).forEach(t => {
+        allListings.push({
+          id: t.id, type: 'trek', category: 'treks',
+          name: t.name, location: `${t.location} &middot; ${t.duration}`,
+          image: t.image, price: t.cost, priceUnit: '/person',
+          rating: t.difficulty === 'Hard' ? 4.9 : 4.8,
+          badge: t.difficulty.toUpperCase(),
+          trekLink: `treks.html#${t.id}`,
+          snippet: t.description.slice(0, 90) + '...'
+        });
+      });
+    }
+
+    // ── Categories ────────────────────────────────────────────────
+    const ALL_CATEGORIES = [
+      { id: 'all',       icon: '\u{1F3D4}\uFE0F', label: 'All' },
+      { id: 'stays',     icon: '\u{1F3E0}', label: 'Stays' },
+      { id: 'luxury',    icon: '\u{1F48E}', label: 'Luxury' },
+      { id: 'quiet',     icon: '\u{1F33F}', label: 'Quiet Escape' },
+      { id: 'adventure', icon: '\u{1FA82}', label: 'Adventure' },
+      { id: 'treks',     icon: '\u{1F97E}', label: 'Treks' },
+      { id: 'transport', icon: '\u{1F696}', label: 'Transport' },
+    ].filter(c => c.id === 'all' || allListings.some(l => l.category === c.id));
+
+    let activeCategory = 'all';
+    let activeSearch = '';
+
+    // ── Category strip ────────────────────────────────────────────
+    const catStrip = document.getElementById('bnb-category-strip');
+    if (catStrip) {
+      catStrip.innerHTML = ALL_CATEGORIES.map(c => `
+        <button class="bnb-category-pill${c.id === activeCategory ? ' active' : ''}" data-cat="${c.id}">
+          <span class="bnb-category-pill-icon">${c.icon}</span>
+          ${c.label}
+        </button>`).join('');
+      catStrip.addEventListener('click', e => {
+        const pill = e.target.closest('.bnb-category-pill');
+        if (!pill) return;
+        activeCategory = pill.dataset.cat;
+        $$('.bnb-category-pill').forEach(p => p.classList.toggle('active', p === pill));
+        renderListings();
+      });
+    }
+
+    // ── Render function ───────────────────────────────────────────
+    function renderListings() {
+      const grid = document.getElementById('bnb-listing-grid');
+      const header = document.getElementById('bnb-results-header');
+      if (!grid) return;
+
+      let filtered = allListings;
+      if (activeCategory !== 'all') filtered = filtered.filter(l => l.category === activeCategory);
+      if (activeSearch.trim()) {
+        const q = activeSearch.toLowerCase();
+        filtered = filtered.filter(l =>
+          l.name.toLowerCase().includes(q) ||
+          (l.location && l.location.toLowerCase().includes(q)) ||
+          (l.snippet && l.snippet.toLowerCase().includes(q))
+        );
+      }
+
+      if (header) {
+        const catLabel = ALL_CATEGORIES.find(c => c.id === activeCategory)?.label || 'All';
+        header.innerHTML = `
+          <span class="bnb-results-count">${filtered.length} listing${filtered.length !== 1 ? 's' : ''} in ${dest.name}${activeCategory !== 'all' ? ' &mdash; ' + catLabel : ''}</span>
+          <div class="bnb-results-sort">
+            <button class="bnb-filter-btn">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/></svg>
+              Filters
+            </button>
+          </div>`;
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="bnb-empty"><p>No listings match this filter in ${dest.name}.</p><button class="bnb-filter-btn" onclick="document.querySelector('.bnb-category-pill[data-cat=all]').click()">Show all listings</button></div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map((item, i) => {
+        let ctaHtml = '';
+        if (item.whatsapp) {
+          ctaHtml = `<a href="https://wa.me/${item.whatsapp}?text=Hi%21+I+found+${encodeURIComponent(item.name)}+on+Himachal+BNB+%E2%80%94+I%27d+like+to+book+for+my+${encodeURIComponent(dest.name)}+trip." class="bnb-listing-card-cta whatsapp" target="_blank" rel="noopener" onclick="event.stopPropagation()">\uD83D\uDCF2 Book on WhatsApp</a>`;
+        } else if (item.type === 'trek') {
+          ctaHtml = `<a href="${item.trekLink}" class="bnb-listing-card-cta outline" onclick="event.stopPropagation()">View Trek Details &rarr;</a>`;
+        } else {
+          ctaHtml = `<a href="services.html" class="bnb-listing-card-cta outline" onclick="event.stopPropagation()">Enquire Now &rarr;</a>`;
+        }
+        return `
+          <div class="bnb-listing-card" style="animation-delay:${i * 0.04}s">
+            <div class="bnb-listing-card-img-wrap">
+              <img src="${item.image}" alt="${item.name}" loading="lazy" width="400" height="400">
+              <button class="bnb-listing-card-heart" aria-label="Save" onclick="event.stopPropagation();this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'\u2665':'\u2661';">\u2661</button>
+              <span class="bnb-listing-card-type-badge">${item.badge}</span>
+              <div class="bnb-card-dots"><div class="bnb-card-dot active"></div><div class="bnb-card-dot"></div><div class="bnb-card-dot"></div></div>
+            </div>
+            <div class="bnb-listing-card-body">
+              <div class="bnb-listing-card-top">
+                <div class="bnb-listing-card-name">${item.name}</div>
+                <div class="bnb-listing-card-rating">\u2605 ${item.rating}</div>
+              </div>
+              <div class="bnb-listing-card-loc">${item.location}</div>
+              <div class="bnb-listing-card-snippet">${item.snippet || ''}</div>
+              <div class="bnb-listing-card-price"><strong>${item.price}</strong><span> ${item.priceUnit}</span></div>
+              ${ctaHtml}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    // Initial render
+    renderListings();
+
+    // Search wiring
+    const searchBtn = document.getElementById('bnb-search-btn');
+    const typeInput = document.getElementById('bnb-type-input');
+    if (searchBtn && typeInput) {
+      const doSearch = () => { activeSearch = typeInput.value; renderListings(); };
+      searchBtn.addEventListener('click', doSearch);
+      typeInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+    }
+
+    // ── About section ─────────────────────────────────────────────
+    const aboutContainer = document.getElementById('bnb-about-container');
+    if (aboutContainer) {
+      aboutContainer.innerHTML = `
+        <div class="bnb-about-section" id="bnb-about">
+          <div class="bnb-about-header" id="bnb-about-header">
+            <h2>About ${dest.name}</h2>
+            <button class="bnb-toggle-btn" id="bnb-about-btn">+</button>
+          </div>
+          <div class="bnb-about-body">
+            <p class="bnb-about-desc">${dest.description}</p>
+            <div class="bnb-highlights-grid">
+              ${dest.highlights.map(h => `<div class="bnb-highlight-item">${h}</div>`).join('')}
+            </div>
+            <div style="margin-top:1.5rem;">
+              <div class="bnb-info-row"><span class="bnb-info-row-label">Getting There</span><span class="bnb-info-row-value">${dest.gettingThere}</span></div>
+              <div class="bnb-info-row"><span class="bnb-info-row-label">Permits</span><span class="bnb-info-row-value">${dest.permits}</span></div>
+              <div class="bnb-info-row"><span class="bnb-info-row-label">Summer</span><span class="bnb-info-row-value">${dest.climate.summer}</span></div>
+              <div class="bnb-info-row"><span class="bnb-info-row-label">Winter</span><span class="bnb-info-row-value">${dest.climate.winter}</span></div>
+              <div class="bnb-info-row">
+                <span class="bnb-info-row-label">Budget Guide</span>
+                <span class="bnb-info-row-value">Backpacker: ${dest.budget.backpacker} &nbsp;|&nbsp; Mid-range: ${dest.budget.mid} &nbsp;|&nbsp; Luxury: ${dest.budget.luxury}</span>
+              </div>
+            </div>
+            <div style="margin-top:1.5rem;">
+              <h3 style="font-family:var(--font-heading);font-size:1.1rem;color:#222;margin-bottom:0.8rem;">Must-Do Experiences</h3>
+              ${dest.mustDo.map(m => `<div style="font-size:14px;color:#717171;padding:0.5rem 0;border-bottom:1px solid #ebebeb;">\u2192 ${m}</div>`).join('')}
+            </div>
+          </div>
+        </div>`;
+
+      document.getElementById('bnb-about-header').addEventListener('click', () => {
+        const section = document.getElementById('bnb-about');
+        const btn = document.getElementById('bnb-about-btn');
+        section.classList.toggle('open');
+        btn.textContent = section.classList.contains('open') ? '\u2212' : '+';
+      });
+    }
+  } // close initDestinationPage
+
+
 
   function initServicePage() {
     const params = new URLSearchParams(window.location.search);
