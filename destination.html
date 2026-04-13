@@ -8,27 +8,33 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <main class="page-main">
-    <!-- Hero Banner -->
-    <section class="dp-hero" id="dp-hero">
-      <div class="dp-hero-overlay"></div>
-      <div class="dp-hero-content">
-        <span class="dp-hero-icon" id="dp-icon"></span>
-        <h1 class="dp-hero-title" id="dp-title"></h1>
-        <p class="dp-hero-tagline" id="dp-tagline"></p>
-        <div class="dp-hero-badges" id="dp-badges"></div>
+    <!-- Page Header (replaces hero) -->
+    <div class="container">
+      <div class="dp-page-header" id="dp-page-header">
+        <span class="section-label" id="dp-region-label"></span>
+        <h1 id="dp-title"></h1>
+        <p id="dp-tagline"></p>
+        <div class="dp-page-badges" id="dp-badges"></div>
+      </div>
+    </div>
+
+    <!-- All-in-One Package -->
+    <section class="package-hero" id="dp-package-section">
+      <div class="container">
+        <div class="package-card" id="dp-package-card"></div>
       </div>
     </section>
 
-    <!-- Booking Strip — upfront -->
+    <!-- Booking Services — individual cards with photos -->
     <section class="dp-booking-strip" id="dp-booking-strip">
       <div class="container">
-        <h2 class="dp-section-heading">Book Your <span class="text-gradient">Stay & Ride</span></h2>
-        <p class="dp-section-sub">Verified local operators. No middlemen. Tap to book via WhatsApp.</p>
+        <h2 class="dp-section-heading">Book <span class="text-gradient">Individually</span></h2>
+        <p class="dp-section-sub">Each service also available separately. Tap to book via WhatsApp.</p>
         <div class="dp-booking-grid" id="dp-booking-grid"></div>
       </div>
     </section>

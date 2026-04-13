@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -21,57 +21,16 @@
   <main>
     <h1 class="sr-only">Himachal BNB — Your Gateway to Himachal Pradesh</h1>
 
-    <!-- HERO — 5-PANEL DESTINATION STRIP -->
-    <section class="hero-panels" id="hero-panels" aria-label="Featured Destinations">
-      <div class="hero-panel active" data-dest="manali" style="background-image: url('https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1600&auto=format&fit=crop');">
-        <div class="hero-panel-overlay"></div>
-        <div class="hero-panel-content">
-          <span class="hero-panel-label">Kullu Valley</span>
-          <h2 class="hero-panel-title">Manali</h2>
-          <p class="hero-panel-tagline">Where deodar forests meet snow-capped passes and riverside cafes serve fresh trout.</p>
-          <a href="destination.html?id=manali" class="hero-panel-btn">Explore →</a>
+    <!-- DESTINATION CARDS — shown directly -->
+    <section class="section" style="padding-top: 5rem;" aria-label="Featured Destinations">
+      <div class="container">
+        <span class="section-label">Destinations</span>
+        <h2 class="section-title">Explore <span class="text-gradient">Himachal Pradesh</span></h2>
+        <p class="section-desc">10 Himalayan worlds. Frozen deserts to flower valleys. Each with its own story.</p>
+        <div class="dest-grid" id="home-dest-grid"></div>
+        <div style="text-align:center; margin-top:2rem;">
+          <a href="destinations.html" class="btn btn-outline">View All Destinations</a>
         </div>
-        <span class="hero-panel-number">01</span>
-      </div>
-      <div class="hero-panel" data-dest="spiti" style="background-image: url('https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1600&auto=format&fit=crop');">
-        <div class="hero-panel-overlay"></div>
-        <div class="hero-panel-content">
-          <span class="hero-panel-label">Lahaul-Spiti</span>
-          <h2 class="hero-panel-title">Spiti Valley</h2>
-          <p class="hero-panel-tagline">A cold desert at 3,800m where thousand-year-old monasteries cling to barren cliffs.</p>
-          <a href="destination.html?id=spiti" class="hero-panel-btn">Explore →</a>
-        </div>
-        <span class="hero-panel-number">02</span>
-      </div>
-      <div class="hero-panel" data-dest="dharamshala" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1600&auto=format&fit=crop');">
-        <div class="hero-panel-overlay"></div>
-        <div class="hero-panel-content">
-          <span class="hero-panel-label">Kangra Valley</span>
-          <h2 class="hero-panel-title">Dharamshala</h2>
-          <p class="hero-panel-tagline">Home of the Dalai Lama, Tibetan momos, and the mighty Dhauladhar range.</p>
-          <a href="destination.html?id=dharamshala" class="hero-panel-btn">Explore →</a>
-        </div>
-        <span class="hero-panel-number">03</span>
-      </div>
-      <div class="hero-panel" data-dest="kasol" style="background-image: url('https://images.unsplash.com/photo-1448375240586-882707db888b?w=1600&auto=format&fit=crop');">
-        <div class="hero-panel-overlay"></div>
-        <div class="hero-panel-content">
-          <span class="hero-panel-label">Parvati Valley</span>
-          <h2 class="hero-panel-title">Kasol</h2>
-          <p class="hero-panel-tagline">Pine forests, crystal-clear rivers, and hot springs hidden in the valley.</p>
-          <a href="destination.html?id=kasol" class="hero-panel-btn">Explore →</a>
-        </div>
-        <span class="hero-panel-number">04</span>
-      </div>
-      <div class="hero-panel" data-dest="kinnaur" style="background-image: url('https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&auto=format&fit=crop');">
-        <div class="hero-panel-overlay"></div>
-        <div class="hero-panel-content">
-          <span class="hero-panel-label">Kinnaur District</span>
-          <h2 class="hero-panel-title">Kinnaur</h2>
-          <p class="hero-panel-tagline">Apple orchards, sacred peaks, and India's most jaw-dropping mountain highway.</p>
-          <a href="destination.html?id=kinnaur" class="hero-panel-btn">Explore →</a>
-        </div>
-        <span class="hero-panel-number">05</span>
       </div>
     </section>
 
@@ -174,7 +133,7 @@
               <p>10 extraordinary Himalayan destinations</p>
             </div>
           </a>
-          <a href="seasons.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop');">
+          <a href="info.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&auto=format&fit=crop');">
             <div class="exp-overlay"></div>
             <div class="exp-content">
               <span class="exp-tag">Seasonal</span>
@@ -182,7 +141,7 @@
               <p>Month-by-month travel intel</p>
             </div>
           </a>
-          <a href="wildlife.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1513220556209-66c30ddde66f?w=800&auto=format&fit=crop');">
+          <a href="info.html" class="exp-card" style="background-image: url('https://images.unsplash.com/photo-1513220556209-66c30ddde66f?w=800&auto=format&fit=crop');">
             <div class="exp-overlay"></div>
             <div class="exp-content">
               <span class="exp-tag">Wildlife</span>

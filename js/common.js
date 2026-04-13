@@ -110,10 +110,8 @@
     $$('.nav-dropdown').forEach((dropdown) => {
       const trigger = $('.nav-dropdown-trigger', dropdown);
 
-      // Click toggle (mobile + fallback)
       trigger.addEventListener('click', (e) => {
         e.preventDefault();
-        // Close other open dropdowns
         $$('.nav-dropdown.open').forEach((d) => {
           if (d !== dropdown) d.classList.remove('open');
         });
@@ -129,7 +127,6 @@
         }
       });
 
-      // Hover open/close on desktop
       dropdown.addEventListener('mouseenter', () => {
         if (window.innerWidth > 768) dropdown.classList.add('open');
       });
@@ -137,7 +134,6 @@
         if (window.innerWidth > 768) dropdown.classList.remove('open');
       });
 
-      // Focusout
       dropdown.addEventListener('focusout', (e) => {
         if (!dropdown.contains(e.relatedTarget)) dropdown.classList.remove('open');
       });
@@ -211,7 +207,7 @@
           </div>
         </div>
         <div class="footer-bottom">
-          <p>&copy; ${new Date().getFullYear()} Himachal BNB. Made with ❤️ from the hills of Himachal Pradesh.</p>
+          <p>&copy; ${new Date().getFullYear()} Himachal BNB. Made with love from the hills of Himachal Pradesh.</p>
           <p class="footer-disclaimer">Himachal BNB is an independent travel guide. We are not affiliated with the Himachal Pradesh Tourism Development Corporation (HPTDC) or any government body. All information is curated from personal experience and local knowledge.</p>
         </div>
       </div>
@@ -244,7 +240,6 @@
     });
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeDetailOverlay();
-      // Focus trap when overlay is open
       if (e.key === 'Tab' && overlay.classList.contains('open')) {
         trapFocus(e, overlay);
       }
@@ -269,7 +264,6 @@
     const overlay = $('#detail-overlay');
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
-    // Move focus into the overlay
     const closeBtn = $('#detail-close');
     if (closeBtn) closeBtn.focus();
   }
@@ -301,13 +295,13 @@
       <div class="detail-hero detail-gallery" id="detail-gallery">
         ${galleryHtml}
         ${(dest.images || []).length > 1 ? `
-          <button class="gallery-prev" id="gallery-prev" aria-label="Previous image">‹</button>
-          <button class="gallery-next" id="gallery-next" aria-label="Next image">›</button>
+          <button class="gallery-prev" id="gallery-prev" aria-label="Previous image">&#8249;</button>
+          <button class="gallery-next" id="gallery-next" aria-label="Next image">&#8250;</button>
           <div class="gallery-dots">${(dest.images || [dest.image]).map((_, i) => `<span class="gallery-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`).join('')}</div>
         ` : ''}
       </div>
       <div class="detail-body">
-        <span class="detail-icon" style="text-shadow: 0 4px 12px ${dest.color}80">${dest.icon}</span>
+        <span class="detail-icon">${dest.icon}</span>
         <div class="detail-name">${dest.name}</div>
         <span class="detail-tag">${dest.tagline}</span>
         <p class="detail-desc">${dest.description}</p>
@@ -365,13 +359,13 @@
       <div class="detail-hero detail-gallery" id="detail-gallery">
         ${galleryHtml}
         ${(trek.images || []).length > 1 ? `
-          <button class="gallery-prev" id="gallery-prev" aria-label="Previous image">‹</button>
-          <button class="gallery-next" id="gallery-next" aria-label="Next image">›</button>
+          <button class="gallery-prev" id="gallery-prev" aria-label="Previous image">&#8249;</button>
+          <button class="gallery-next" id="gallery-next" aria-label="Next image">&#8250;</button>
           <div class="gallery-dots">${(trek.images || [trek.image]).map((_, i) => `<span class="gallery-dot ${i === 0 ? 'active' : ''}" data-index="${i}"></span>`).join('')}</div>
         ` : ''}
       </div>
       <div class="detail-body" style="padding-top: 2rem;">
-        <span class="detail-icon" style="text-shadow: 0 4px 12px ${trek.color}80">🥾</span>
+        <span class="detail-icon">🥾</span>
         <div class="detail-name">${trek.name}</div>
         <span class="detail-tag">${trek.location}, ${trek.region}</span>
         <p class="detail-desc">${trek.description}</p>
@@ -400,7 +394,7 @@
                 <span class="itin-day-num">Day ${day.day}</span>
                 <div class="itin-day-title">${day.title}</div>
                 <div class="itin-day-desc">${day.desc}</div>
-                <div class="itin-day-alt">⛰ ${day.altitude}</div>
+                <div class="itin-day-alt">&#9968; ${day.altitude}</div>
               </div>
             `).join('')}
           </div>
@@ -440,31 +434,37 @@
   }
 
   // ═══════════════════════════════════════════════════════════
-  // PAGE: HOMEPAGE (hero panels)
+  // PAGE: HOMEPAGE — show destination cards directly
   // ═══════════════════════════════════════════════════════════
 
   function initHomePage() {
-    const panels = $$('.hero-panel');
-    if (!panels.length) return;
+    const grid = document.getElementById('home-dest-grid');
+    if (!grid || typeof DESTINATIONS === 'undefined') return;
 
-    panels.forEach(panel => {
-      panel.addEventListener('mouseenter', () => {
-        panels.forEach(p => p.classList.remove('active'));
-        panel.classList.add('active');
-      });
-      panel.addEventListener('touchstart', (e) => {
-        if (window.innerWidth <= 768) return;
-        if (!panel.classList.contains('active')) {
-          e.preventDefault();
-          panels.forEach(p => p.classList.remove('active'));
-          panel.classList.add('active');
-        }
-      }, { passive: false });
-    });
+    // Show top 5 destinations as cards with photos
+    const top = DESTINATIONS.slice(0, 5);
+    grid.innerHTML = top.map((dest, i) => {
+      const img = dest.images ? dest.images[0] : dest.image;
+      return `
+        <a href="destination.html?id=${dest.id}" class="dest-card" aria-label="View ${dest.name}" style="animation-delay:${i * 0.06}s">
+          <div class="dest-card-img"><img src="${img}" alt="${dest.name}" loading="lazy" width="400" height="260"></div>
+          <div class="dest-card-body">
+            <span class="dest-card-icon">${dest.icon}</span>
+            <div class="dest-card-name">${dest.name}</div>
+            <div class="dest-card-region">${dest.region}</div>
+            <div class="dest-card-tagline">${dest.tagline}</div>
+            <div class="dest-card-meta">
+              <span>&#8593; ${dest.altitude}</span>
+              <span><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>
+              <span>&#127777; ${dest.temp}</span>
+            </div>
+          </div>
+        </a>`;
+    }).join('');
   }
 
   // ═══════════════════════════════════════════════════════════
-  // PAGE: DESTINATIONS
+  // PAGE: DESTINATIONS — cards with photos
   // ═══════════════════════════════════════════════════════════
 
   function initDestinationsPage() {
@@ -474,22 +474,24 @@
       const filtered = filter === 'all' ? DESTINATIONS : DESTINATIONS.filter(d => d.difficulty === filter);
       grid.innerHTML = '';
       filtered.forEach((dest, i) => {
+        const img = dest.images ? dest.images[0] : dest.image;
         const card = document.createElement('a');
         card.className = 'dest-card';
         card.href = `destination.html?id=${dest.id}`;
         card.setAttribute('aria-label', `View details for ${dest.name}`);
-        card.style.setProperty('--card-color', dest.color);
-        card.style.backgroundImage = `url(${dest.images ? dest.images[0] : dest.image})`;
         card.style.animationDelay = `${i * 0.06}s`;
         card.innerHTML = `
-          <span class="dest-card-icon">${dest.icon}</span>
-          <div class="dest-card-name">${dest.name}</div>
-          <div class="dest-card-region">${dest.region}</div>
-          <div class="dest-card-tagline">"${dest.tagline}"</div>
-          <div class="dest-card-meta">
-            <span class="dest-meta-item">↑ <span class="meta-val">${dest.altitude}</span></span>
-            <span class="dest-meta-item"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>
-            <span class="dest-meta-item">🌡 <span class="meta-val">${dest.temp}</span></span>
+          <div class="dest-card-img"><img src="${img}" alt="${dest.name}" loading="lazy" width="400" height="260"></div>
+          <div class="dest-card-body">
+            <span class="dest-card-icon">${dest.icon}</span>
+            <div class="dest-card-name">${dest.name}</div>
+            <div class="dest-card-region">${dest.region}</div>
+            <div class="dest-card-tagline">${dest.tagline}</div>
+            <div class="dest-card-meta">
+              <span>&#8593; ${dest.altitude}</span>
+              <span><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>
+              <span>&#127777; ${dest.temp}</span>
+            </div>
           </div>`;
         grid.appendChild(card);
       });
@@ -505,7 +507,7 @@
   }
 
   // ═══════════════════════════════════════════════════════════
-  // PAGE: TREKS
+  // PAGE: TREKS — cards with photos
   // ═══════════════════════════════════════════════════════════
 
   function initTreksPage() {
@@ -514,21 +516,20 @@
       if (!grid) return;
       const filtered = filter === 'all' ? TREKS : TREKS.filter(t => t.difficulty === filter);
       grid.innerHTML = filtered.map(trek => `
-        <div class="trek-card" data-trek-id="${trek.id}" tabindex="0" role="button" aria-label="View details for ${trek.name}" style="background-image: url(${trek.image});">
-          <div class="trek-card-overlay"></div>
+        <div class="trek-card" data-trek-id="${trek.id}" tabindex="0" role="button" aria-label="View details for ${trek.name}">
+          <div class="trek-card-img"><img src="${trek.image}" alt="${trek.name}" loading="lazy" width="400" height="260"></div>
           <div class="trek-card-content">
             <span class="difficulty-badge ${trek.difficulty}">${trek.difficulty}</span>
             <h3 class="trek-card-name">${trek.name}</h3>
             <div class="trek-card-meta">
-              <span>⏱ ${trek.duration}</span>
-              <span>↑ ${trek.maxAltitude}</span>
-              <span>📏 ${trek.distance}</span>
+              <span>&#9201; ${trek.duration}</span>
+              <span>&#8593; ${trek.maxAltitude}</span>
+              <span>&#128207; ${trek.distance}</span>
             </div>
           </div>
         </div>
       `).join('');
 
-      // Attach click + keyboard listeners
       grid.querySelectorAll('.trek-card').forEach(card => {
         const handler = () => {
           const trek = TREKS.find(t => t.id === card.dataset.trekId);
@@ -566,13 +567,13 @@
         <div class="resort-info">
           <div>
             <h3 class="resort-name">${r.name}</h3>
-            <span class="resort-loc">📍 ${r.location}</span>
+            <span class="resort-loc">&#128205; ${r.location}</span>
           </div>
           <p class="resort-desc">${r.description}</p>
           <div class="resort-meta">
-            <span class="resort-rating">★ ${r.rating}</span>
+            <span class="resort-rating">&#9733; ${r.rating}</span>
             <div class="resort-features" style="display:flex;gap:0.5rem;font-size:0.8rem;color:var(--text-muted);">
-              ${r.features.slice(0, 2).map(f => `<span>• ${f}</span>`).join('')}
+              ${r.features.slice(0, 2).map(f => `<span>&#8226; ${f}</span>`).join('')}
             </div>
           </div>
         </div>
@@ -603,15 +604,15 @@
         { id: 'explore', icon: '🗺️', label: 'Off the Beaten Path', desc: 'Remote valleys, hidden villages' }
       ],
       season: [
-        { id: 'summer', icon: '☀️', label: 'Summer (Mar–Jun)', desc: 'Clear skies, all roads open' },
-        { id: 'monsoon', icon: '🌧️', label: 'Monsoon (Jul–Sep)', desc: 'Lush green, fewer crowds, some risks' },
-        { id: 'autumn', icon: '🍂', label: 'Autumn (Oct–Nov)', desc: 'Crystal clear, festivals, golden light' },
-        { id: 'winter', icon: '❄️', label: 'Winter (Dec–Feb)', desc: 'Snow, skiing, frozen lakes' }
+        { id: 'summer', icon: '☀️', label: 'Summer (Mar\u2013Jun)', desc: 'Clear skies, all roads open' },
+        { id: 'monsoon', icon: '🌧️', label: 'Monsoon (Jul\u2013Sep)', desc: 'Lush green, fewer crowds, some risks' },
+        { id: 'autumn', icon: '🍂', label: 'Autumn (Oct\u2013Nov)', desc: 'Crystal clear, festivals, golden light' },
+        { id: 'winter', icon: '❄️', label: 'Winter (Dec\u2013Feb)', desc: 'Snow, skiing, frozen lakes' }
       ],
       budget: [
-        { id: 'backpacker', icon: '🎒', label: 'Backpacker', desc: '₹800–1,500/day' },
-        { id: 'mid', icon: '🏨', label: 'Mid-Range', desc: '₹2,500–5,000/day' },
-        { id: 'luxury', icon: '💎', label: 'Luxury', desc: '₹8,000–20,000/day' }
+        { id: 'backpacker', icon: '🎒', label: 'Backpacker', desc: '\u20B9800\u20131,500/day' },
+        { id: 'mid', icon: '🏨', label: 'Mid-Range', desc: '\u20B92,500\u20135,000/day' },
+        { id: 'luxury', icon: '💎', label: 'Luxury', desc: '\u20B98,000\u201320,000/day' }
       ],
       activities: [
         { id: 'trek', icon: '🥾', label: 'Trekking' },
@@ -640,7 +641,7 @@
       const opts = options[step];
       const isMulti = step === 'activities';
       bodyEl.innerHTML = `
-        <h3 class="planner-question">${['What kind of trip are you looking for?', 'When are you thinking of visiting?', "What's your daily budget?", 'Pick activities that excite you (choose any)'][current]}</h3>
+        <h3 class="planner-question">${['What kind of trip are you looking for?', 'When are you thinking of visiting?', "What\'s your daily budget?", 'Pick activities that excite you (choose any)'][current]}</h3>
         <div class="option-cards ${isMulti ? 'multi' : ''}">
           ${opts.map(o => `
             <div class="option-card" data-id="${o.id}">
@@ -689,14 +690,19 @@
       resultsEl.innerHTML = `
         <h2 class="section-title">Your <span class="text-gradient">Picks</span></h2>
         <p class="section-desc" style="margin-bottom:2rem;">Destinations matched to your travel style.</p>
-        <div class="dest-grid">${top.map(d => `
-          <a href="destination.html?id=${d.id}" class="dest-card" aria-label="View ${d.name}" style="background-image:url(${d.images ? d.images[0] : d.image})">
-            <span class="dest-card-icon">${d.icon}</span>
-            <div class="dest-card-name">${d.name}</div>
-            <div class="dest-card-region">${d.region}</div>
-            <div class="dest-card-tagline">"${d.tagline}"</div>
-          </a>
-        `).join('')}</div>
+        <div class="dest-grid">${top.map(d => {
+          const img = d.images ? d.images[0] : d.image;
+          return `
+          <a href="destination.html?id=${d.id}" class="dest-card" aria-label="View ${d.name}">
+            <div class="dest-card-img"><img src="${img}" alt="${d.name}" loading="lazy" width="400" height="260"></div>
+            <div class="dest-card-body">
+              <span class="dest-card-icon">${d.icon}</span>
+              <div class="dest-card-name">${d.name}</div>
+              <div class="dest-card-region">${d.region}</div>
+              <div class="dest-card-tagline">${d.tagline}</div>
+            </div>
+          </a>`;
+        }).join('')}</div>
         <button class="btn btn-outline" id="planner-restart" style="margin-top:2rem;">Start Over</button>
       `;
       document.getElementById('planner-restart').addEventListener('click', () => location.reload());
@@ -706,7 +712,7 @@
   }
 
   // ═══════════════════════════════════════════════════════════
-  // PAGE: SEASONS
+  // PAGE: INFO (Seasons, Wildlife, Guide, Culture)
   // ═══════════════════════════════════════════════════════════
 
   function initSeasonsPage() {
@@ -743,11 +749,11 @@
           <div class="season-meter"><span class="meter-label">Road Access</span><div class="meter-bar"><div class="meter-fill" style="width:${s.accessibility * 20}%;background:${s.accessibility < 2 ? '#dc2626' : s.accessibility < 4 ? '#f59e0b' : 'var(--accent)'}"></div></div></div>
           <div class="season-meter"><span class="meter-label">Scenic Beauty</span><div class="meter-bar"><div class="meter-fill" style="width:${s.beauty * 20}%;background:var(--accent)"></div></div></div>
         </div>
-        <h3 style="margin-top:1.5rem;color:var(--text-primary);font-family:var(--font-heading);font-size:1.1rem;">Highlights</h3>
+        <h3 style="margin-top:1.5rem;color:var(--text-primary);font-family:var(--font-heading);font-size:1.1rem;font-weight:800;">Highlights</h3>
         <ul class="detail-list" style="margin-top:0.8rem;">
           ${s.highlights.map(h => '<li>' + h + '</li>').join('')}
         </ul>
-        <h3 style="margin-top:1.5rem;color:var(--text-primary);font-family:var(--font-heading);font-size:1.1rem;">Open Destinations</h3>
+        <h3 style="margin-top:1.5rem;color:var(--text-primary);font-family:var(--font-heading);font-size:1.1rem;font-weight:800;">Open Destinations</h3>
         <div style="display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:0.8rem;">
           ${openDests.map(d => '<span class="dest-pill" style="border-color:' + d.color + '">' + d.icon + ' ' + d.name + '</span>').join('')}
         </div>
@@ -759,10 +765,6 @@
       el.addEventListener('click', () => showSeason(parseInt(el.dataset.month)));
     });
   }
-
-  // ═══════════════════════════════════════════════════════════
-  // PAGE: WILDLIFE
-  // ═══════════════════════════════════════════════════════════
 
   function initWildlifePage() {
     const wildlifeImages = {
@@ -802,16 +804,12 @@
     }).join('');
 
     const factsEl = document.getElementById('wildlife-facts');
-    if (factsEl) {
+    if (factsEl && typeof WILDLIFE_FACTS !== 'undefined') {
       factsEl.innerHTML = WILDLIFE_FACTS.map(f =>
-        '<div class="fact-item"><span class="fact-icon">🔬</span><p>' + f + '</p></div>'
+        '<div class="fact-item"><span class="fact-icon">&#128300;</span><p>' + f + '</p></div>'
       ).join('');
     }
   }
-
-  // ═══════════════════════════════════════════════════════════
-  // PAGE: GUIDE
-  // ═══════════════════════════════════════════════════════════
 
   function initGuidePage() {
     const container = document.getElementById('guide-sections');
@@ -821,7 +819,7 @@
       { title: '🏔️ Altitude & Acclimatization', content: CULTURE.altitudeTips.map(t => `<div class="guide-tip"><strong>${t.altitude}</strong><span class="risk-badge ${t.risk.toLowerCase().replace(/\s/g, '-')}">${t.risk} Risk</span><p>${t.advice}</p></div>`).join('') },
       { title: '🎒 Packing Checklist', content: Object.entries(CULTURE.packingList).map(([cat, items]) => `<div class="packing-cat"><h4>${cat.charAt(0).toUpperCase() + cat.slice(1)}</h4><ul>${items.map(i => `<li>${i}</li>`).join('')}</ul></div>`).join('') },
       { title: '💰 Budget Breakdown', content: BUDGET_GUIDE.map(b => `<div class="budget-card"><h4>${b.title} <span class="budget-range">${b.range}</span></h4><p>${b.desc}</p><ul>${b.details.map(d => `<li>${d}</li>`).join('')}</ul></div>`).join('') },
-      { title: '📋 Permits & Documents', content: PERMITS_GUIDE.map(p => `<div class="permit-card"><h4>${p.region} — ${p.title}</h4><p>${p.desc}</p><p class="permit-tip">💡 ${p.tips}</p></div>`).join('') },
+      { title: '📋 Permits & Documents', content: PERMITS_GUIDE.map(p => `<div class="permit-card"><h4>${p.region} — ${p.title}</h4><p>${p.desc}</p><p class="permit-tip">&#128161; ${p.tips}</p></div>`).join('') },
       { title: '🚨 Emergency & Safety', content: `<div class="emergency-grid">${CULTURE.emergency.map(e => `<div class="emergency-item"><strong>${e.name}</strong><a href="tel:${e.number.replace(/\s/g, '')}" class="emergency-num">${e.number}</a></div>`).join('')}</div>` }
     ];
 
@@ -842,10 +840,6 @@
     });
   }
 
-  // ═══════════════════════════════════════════════════════════
-  // PAGE: CULTURE
-  // ═══════════════════════════════════════════════════════════
-
   function initCulturePage() {
     const content = document.getElementById('culture-content');
     if (!content) return;
@@ -855,7 +849,7 @@
         <div class="culture-card"><span class="culture-card-icon">${e.icon}</span><h3>${e.title}</h3><p>${e.text}</p></div>
       `).join('')}</div>`,
       food: () => `<div class="food-grid">${CULTURE.foods.map(f => `
-        <article class="food-card"><h3>${f.name}</h3><p>${f.desc}</p><span class="food-region">📍 ${f.region}</span></article>
+        <article class="food-card"><h3>${f.name}</h3><p>${f.desc}</p><span class="food-region">&#128205; ${f.region}</span></article>
       `).join('')}</div>`,
       festivals: () => `<div class="festival-grid">${FESTIVALS.map(f => `
         <article class="festival-card"><div class="festival-header"><span class="festival-icon">${f.icon}</span><div><h3>${f.name}</h3><span class="festival-meta">${f.month} · ${f.location}</span></div></div><p>${f.desc}</p></article>
@@ -897,12 +891,12 @@
             <article class="service-card" id="${s.id}">
               <span class="service-icon">${s.icon}</span>
               <h3>${s.name}</h3>
-              <div class="service-area">📍 ${s.area}</div>
+              <div class="service-area">&#128205; ${s.area}</div>
               <p>${s.description}</p>
               <span class="service-price">${s.price}</span>
               <div class="service-actions">
-                <a href="https://wa.me/${s.whatsapp}?text=Hi! I found you on Himachal BNB and want to book ${s.name}" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 Book on WhatsApp</a>
-                <a href="tel:${s.phone}" class="btn btn-outline btn-call">📞 Call Now</a>
+                <a href="https://wa.me/${s.whatsapp}?text=Hi! I found you on Himachal BNB and want to book ${s.name}" target="_blank" rel="noopener" class="btn btn-whatsapp">&#128172; Book on WhatsApp</a>
+                <a href="tel:${s.phone}" class="btn btn-outline btn-call">&#128222; Call Now</a>
               </div>
             </article>
           `).join('')}
@@ -913,7 +907,7 @@
   }
 
   // ═══════════════════════════════════════════════════════════
-  // PAGE: INDIVIDUAL DESTINATION
+  // PAGE: INDIVIDUAL DESTINATION — All-in-one package + cards
   // ═══════════════════════════════════════════════════════════
 
   function initDestinationPage() {
@@ -930,21 +924,22 @@
     const metaDesc = document.querySelector('meta[name="description"]');
     if (metaDesc) metaDesc.content = `Explore ${dest.name} in ${dest.region}. Book resorts, homestays, bike rentals, cabs, and adventure activities directly from verified local operators.`;
 
-    // Hero
-    const hero = $('#dp-hero');
-    hero.style.backgroundImage = `url(${dest.images ? dest.images[0] : dest.image})`;
-    $('#dp-icon').textContent = dest.icon;
-    $('#dp-title').textContent = dest.name;
-    $('#dp-tagline').textContent = dest.tagline;
-    $('#dp-badges').innerHTML = `
-      <span class="dp-badge">↑ ${dest.altitude}</span>
-      <span class="dp-badge"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>
-      <span class="dp-badge">🌡 ${dest.temp}</span>
-      <span class="dp-badge">📍 ${dest.region}</span>
-    `;
+    // Page header (replaces hero)
+    const header = $('#dp-page-header');
+    if (header) {
+      const regionLabel = $('#dp-region-label');
+      if (regionLabel) regionLabel.textContent = dest.region;
+      $('#dp-title').textContent = dest.name;
+      $('#dp-tagline').textContent = dest.tagline;
+      $('#dp-badges').innerHTML = `
+        <span class="dp-page-badge">&#8593; ${dest.altitude}</span>
+        <span class="dp-page-badge"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>
+        <span class="dp-page-badge">&#127777; ${dest.temp}</span>
+        <span class="dp-page-badge">&#128205; ${dest.region}</span>
+      `;
+    }
 
-    // --- BOOKING SERVICES ---
-    // Match services to this destination by checking tags/area for destination name or id
+    // --- SERVICE MATCHING ---
     const destName = dest.name.toLowerCase();
     const destId2 = dest.id.toLowerCase();
     const destRegion = dest.region.toLowerCase();
@@ -955,36 +950,90 @@
     };
 
     const bookableServices = typeof SERVICES !== 'undefined' ? SERVICES.filter(matchService) : [];
-    // Also add some generic services if too few
     const allServices = typeof SERVICES !== 'undefined' ? SERVICES : [];
-    const categories = ['bikes', 'cabs', 'tempo', 'homestays'];
-    const categoryLabels = { bikes: 'Bike Rental', cabs: 'Cab Booking', tempo: 'Tempo Traveller', homestays: 'Homestay', treks: 'Trek Operator', paragliding: 'Paragliding' };
-    const categoryIcons = { bikes: '🏍️', cabs: '🚖', tempo: '🚐', homestays: '🏠', treks: '🥾', paragliding: '🪂' };
 
+    // --- ALL-IN-ONE PACKAGE ---
+    const packageCard = $('#dp-package-card');
+    if (packageCard) {
+      const hasStay = bookableServices.some(s => s.category === 'homestays');
+      const hasTransport = bookableServices.some(s => s.category === 'bikes' || s.category === 'cabs' || s.category === 'tempo');
+      const hasTreks = (typeof TREKS !== 'undefined' && TREKS.some(t => {
+        const loc = t.location.toLowerCase();
+        return loc.includes(destName) || loc.includes(destId2);
+      }));
+      const hasAdventure = bookableServices.some(s => s.category === 'paragliding' || s.category === 'treks');
+
+      const packageItems = [];
+      packageItems.push({ icon: '🏠', text: 'Accommodation', sub: hasStay ? 'Homestay / Resort included' : 'Homestay or resort options' });
+      packageItems.push({ icon: '🚖', text: 'Transport', sub: hasTransport ? 'Cab or bike rental included' : 'Cab & bike options available' });
+      if (hasTreks || hasAdventure) {
+        packageItems.push({ icon: '🥾', text: 'Activities', sub: 'Treks, tours & adventures' });
+      }
+      packageItems.push({ icon: '🍽️', text: 'Local Food', sub: 'Recommended local eateries' });
+      packageItems.push({ icon: '🗺️', text: 'Guided Itinerary', sub: 'Day-by-day plan for your trip' });
+      packageItems.push({ icon: '📞', text: '24/7 Support', sub: 'Local contact throughout your stay' });
+
+      packageCard.innerHTML = `
+        <span class="package-label">&#9733; All-in-One Package</span>
+        <div class="package-title">Complete ${dest.name} Experience</div>
+        <div class="package-tagline">Everything you need for the perfect ${dest.name} trip — stay, transport, activities, and local guidance bundled together.</div>
+        <div class="package-includes">
+          ${packageItems.map(item => `
+            <div class="package-item">
+              <span class="package-item-icon">${item.icon}</span>
+              <div>
+                <span class="package-item-text">${item.text}</span>
+                <span class="package-item-sub">${item.sub}</span>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="package-price">From ${dest.budget.mid}</div>
+        <div class="package-note">Price varies by season, group size, and preferences. Contact us for a custom quote.</div>
+        <div class="package-actions">
+          <a href="https://wa.me/919876543210?text=Hi! I want to book the complete ${dest.name} package (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.789l4.94-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.115 0-4.09-.57-5.793-1.564l-.415-.248-2.93.868.832-2.827-.272-.432A9.706 9.706 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/></svg>
+            Book Complete Package
+          </a>
+          <a href="planner.html" class="dp-btn dp-btn-call">Plan Custom Trip</a>
+        </div>
+      `;
+    }
+
+    // --- INDIVIDUAL BOOKING SERVICES (with photos) ---
     const bookingGrid = $('#dp-booking-grid');
     if (bookableServices.length > 0) {
+      // Service category images for card photos
+      const catImages = {
+        bikes: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop',
+        cabs: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+        tempo: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+        homestays: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&auto=format&fit=crop',
+        treks: 'https://images.unsplash.com/photo-1626714486580-08709e99a341?w=800&auto=format&fit=crop',
+        paragliding: 'https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop'
+      };
+
       bookingGrid.innerHTML = bookableServices.map(svc => `
         <div class="dp-booking-card">
-          <div class="dp-booking-header">
-            <span class="dp-booking-icon">${svc.icon}</span>
-            <div>
-              <h3 class="dp-booking-name">${svc.name}</h3>
-              <span class="dp-booking-area">${svc.area}</span>
+          <div class="dp-booking-card-img"><img src="${catImages[svc.category] || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&auto=format&fit=crop'}" alt="${svc.name}" loading="lazy" width="400" height="200"></div>
+          <div class="dp-booking-card-body">
+            <div class="dp-booking-header">
+              <span class="dp-booking-icon">${svc.icon}</span>
+              <div>
+                <h3 class="dp-booking-name">${svc.name}</h3>
+                <span class="dp-booking-area">${svc.area}</span>
+              </div>
             </div>
-          </div>
-          <p class="dp-booking-desc">${svc.description}</p>
-          <div class="dp-booking-price"><strong>${svc.price}</strong></div>
-          <div class="dp-booking-actions">
-            <a href="https://wa.me/${svc.whatsapp}?text=Hi! I'd like to book ${svc.name} for my ${dest.name} trip (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.789l4.94-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.115 0-4.09-.57-5.793-1.564l-.415-.248-2.93.868.832-2.827-.272-.432A9.706 9.706 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/></svg>
-              Book on WhatsApp
-            </a>
-            <a href="tel:${svc.phone}" class="dp-btn dp-btn-call">Call Now</a>
+            <p class="dp-booking-desc">${svc.description}</p>
+            <div class="dp-booking-price"><strong>${svc.price}</strong></div>
+            <div class="dp-booking-actions">
+              <a href="https://wa.me/${svc.whatsapp}?text=Hi! I'd like to book ${svc.name} for my ${dest.name} trip (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">Book on WhatsApp</a>
+              <a href="tel:${svc.phone}" class="dp-btn dp-btn-call">Call Now</a>
+            </div>
           </div>
         </div>
       `).join('');
     } else {
-      // Show generic booking CTAs
       bookingGrid.innerHTML = `
         <div class="dp-booking-empty">
           <p>Direct operator listings for ${dest.name} coming soon.</p>
@@ -1014,7 +1063,7 @@
       adventureSection.style.display = 'none';
     }
 
-    // --- NEARBY TREKS ---
+    // --- NEARBY TREKS (with photos) ---
     const nearbyTreks = typeof TREKS !== 'undefined' ? TREKS.filter(t => {
       const loc = t.location.toLowerCase();
       const reg = t.region.toLowerCase();
@@ -1024,15 +1073,15 @@
     if (nearbyTreks.length > 0) {
       $('#dp-treks-title').textContent = dest.name;
       $('#dp-trek-grid').innerHTML = nearbyTreks.map(trek => `
-        <div class="dp-trek-card" style="background-image: url(${trek.image});">
-          <div class="dp-trek-overlay"></div>
+        <div class="dp-trek-card">
+          <div class="dp-trek-card-img"><img src="${trek.image}" alt="${trek.name}" loading="lazy" width="400" height="220"></div>
           <div class="dp-trek-content">
             <span class="difficulty-badge ${trek.difficulty}">${trek.difficulty}</span>
             <h3>${trek.name}</h3>
             <div class="dp-trek-meta">
-              <span>⏱ ${trek.duration}</span>
-              <span>↑ ${trek.maxAltitude}</span>
-              <span>📏 ${trek.distance}</span>
+              <span>&#9201; ${trek.duration}</span>
+              <span>&#8593; ${trek.maxAltitude}</span>
+              <span>&#128207; ${trek.distance}</span>
             </div>
             <p>${trek.description.slice(0, 120)}...</p>
             <div class="dp-booking-actions" style="margin-top:0.75rem;">
@@ -1061,7 +1110,7 @@
             <p>${r.description}</p>
             <div class="dp-resort-meta">
               <span class="dp-resort-price">${r.price}</span>
-              <span class="dp-resort-rating">★ ${r.rating}</span>
+              <span class="dp-resort-rating">&#9733; ${r.rating}</span>
             </div>
             <div class="dp-resort-features">${r.features.map(f => `<span class="dp-feature-tag">${f}</span>`).join('')}</div>
           </div>
@@ -1112,7 +1161,7 @@
         <div><strong>Summer</strong><p>${dest.climate.summer}</p></div>
         <div><strong>Winter</strong><p>${dest.climate.winter}</p></div>
       </div>
-      <p style="margin-top:1rem;color:var(--text-secondary);font-size:14px;"><strong>Best time to visit:</strong> ${bestMonths}</p>
+      <p style="margin-top:1rem;color:var(--text-secondary);font-size:14px;font-weight:600;"><strong>Best time to visit:</strong> ${bestMonths}</p>
     `;
 
     // Collapsible toggles
@@ -1136,7 +1185,7 @@
   }
 
   // ═══════════════════════════════════════════════════════════
-  // PAGE: INDIVIDUAL SERVICE CATEGORY
+  // PAGE: INDIVIDUAL SERVICE CATEGORY (no hero)
   // ═══════════════════════════════════════════════════════════
 
   function initServicePage() {
@@ -1156,24 +1205,28 @@
     if (!meta) { window.location.href = 'services.html'; return; }
 
     document.title = `${meta.title} — Himachal BNB`;
-    $('#sp-hero').style.backgroundImage = `url(${meta.img})`;
-    $('#sp-icon').textContent = meta.icon;
-    $('#sp-title').textContent = meta.title;
-    $('#sp-tagline').textContent = meta.tagline;
 
-    // For resorts, show RESORTS data
+    // Set page header
+    const label = $('#sp-label');
+    if (label) label.textContent = 'Services';
+    const title = $('#sp-title');
+    if (title) title.textContent = meta.title;
+    const tagline = $('#sp-tagline');
+    if (tagline) tagline.textContent = meta.tagline;
+
+    // For resorts, show RESORTS data with photos
     if (cat === 'resorts') {
       const resorts = typeof RESORTS !== 'undefined' ? RESORTS : [];
       $('#sp-grid').innerHTML = resorts.map(r => `
         <div class="sp-card sp-card-visual">
-          <div class="sp-card-img" style="background-image:url(${r.image});"></div>
+          <div class="sp-card-img"><img src="${r.image}" alt="${r.name}" loading="lazy" width="400" height="240"></div>
           <div class="sp-card-body">
             <h3>${r.name}</h3>
             <span class="sp-card-loc">${r.location}</span>
             <p>${r.description.slice(0, 100)}...</p>
             <div class="sp-card-footer">
               <span class="sp-card-price">${r.price}</span>
-              <span class="sp-card-rating">★ ${r.rating}</span>
+              <span class="sp-card-rating">&#9733; ${r.rating}</span>
             </div>
             <div class="sp-card-tags">${r.features.map(f => `<span class="dp-feature-tag">${f}</span>`).join('')}</div>
           </div>
@@ -1192,32 +1245,42 @@
       return;
     }
 
+    // Service category images
+    const catImages = {
+      bikes: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop',
+      cabs: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+      tempo: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+      homestays: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&auto=format&fit=crop',
+      treks: 'https://images.unsplash.com/photo-1626714486580-08709e99a341?w=800&auto=format&fit=crop',
+      paragliding: 'https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop'
+    };
+
     $('#sp-grid').innerHTML = items.map(s => `
-      <div class="sp-card">
-        <div class="sp-card-header">
-          <span class="sp-card-icon">${s.icon}</span>
-          <div>
-            <h3>${s.name}</h3>
-            <span class="sp-card-loc">${s.area}</span>
+      <div class="sp-card sp-card-visual">
+        <div class="sp-card-img"><img src="${catImages[s.category] || meta.img}" alt="${s.name}" loading="lazy" width="400" height="220"></div>
+        <div class="sp-card-body">
+          <div class="sp-card-header">
+            <span class="sp-card-icon">${s.icon}</span>
+            <div>
+              <h3>${s.name}</h3>
+              <span class="sp-card-loc">${s.area}</span>
+            </div>
           </div>
-        </div>
-        <p>${s.description}</p>
-        <div class="sp-card-footer">
-          <span class="sp-card-price">${s.price}</span>
-        </div>
-        <div class="sp-card-actions">
-          <a href="https://wa.me/${s.whatsapp}?text=Hi! I'd like to book ${s.name} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.789l4.94-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.115 0-4.09-.57-5.793-1.564l-.415-.248-2.93.868.832-2.827-.272-.432A9.706 9.706 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/></svg>
-            Book on WhatsApp
-          </a>
-          <a href="tel:${s.phone}" class="dp-btn dp-btn-call">Call</a>
+          <p>${s.description}</p>
+          <div class="sp-card-footer">
+            <span class="sp-card-price">${s.price}</span>
+          </div>
+          <div class="sp-card-actions">
+            <a href="https://wa.me/${s.whatsapp}?text=Hi! I'd like to book ${s.name} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">Book on WhatsApp</a>
+            <a href="tel:${s.phone}" class="dp-btn dp-btn-call">Call</a>
+          </div>
         </div>
       </div>
     `).join('');
   }
 
   // ═══════════════════════════════════════════════════════════
-  // PAGE: INDIVIDUAL ADVENTURE ACTIVITY
+  // PAGE: INDIVIDUAL ADVENTURE ACTIVITY (no hero)
   // ═══════════════════════════════════════════════════════════
 
   function initAdventurePage() {
@@ -1238,32 +1301,44 @@
     if (!meta) { window.location.href = 'treks.html'; return; }
 
     document.title = `${meta.title} in Himachal — Himachal BNB`;
-    $('#ap-hero').style.backgroundImage = `url(${meta.img})`;
-    $('#ap-icon').textContent = meta.icon;
-    $('#ap-title').textContent = meta.title;
-    $('#ap-tagline').textContent = meta.tagline;
 
-    // Operators
+    // Set page header (no hero)
+    const label = $('#ap-label');
+    if (label) label.textContent = 'Adventure';
+    const title = $('#ap-title');
+    if (title) title.textContent = meta.title;
+    const tagline = $('#ap-tagline');
+    if (tagline) tagline.textContent = meta.tagline;
+
+    // Operators with photos
     const operators = meta.serviceCat && typeof SERVICES !== 'undefined'
       ? SERVICES.filter(s => s.category === meta.serviceCat) : [];
 
+    const catImages = {
+      treks: 'https://images.unsplash.com/photo-1626714486580-08709e99a341?w=800&auto=format&fit=crop',
+      paragliding: 'https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop'
+    };
+
     if (operators.length > 0) {
       $('#ap-operators-grid').innerHTML = operators.map(s => `
-        <div class="sp-card">
-          <div class="sp-card-header">
-            <span class="sp-card-icon">${s.icon}</span>
-            <div>
-              <h3>${s.name}</h3>
-              <span class="sp-card-loc">${s.area}</span>
+        <div class="sp-card sp-card-visual">
+          <div class="sp-card-img"><img src="${catImages[s.category] || meta.img}" alt="${s.name}" loading="lazy" width="400" height="220"></div>
+          <div class="sp-card-body">
+            <div class="sp-card-header">
+              <span class="sp-card-icon">${s.icon}</span>
+              <div>
+                <h3>${s.name}</h3>
+                <span class="sp-card-loc">${s.area}</span>
+              </div>
             </div>
-          </div>
-          <p>${s.description}</p>
-          <div class="sp-card-footer">
-            <span class="sp-card-price">${s.price}</span>
-          </div>
-          <div class="sp-card-actions">
-            <a href="https://wa.me/${s.whatsapp}?text=Hi! I want to book ${meta.title} — ${s.name} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">Book on WhatsApp</a>
-            <a href="tel:${s.phone}" class="dp-btn dp-btn-call">Call</a>
+            <p>${s.description}</p>
+            <div class="sp-card-footer">
+              <span class="sp-card-price">${s.price}</span>
+            </div>
+            <div class="sp-card-actions">
+              <a href="https://wa.me/${s.whatsapp}?text=Hi! I want to book ${meta.title} — ${s.name} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">Book on WhatsApp</a>
+              <a href="tel:${s.phone}" class="dp-btn dp-btn-call">Call</a>
+            </div>
           </div>
         </div>
       `).join('');
@@ -1275,19 +1350,19 @@
         </div>`;
     }
 
-    // Treks section
+    // Treks section with photos
     if (meta.showTreks && typeof TREKS !== 'undefined') {
       $('#ap-treks-section').style.display = 'block';
       $('#ap-trek-grid').innerHTML = TREKS.slice(0, 6).map(trek => `
-        <div class="dp-trek-card" style="background-image:url(${trek.image});">
-          <div class="dp-trek-overlay"></div>
+        <div class="dp-trek-card">
+          <div class="dp-trek-card-img"><img src="${trek.image}" alt="${trek.name}" loading="lazy" width="400" height="220"></div>
           <div class="dp-trek-content">
             <span class="difficulty-badge ${trek.difficulty}">${trek.difficulty}</span>
             <h3>${trek.name}</h3>
             <div class="dp-trek-meta">
-              <span>⏱ ${trek.duration}</span>
-              <span>↑ ${trek.maxAltitude}</span>
-              <span>📏 ${trek.distance}</span>
+              <span>&#9201; ${trek.duration}</span>
+              <span>&#8593; ${trek.maxAltitude}</span>
+              <span>&#128207; ${trek.distance}</span>
             </div>
             <div class="dp-booking-actions" style="margin-top:0.75rem;">
               <a href="treks.html#${trek.id}" class="dp-btn dp-btn-outline">View Trek</a>
@@ -1297,24 +1372,86 @@
       `).join('');
     }
 
-    // Best locations
+    // Best locations with photos
     const dests = typeof DESTINATIONS !== 'undefined'
       ? DESTINATIONS.filter(d => d.tags.some(t => meta.destTags.includes(t))).slice(0, 4) : [];
 
     if (dests.length > 0) {
-      $('#ap-dest-grid').innerHTML = dests.map(d => `
-        <a href="destination.html?id=${d.id}" class="ap-dest-card" style="background-image:url(${d.images ? d.images[0] : d.image});">
-          <div class="ap-dest-overlay"></div>
+      $('#ap-dest-grid').innerHTML = dests.map(d => {
+        const img = d.images ? d.images[0] : d.image;
+        return `
+        <a href="destination.html?id=${d.id}" class="ap-dest-card">
+          <div class="ap-dest-card-img"><img src="${img}" alt="${d.name}" loading="lazy" width="400" height="220"></div>
           <div class="ap-dest-content">
             <span class="ap-dest-icon">${d.icon}</span>
             <h3>${d.name}</h3>
             <span>${d.region}</span>
           </div>
-        </a>
-      `).join('');
+        </a>`;
+      }).join('');
     } else {
-      $('.ap-where').style.display = 'none';
+      const whereSection = document.querySelector('.ap-where');
+      if (whereSection) whereSection.style.display = 'none';
     }
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // INFO PAGE — Tab switching
+  // ═══════════════════════════════════════════════════════════
+
+  function initInfoPage() {
+    // Tab switching for combined info page
+    const tabs = $$('.info-tab');
+    const panels = $$('.info-panel');
+    if (!tabs.length) return;
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        panels.forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        const panel = document.getElementById('panel-' + tab.dataset.tab);
+        if (panel) panel.classList.add('active');
+
+        // Lazy init sub-pages
+        const tabName = tab.dataset.tab;
+        if (tabName === 'seasons') initSeasonsPage();
+        if (tabName === 'wildlife') initWildlifePage();
+        if (tabName === 'guide') initGuidePage();
+        if (tabName === 'culture') initCultureSubPage();
+      });
+    });
+
+    // Init default tab
+    initSeasonsPage();
+  }
+
+  function initCultureSubPage() {
+    const subTabs = $('#culture-sub-tabs');
+    const grid = $('#culture-grid');
+    if (!subTabs || !grid || typeof CULTURE === 'undefined') return;
+
+    const tabs = {
+      etiquette: () => CULTURE.etiquette.map(e => `<div class="culture-card"><span class="culture-card-icon">${e.icon}</span><h3>${e.title}</h3><p>${e.text}</p></div>`).join(''),
+      food: () => (typeof CULTURE !== 'undefined' && CULTURE.foods ? CULTURE.foods : []).map(f => `<article class="food-card"><h3>${f.name}</h3><p>${f.desc}</p><span class="food-region">&#128205; ${f.region}</span></article>`).join(''),
+      festivals: () => (typeof FESTIVALS !== 'undefined' ? FESTIVALS : []).map(f => `<article class="festival-card"><div class="festival-header"><span class="festival-icon">${f.icon}</span><div><h3>${f.name}</h3><span class="festival-meta">${f.month} · ${f.location}</span></div></div><p>${f.desc}</p></article>`).join('')
+    };
+
+    subTabs.innerHTML = `
+      <button class="culture-tab active" data-tab="etiquette">Etiquette</button>
+      <button class="culture-tab" data-tab="food">Food</button>
+      <button class="culture-tab" data-tab="festivals">Festivals</button>
+    `;
+
+    function showTab(tab) {
+      $$('.culture-tab', subTabs).forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
+      grid.innerHTML = tabs[tab] ? tabs[tab]() : '';
+    }
+
+    showTab('etiquette');
+    subTabs.addEventListener('click', (e) => {
+      if (e.target.classList.contains('culture-tab')) showTab(e.target.dataset.tab);
+    });
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -1330,6 +1467,7 @@
     treks: initTreksPage,
     resorts: initResortsPage,
     planner: initPlannerPage,
+    info: initInfoPage,
     seasons: initSeasonsPage,
     wildlife: initWildlifePage,
     guide: initGuidePage,
@@ -1342,7 +1480,7 @@
     renderDetailOverlay();
     renderFooter();
 
-    // Scroll-aware nav — transparent at top, frosted on scroll
+    // Scroll-aware nav
     const nav = $('#main-nav');
     if (nav) {
       const updateNav = () => {
@@ -1352,7 +1490,7 @@
       updateNav();
     }
 
-    // Scroll reveal — animate sections into view
+    // Scroll reveal
     const revealEls = $$('.section, .feature-card, .service-card, .testimonial-card, .exp-card, .service-strip-card');
     if (revealEls.length && 'IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
