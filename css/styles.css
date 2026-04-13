@@ -685,3 +685,58 @@ img { max-width: 100%; height: auto; display: block; }
   .dp-badge { font-size: 11px; padding: 4px 10px; }
   .dp-info-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   SERVICE PAGE & ADVENTURE PAGE
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Service / Adventure Hero — reuse dp-hero pattern */
+.sp-hero, .ap-hero { position: relative; height: 50vh; min-height: 360px; background-size: cover; background-position: center; display: flex; align-items: flex-end; }
+.sp-hero-overlay, .ap-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,30,20,0.88) 0%, rgba(15,30,20,0.2) 60%); }
+.sp-hero-content, .ap-hero-content { position: relative; z-index: 2; padding: 2.5rem 40px 3rem; max-width: 1320px; margin: 0 auto; width: 100%; }
+.sp-hero-icon, .ap-hero-icon { font-size: 2.5rem; display: block; margin-bottom: 0.3rem; }
+.sp-hero-title, .ap-hero-title { font-family: var(--font-heading); font-size: clamp(2rem, 7vw, 3.5rem); font-weight: 700; color: #fff; margin: 0; }
+.sp-hero-tagline, .ap-hero-tagline { font-family: var(--font-heading); font-size: 1.2rem; font-style: italic; color: rgba(255,255,255,0.8); margin: 0.3rem 0 0; }
+
+/* Service Listings */
+.sp-listings { padding: 3rem 0; background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 50%, #e0f2f1 100%); }
+.sp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.2rem; }
+.sp-card { background: #fff; border: 1px solid #c8e6c9; border-radius: 16px; padding: 1.5rem; transition: all 0.3s var(--ease); box-shadow: 0 2px 8px rgba(46,125,50,0.06); }
+.sp-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(46,125,50,0.12); border-color: #81c784; }
+.sp-card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 0.8rem; }
+.sp-card-icon { font-size: 2rem; }
+.sp-card h3 { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #1b5e20; margin: 0; }
+.sp-card-loc { font-size: 12px; color: #558b2f; font-weight: 500; }
+.sp-card p { font-size: 14px; color: #455a64; line-height: 1.6; margin: 0 0 0.8rem; }
+.sp-card-footer { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.sp-card-price { font-size: 16px; font-weight: 700; color: #2e7d32; }
+.sp-card-rating { font-size: 14px; font-weight: 700; color: #f9a825; }
+.sp-card-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.sp-card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.8rem; }
+
+/* Visual card variant (with image) */
+.sp-card-visual { padding: 0; overflow: hidden; }
+.sp-card-img { height: 200px; background-size: cover; background-position: center; }
+.sp-card-body { padding: 1.2rem 1.5rem; }
+.sp-card-body h3 { font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700; color: #1b5e20; margin: 0 0 0.2rem; }
+.sp-card-body span { font-size: 12px; color: #558b2f; }
+.sp-card-body p { font-size: 13px; color: #455a64; line-height: 1.5; margin: 0.5rem 0; }
+
+/* Adventure page sections */
+.ap-operators { padding: 3rem 0; background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%); }
+.ap-treks { padding: 3rem 0; background: var(--bg); }
+.ap-where { padding: 3rem 0; background: linear-gradient(135deg, #f1f8e9 0%, #e0f2f1 100%); }
+.ap-dest-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.2rem; }
+.ap-dest-card { position: relative; height: 240px; border-radius: 16px; overflow: hidden; background-size: cover; background-position: center; text-decoration: none; display: block; transition: all 0.3s var(--ease); }
+.ap-dest-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
+.ap-dest-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(10,20,15,0.85) 0%, rgba(10,20,15,0.1) 60%); }
+.ap-dest-content { position: relative; z-index: 2; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; padding: 1.2rem; color: #fff; }
+.ap-dest-icon { font-size: 1.8rem; margin-bottom: 0.3rem; }
+.ap-dest-content h3 { font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; margin: 0; }
+.ap-dest-content span { font-size: 12px; opacity: 0.8; }
+
+@media (max-width: 768px) {
+  .sp-hero, .ap-hero { height: 40vh; min-height: 280px; }
+  .sp-hero-content, .ap-hero-content { padding: 2rem 20px; }
+  .sp-grid, .ap-dest-grid { grid-template-columns: 1fr; }
+}

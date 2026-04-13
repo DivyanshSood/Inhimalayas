@@ -17,6 +17,8 @@
     '': 'home',
     'destinations.html': 'destinations',
     'destination.html': 'destination',
+    'service.html': 'servicepage',
+    'adventure.html': 'adventurepage',
     'treks.html': 'adventure',
     'services.html': 'services',
     'info.html': 'info',
@@ -65,26 +67,26 @@
 
           <!-- Services dropdown -->
           <div class="nav-dropdown" data-dropdown="services">
-            <button class="nav-link nav-dropdown-trigger ${currentPage === 'services' || currentPage === 'resorts' ? 'active' : ''}">Services ${chevron}</button>
+            <button class="nav-link nav-dropdown-trigger ${currentPage === 'services' || currentPage === 'resorts' || currentPage === 'servicepage' ? 'active' : ''}">Services ${chevron}</button>
             <div class="nav-dropdown-menu">
-              <a href="resorts.html" class="dropdown-link">Resorts</a>
-              <a href="services.html#homestays" class="dropdown-link">Homestays</a>
-              <a href="services.html#hostels" class="dropdown-link">Hostels</a>
-              <a href="services.html#bikes" class="dropdown-link">Bike Rental</a>
-              <a href="services.html#cabs" class="dropdown-link">Cab / Traveller</a>
+              <a href="service.html?cat=resorts" class="dropdown-link">Resorts</a>
+              <a href="service.html?cat=homestays" class="dropdown-link">Homestays</a>
+              <a href="service.html?cat=hostels" class="dropdown-link">Hostels</a>
+              <a href="service.html?cat=bikes" class="dropdown-link">Bike Rental</a>
+              <a href="service.html?cat=cabs" class="dropdown-link">Cab / Traveller</a>
             </div>
           </div>
 
           <!-- Adventure Activities dropdown -->
           <div class="nav-dropdown" data-dropdown="adventure">
-            <button class="nav-link nav-dropdown-trigger ${currentPage === 'adventure' ? 'active' : ''}">Adventure ${chevron}</button>
+            <button class="nav-link nav-dropdown-trigger ${currentPage === 'adventure' || currentPage === 'adventurepage' ? 'active' : ''}">Adventure ${chevron}</button>
             <div class="nav-dropdown-menu">
-              <a href="services.html#paragliding" class="dropdown-link">Paragliding</a>
-              <a href="services.html#rock-climbing" class="dropdown-link">Rock Climbing</a>
-              <a href="treks.html" class="dropdown-link">Trekking & Hiking</a>
-              <a href="services.html#snow-sports" class="dropdown-link">Snow Sports</a>
-              <a href="services.html#rafting" class="dropdown-link">River Rafting</a>
-              <a href="services.html#bungee" class="dropdown-link">Bungee Jumping</a>
+              <a href="adventure.html?type=paragliding" class="dropdown-link">Paragliding</a>
+              <a href="adventure.html?type=rock-climbing" class="dropdown-link">Rock Climbing</a>
+              <a href="adventure.html?type=trekking" class="dropdown-link">Trekking & Hiking</a>
+              <a href="adventure.html?type=snow-sports" class="dropdown-link">Snow Sports</a>
+              <a href="adventure.html?type=rafting" class="dropdown-link">River Rafting</a>
+              <a href="adventure.html?type=bungee" class="dropdown-link">Bungee Jumping</a>
             </div>
           </div>
 
@@ -156,7 +158,7 @@
             <div class="footer-brand">
               <span class="brand-primary">Himachal</span><span class="brand-accent">BNB</span>
             </div>
-            <p>Your trusted guide to Himachal Pradesh — curated by locals who grew up in the hills. We handpick every resort, verify every trail, and share the insider knowledge that guidebooks miss.</p>
+            <p>Curated by locals from the hills. Every resort vetted, every trail walked.</p>
           </div>
           <div class="footer-col">
             <h4>Destinations</h4>
@@ -174,26 +176,26 @@
           <div class="footer-col">
             <h4>Services</h4>
             <ul>
-              <li><a href="resorts.html">Resorts</a></li>
-              <li><a href="services.html#homestays">Homestays</a></li>
-              <li><a href="services.html#bikes">Bike Rental</a></li>
-              <li><a href="services.html#cabs">Cab / Traveller</a></li>
+              <li><a href="service.html?cat=resorts">Resorts</a></li>
+              <li><a href="service.html?cat=homestays">Homestays</a></li>
+              <li><a href="service.html?cat=bikes">Bike Rental</a></li>
+              <li><a href="service.html?cat=cabs">Cab / Traveller</a></li>
             </ul>
           </div>
           <div class="footer-col">
             <h4>Adventure</h4>
             <ul>
-              <li><a href="services.html#paragliding">Paragliding</a></li>
-              <li><a href="treks.html">Trekking & Hiking</a></li>
-              <li><a href="services.html#rafting">River Rafting</a></li>
-              <li><a href="services.html#snow-sports">Snow Sports</a></li>
+              <li><a href="adventure.html?type=paragliding">Paragliding</a></li>
+              <li><a href="adventure.html?type=trekking">Trekking & Hiking</a></li>
+              <li><a href="adventure.html?type=rafting">River Rafting</a></li>
+              <li><a href="adventure.html?type=snow-sports">Snow Sports</a></li>
               <li><a href="info.html">Travel Info</a></li>
               <li><a href="planner.html">Plan Your Trip</a></li>
             </ul>
           </div>
           <div class="footer-col">
             <h4>Stay Connected</h4>
-            <p class="footer-contact-text">Got a question about Himachal? We reply to every message.</p>
+            <p class="footer-contact-text">We reply to every message.</p>
             <a href="mailto:hello@himachalbnb.com" class="footer-email">hello@himachalbnb.com</a>
             <div class="footer-socials">
               <a href="#" aria-label="Instagram" class="social-link">
@@ -685,30 +687,18 @@
       const top = filtered.slice(0, 4);
       resultsEl.style.display = 'block';
       resultsEl.innerHTML = `
-        <h2 class="section-title">Your <span class="text-gradient">Recommendations</span></h2>
-        <p class="section-desc" style="margin-bottom:2rem;">Based on your preferences, here are the destinations we think you'll love most.</p>
+        <h2 class="section-title">Your <span class="text-gradient">Picks</span></h2>
+        <p class="section-desc" style="margin-bottom:2rem;">Destinations matched to your travel style.</p>
         <div class="dest-grid">${top.map(d => `
-          <div class="dest-card" data-dest-id="${d.id}" tabindex="0" role="button" aria-label="View details for ${d.name}" style="background-image:url(${d.images ? d.images[0] : d.image})">
+          <a href="destination.html?id=${d.id}" class="dest-card" aria-label="View ${d.name}" style="background-image:url(${d.images ? d.images[0] : d.image})">
             <span class="dest-card-icon">${d.icon}</span>
             <div class="dest-card-name">${d.name}</div>
             <div class="dest-card-region">${d.region}</div>
             <div class="dest-card-tagline">"${d.tagline}"</div>
-          </div>
+          </a>
         `).join('')}</div>
         <button class="btn btn-outline" id="planner-restart" style="margin-top:2rem;">Start Over</button>
       `;
-
-      // Attach click + keyboard handlers
-      resultsEl.querySelectorAll('.dest-card').forEach(card => {
-        const handler = () => {
-          const dest = DESTINATIONS.find(x => x.id === card.dataset.destId);
-          if (dest) showDestDetail(dest);
-        };
-        card.addEventListener('click', handler);
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handler(); }
-        });
-      });
       document.getElementById('planner-restart').addEventListener('click', () => location.reload());
     }
 
@@ -1146,6 +1136,188 @@
   }
 
   // ═══════════════════════════════════════════════════════════
+  // PAGE: INDIVIDUAL SERVICE CATEGORY
+  // ═══════════════════════════════════════════════════════════
+
+  function initServicePage() {
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get('cat');
+    if (!cat) { window.location.href = 'services.html'; return; }
+
+    const SERVICE_META = {
+      resorts:    { icon: '🏨', title: 'Resorts & Retreats', tagline: 'Handpicked luxury stays in the Himalayas', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1600&auto=format&fit=crop' },
+      homestays:  { icon: '🏠', title: 'Homestays', tagline: 'Live with locals, eat home-cooked meals', img: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=1600&auto=format&fit=crop' },
+      hostels:    { icon: '🛏️', title: 'Hostels', tagline: 'Budget-friendly beds for backpackers', img: 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=1600&auto=format&fit=crop' },
+      bikes:      { icon: '🏍️', title: 'Bike Rentals', tagline: 'Royal Enfields & scooters for the open road', img: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=1600&auto=format&fit=crop' },
+      cabs:       { icon: '🚖', title: 'Cab & Traveller', tagline: 'Reliable rides with pahadi drivers', img: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=1600&auto=format&fit=crop' }
+    };
+
+    const meta = SERVICE_META[cat];
+    if (!meta) { window.location.href = 'services.html'; return; }
+
+    document.title = `${meta.title} — Himachal BNB`;
+    $('#sp-hero').style.backgroundImage = `url(${meta.img})`;
+    $('#sp-icon').textContent = meta.icon;
+    $('#sp-title').textContent = meta.title;
+    $('#sp-tagline').textContent = meta.tagline;
+
+    // For resorts, show RESORTS data
+    if (cat === 'resorts') {
+      const resorts = typeof RESORTS !== 'undefined' ? RESORTS : [];
+      $('#sp-grid').innerHTML = resorts.map(r => `
+        <div class="sp-card sp-card-visual">
+          <div class="sp-card-img" style="background-image:url(${r.image});"></div>
+          <div class="sp-card-body">
+            <h3>${r.name}</h3>
+            <span class="sp-card-loc">${r.location}</span>
+            <p>${r.description.slice(0, 100)}...</p>
+            <div class="sp-card-footer">
+              <span class="sp-card-price">${r.price}</span>
+              <span class="sp-card-rating">★ ${r.rating}</span>
+            </div>
+            <div class="sp-card-tags">${r.features.map(f => `<span class="dp-feature-tag">${f}</span>`).join('')}</div>
+          </div>
+        </div>
+      `).join('');
+      return;
+    }
+
+    // Map service.html cats to SERVICES categories
+    const catMap = { homestays: 'homestays', hostels: 'homestays', bikes: 'bikes', cabs: ['cabs', 'tempo'] };
+    const matchCats = Array.isArray(catMap[cat]) ? catMap[cat] : [catMap[cat] || cat];
+    const items = typeof SERVICES !== 'undefined' ? SERVICES.filter(s => matchCats.includes(s.category)) : [];
+
+    if (items.length === 0) {
+      $('#sp-grid').innerHTML = '<div class="dp-booking-empty"><p>Listings coming soon. Browse all services instead.</p><a href="services.html" class="dp-btn dp-btn-whatsapp" style="margin-top:1rem;">All Services</a></div>';
+      return;
+    }
+
+    $('#sp-grid').innerHTML = items.map(s => `
+      <div class="sp-card">
+        <div class="sp-card-header">
+          <span class="sp-card-icon">${s.icon}</span>
+          <div>
+            <h3>${s.name}</h3>
+            <span class="sp-card-loc">${s.area}</span>
+          </div>
+        </div>
+        <p>${s.description}</p>
+        <div class="sp-card-footer">
+          <span class="sp-card-price">${s.price}</span>
+        </div>
+        <div class="sp-card-actions">
+          <a href="https://wa.me/${s.whatsapp}?text=Hi! I'd like to book ${s.name} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.789l4.94-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.115 0-4.09-.57-5.793-1.564l-.415-.248-2.93.868.832-2.827-.272-.432A9.706 9.706 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/></svg>
+            Book on WhatsApp
+          </a>
+          <a href="tel:${s.phone}" class="dp-btn dp-btn-call">Call</a>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // PAGE: INDIVIDUAL ADVENTURE ACTIVITY
+  // ═══════════════════════════════════════════════════════════
+
+  function initAdventurePage() {
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get('type');
+    if (!type) { window.location.href = 'treks.html'; return; }
+
+    const ADV_META = {
+      paragliding:    { icon: '🪂', title: 'Paragliding', tagline: 'Soar above the Himalayas', img: 'https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=1600&auto=format&fit=crop', serviceCat: 'paragliding', destTags: ['paragliding', 'adventure'], desc: 'Bir Billing hosts the Paragliding World Cup. Tandem flights with certified pilots, 15-25 min over the Dhauladhar range.' },
+      'rock-climbing': { icon: '🧗', title: 'Rock Climbing', tagline: 'Scale Himalayan granite', img: 'https://images.unsplash.com/photo-1522163182402-834f871fd851?w=1600&auto=format&fit=crop', serviceCat: null, destTags: ['adventure'], desc: 'Manali, Dharamshala, and Bir offer world-class climbing on Himalayan rock faces. Guided sessions for all levels.' },
+      trekking:        { icon: '🥾', title: 'Trekking & Hiking', tagline: 'Walk into the wild', img: 'https://images.unsplash.com/photo-1626714486580-08709e99a341?w=1600&auto=format&fit=crop', serviceCat: 'treks', destTags: ['trek', 'adventure'], showTreks: true, desc: 'From weekend walks to extreme expeditions. Curated trails with day-by-day itineraries and local guides.' },
+      'snow-sports':   { icon: '⛷️', title: 'Snow Sports', tagline: 'Ski, snowboard & play', img: 'https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=1600&auto=format&fit=crop', serviceCat: null, destTags: ['snow'], desc: 'Solang Valley and Kufri for skiing, snowboarding, and snow tubing. Season: December to February.' },
+      rafting:         { icon: '🚣', title: 'River Rafting', tagline: 'Ride the Himalayan rapids', img: 'https://images.unsplash.com/photo-1530866495561-507c83a7d519?w=1600&auto=format&fit=crop', serviceCat: null, destTags: ['adventure'], desc: 'Grade II-IV rapids on the Beas (Kullu) and Sutlej rivers. Professional guides and safety gear included.' },
+      bungee:          { icon: '🤸', title: 'Bungee Jumping', tagline: 'Take the leap', img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&auto=format&fit=crop', serviceCat: null, destTags: ['adventure'], desc: 'Bungee jumping available in Manali and Solang Valley. 83ft and 130ft platforms with certified operators.' }
+    };
+
+    const meta = ADV_META[type];
+    if (!meta) { window.location.href = 'treks.html'; return; }
+
+    document.title = `${meta.title} in Himachal — Himachal BNB`;
+    $('#ap-hero').style.backgroundImage = `url(${meta.img})`;
+    $('#ap-icon').textContent = meta.icon;
+    $('#ap-title').textContent = meta.title;
+    $('#ap-tagline').textContent = meta.tagline;
+
+    // Operators
+    const operators = meta.serviceCat && typeof SERVICES !== 'undefined'
+      ? SERVICES.filter(s => s.category === meta.serviceCat) : [];
+
+    if (operators.length > 0) {
+      $('#ap-operators-grid').innerHTML = operators.map(s => `
+        <div class="sp-card">
+          <div class="sp-card-header">
+            <span class="sp-card-icon">${s.icon}</span>
+            <div>
+              <h3>${s.name}</h3>
+              <span class="sp-card-loc">${s.area}</span>
+            </div>
+          </div>
+          <p>${s.description}</p>
+          <div class="sp-card-footer">
+            <span class="sp-card-price">${s.price}</span>
+          </div>
+          <div class="sp-card-actions">
+            <a href="https://wa.me/${s.whatsapp}?text=Hi! I want to book ${meta.title} — ${s.name} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">Book on WhatsApp</a>
+            <a href="tel:${s.phone}" class="dp-btn dp-btn-call">Call</a>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      $('#ap-operators-grid').innerHTML = `
+        <div class="dp-booking-empty">
+          <p>${meta.desc}</p>
+          <a href="services.html" class="dp-btn dp-btn-whatsapp" style="margin-top:1rem;">Browse All Operators</a>
+        </div>`;
+    }
+
+    // Treks section
+    if (meta.showTreks && typeof TREKS !== 'undefined') {
+      $('#ap-treks-section').style.display = 'block';
+      $('#ap-trek-grid').innerHTML = TREKS.slice(0, 6).map(trek => `
+        <div class="dp-trek-card" style="background-image:url(${trek.image});">
+          <div class="dp-trek-overlay"></div>
+          <div class="dp-trek-content">
+            <span class="difficulty-badge ${trek.difficulty}">${trek.difficulty}</span>
+            <h3>${trek.name}</h3>
+            <div class="dp-trek-meta">
+              <span>⏱ ${trek.duration}</span>
+              <span>↑ ${trek.maxAltitude}</span>
+              <span>📏 ${trek.distance}</span>
+            </div>
+            <div class="dp-booking-actions" style="margin-top:0.75rem;">
+              <a href="treks.html#${trek.id}" class="dp-btn dp-btn-outline">View Trek</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // Best locations
+    const dests = typeof DESTINATIONS !== 'undefined'
+      ? DESTINATIONS.filter(d => d.tags.some(t => meta.destTags.includes(t))).slice(0, 4) : [];
+
+    if (dests.length > 0) {
+      $('#ap-dest-grid').innerHTML = dests.map(d => `
+        <a href="destination.html?id=${d.id}" class="ap-dest-card" style="background-image:url(${d.images ? d.images[0] : d.image});">
+          <div class="ap-dest-overlay"></div>
+          <div class="ap-dest-content">
+            <span class="ap-dest-icon">${d.icon}</span>
+            <h3>${d.name}</h3>
+            <span>${d.region}</span>
+          </div>
+        </a>
+      `).join('');
+    } else {
+      $('.ap-where').style.display = 'none';
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════
   // INIT — auto-detect page and initialise
   // ═══════════════════════════════════════════════════════════
 
@@ -1153,6 +1325,8 @@
     home: initHomePage,
     destinations: initDestinationsPage,
     destination: initDestinationPage,
+    servicepage: initServicePage,
+    adventurepage: initAdventurePage,
     treks: initTreksPage,
     resorts: initResortsPage,
     planner: initPlannerPage,

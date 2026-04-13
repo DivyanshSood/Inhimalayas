@@ -3,6 +3,7 @@
   <!-- Main Pages -->
   <url><loc>https://himachalbnb.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
   <url><loc>https://himachalbnb.com/planner.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/info.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
 
   <!-- Destinations -->
   <url><loc>https://himachalbnb.com/destinations.html</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
@@ -19,11 +20,17 @@
 
   <!-- Services -->
   <url><loc>https://himachalbnb.com/services.html</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/resorts.html</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/service.html?cat=resorts</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/service.html?cat=homestays</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/service.html?cat=bikes</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/service.html?cat=cabs</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
 
-  <!-- Adventure Activities -->
+  <!-- Adventure -->
   <url><loc>https://himachalbnb.com/treks.html</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-
-  <!-- Info (combined: seasons, wildlife, culture, guide) -->
-  <url><loc>https://himachalbnb.com/info.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=paragliding</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=trekking</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=rafting</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=snow-sports</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=rock-climbing</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=bungee</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
 </urlset>
