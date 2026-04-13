@@ -22,7 +22,8 @@
     'seasons.html': 'seasons',
     'wildlife.html': 'wildlife',
     'guide.html': 'guide',
-    'culture.html': 'culture'
+    'culture.html': 'culture',
+    'services.html': 'services'
   };
   const currentPage = PAGE_MAP[currentPath] || 'home';
 
@@ -43,7 +44,7 @@
           <a href="destinations.html" class="nav-link ${currentPage === 'destinations' ? 'active' : ''}">Destinations</a>
           <a href="treks.html" class="nav-link ${currentPage === 'treks' ? 'active' : ''}">Treks</a>
           <a href="resorts.html" class="nav-link ${currentPage === 'resorts' ? 'active' : ''}">Resorts</a>
-          <a href="planner.html" class="nav-link ${currentPage === 'planner' ? 'active' : ''}">Plan Trip</a>
+          <a href="services.html" class="nav-link ${currentPage === 'services' ? 'active' : ''}">Services</a>
           <div class="nav-dropdown">
             <button class="nav-link nav-dropdown-trigger ${['seasons','wildlife','guide','culture'].includes(currentPage) ? 'active' : ''}">
               More <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -55,6 +56,7 @@
               <a href="culture.html" class="dropdown-link ${currentPage === 'culture' ? 'active' : ''}">Culture & Food</a>
             </div>
           </div>
+          <a href="planner.html" class="nav-cta ${currentPage === 'planner' ? 'active' : ''}">Plan Trip</a>
         </div>
         <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
           <span></span><span></span><span></span>
@@ -116,6 +118,7 @@
               <li><a href="destinations.html">Destinations</a></li>
               <li><a href="treks.html">Treks</a></li>
               <li><a href="resorts.html">Resorts</a></li>
+              <li><a href="services.html">Services</a></li>
               <li><a href="planner.html">Plan Your Trip</a></li>
             </ul>
           </div>
@@ -388,6 +391,7 @@
         panel.classList.add('active');
       });
       panel.addEventListener('touchstart', (e) => {
+        if (window.innerWidth <= 768) return;
         if (!panel.classList.contains('active')) {
           e.preventDefault();
           panels.forEach(p => p.classList.remove('active'));
@@ -829,6 +833,48 @@
   }
 
   // ═══════════════════════════════════════════════════════════
+  // SERVICES PAGE
+  // ═══════════════════════════════════════════════════════════
+
+  function initServicesPage() {
+    const grid = $('#services-grid');
+    if (!grid) return;
+
+    const CATEGORY_LABELS = { bikes:'Bike Rental', cabs:'Cab Booking', tempo:'Tempo Traveller', homestays:'Homestay', treks:'Trek Operator', paragliding:'Paragliding' };
+
+    function renderServices(filter) {
+      const items = filter === 'all' ? SERVICES : SERVICES.filter(s => s.category === filter);
+      grid.innerHTML = items.map(s => `
+        <article class="service-card" id="${s.id}">
+          <span class="service-icon">${s.icon}</span>
+          <h3>${s.name}</h3>
+          <div class="service-area">📍 ${s.area} · ${CATEGORY_LABELS[s.category]}</div>
+          <p>${s.description}</p>
+          <span class="service-price">${s.price}</span>
+          <a href="https://wa.me/${s.whatsapp}?text=Hi! I found you on Himachal BNB and want to enquire about ${s.name}" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 Book on WhatsApp</a>
+        </article>
+      `).join('');
+    }
+
+    renderServices('all');
+
+    // Hash-based category jump
+    const hash = window.location.hash.replace('#', '');
+    if (hash && CATEGORY_LABELS[hash]) {
+      renderServices(hash);
+      $$('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === hash));
+    }
+
+    $$('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        $$('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        renderServices(btn.dataset.filter);
+      });
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
   // INIT — auto-detect page and initialise
   // ═══════════════════════════════════════════════════════════
 
@@ -841,7 +887,8 @@
     seasons: initSeasonsPage,
     wildlife: initWildlifePage,
     guide: initGuidePage,
-    culture: initCulturePage
+    culture: initCulturePage,
+    services: initServicesPage
   };
 
   function init() {

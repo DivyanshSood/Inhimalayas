@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://himachalbnb.com/sitemap.xml
+
+# Crawl-delay for politeness
+Crawl-delay: 1
