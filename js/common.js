@@ -959,9 +959,12 @@
     // Subpage theme filtering
     if (type === 'subpage' && theme) {
       bookableServices = bookableServices.filter(s => {
-         if(theme === 'luxury') return s.category === 'cabs' || (s.category === 'homestays' && s.price.includes('15') || s.price.includes('16')); // higher priced or premium transport
-         if(theme === 'adventure') return s.category === 'bikes' || s.category === 'paragliding' || s.category === 'treks';
-         if(theme === 'quiet') return s.category === 'homestays' || s.category === 'tempo';
+         // Luxury: Cabs and any homestay with 'luxury', '12,000', etc.
+         if (theme === 'luxury') return s.category === 'cabs' || s.tags?.includes('luxury') || (s.price.includes('1') && s.price.length > 10);
+         // Adventure: Bikes, paragliding (including rafting), treks
+         if (theme === 'adventure') return s.category === 'bikes' || s.category === 'paragliding' || s.category === 'treks';
+         // Quiet: non-luxury homestays, tempos
+         if (theme === 'quiet') return s.category === 'homestays' || s.category === 'tempo';
          return true;
       });
     }
