@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Destination — Himachal BNB</title>
+  <meta name="description" content="Explore and book services for your Himachal Pradesh destination — resorts, homestays, cabs, bikes, treks, and adventure activities.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <main class="page-main">
+    <!-- Hero Banner -->
+    <section class="dp-hero" id="dp-hero">
+      <div class="dp-hero-overlay"></div>
+      <div class="dp-hero-content">
+        <span class="dp-hero-icon" id="dp-icon"></span>
+        <h1 class="dp-hero-title" id="dp-title"></h1>
+        <p class="dp-hero-tagline" id="dp-tagline"></p>
+        <div class="dp-hero-badges" id="dp-badges"></div>
+      </div>
+    </section>
+
+    <!-- Booking Strip — upfront -->
+    <section class="dp-booking-strip" id="dp-booking-strip">
+      <div class="container">
+        <h2 class="dp-section-heading">Book Your <span class="text-gradient">Stay & Ride</span></h2>
+        <p class="dp-section-sub">Verified local operators. No middlemen. Tap to book via WhatsApp.</p>
+        <div class="dp-booking-grid" id="dp-booking-grid"></div>
+      </div>
+    </section>
+
+    <!-- Adventure Activities -->
+    <section class="dp-adventures" id="dp-adventures">
+      <div class="container">
+        <h2 class="dp-section-heading">Adventure <span class="text-gradient">Activities</span></h2>
+        <p class="dp-section-sub">Guided experiences by certified local operators.</p>
+        <div class="dp-adventure-grid" id="dp-adventure-grid"></div>
+      </div>
+    </section>
+
+    <!-- Nearby Treks -->
+    <section class="dp-treks" id="dp-treks">
+      <div class="container">
+        <h2 class="dp-section-heading">Treks Near <span class="text-gradient" id="dp-treks-title"></span></h2>
+        <div class="dp-trek-grid" id="dp-trek-grid"></div>
+      </div>
+    </section>
+
+    <!-- Resorts & Premium Stays -->
+    <section class="dp-resorts" id="dp-resorts">
+      <div class="container">
+        <h2 class="dp-section-heading">Premium <span class="text-gradient">Stays</span></h2>
+        <div class="dp-resort-grid" id="dp-resort-grid"></div>
+      </div>
+    </section>
+
+    <!-- Info Box — collapsible -->
+    <section class="dp-info-box">
+      <div class="container">
+        <h2 class="dp-section-heading">Destination <span class="text-gradient">Guide</span></h2>
+
+        <div class="dp-info-card" id="dp-info-card">
+          <div class="dp-info-grid" id="dp-info-grid"></div>
+
+          <div class="dp-collapsible" data-open="true">
+            <button class="dp-collapsible-trigger">Highlights & Must-Do</button>
+            <div class="dp-collapsible-content" id="dp-highlights"></div>
+          </div>
+
+          <div class="dp-collapsible">
+            <button class="dp-collapsible-trigger">Budget Guide</button>
+            <div class="dp-collapsible-content" id="dp-budget"></div>
+          </div>
+
+          <div class="dp-collapsible">
+            <button class="dp-collapsible-trigger">Getting There & Permits</button>
+            <div class="dp-collapsible-content" id="dp-practical"></div>
+          </div>
+
+          <div class="dp-collapsible">
+            <button class="dp-collapsible-trigger">Climate & Best Time</button>
+            <div class="dp-collapsible-content" id="dp-climate"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="dp-cta">
+      <div class="container" style="text-align: center;">
+        <h2 class="dp-section-heading">Ready to <span class="text-gradient">Go?</span></h2>
+        <p class="dp-section-sub">Plan your complete itinerary with our smart trip planner.</p>
+        <a href="planner.html" class="btn btn-primary btn-lg">Plan Your Trip</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/data.js" defer></script>
+  <script src="js/images.js" defer></script>
+  <script src="js/common.js" defer></script>
+</body>
+</html>

@@ -16,6 +16,7 @@
     'index.html': 'home',
     '': 'home',
     'destinations.html': 'destinations',
+    'destination.html': 'destination',
     'treks.html': 'adventure',
     'services.html': 'services',
     'info.html': 'info',
@@ -49,14 +50,14 @@
           <div class="nav-dropdown" data-dropdown="destinations">
             <button class="nav-link nav-dropdown-trigger ${currentPage === 'destinations' ? 'active' : ''}">Destinations ${chevron}</button>
             <div class="nav-dropdown-menu">
-              <a href="destinations.html#kullu" class="dropdown-link">Kullu</a>
-              <a href="destinations.html#manali" class="dropdown-link">Manali</a>
-              <a href="destinations.html#kasol" class="dropdown-link">Kasol</a>
-              <a href="destinations.html#dharamshala" class="dropdown-link">Dharamshala</a>
-              <a href="destinations.html#bir" class="dropdown-link">Bir</a>
-              <a href="destinations.html#dalhousie" class="dropdown-link">Dalhousie</a>
-              <a href="destinations.html#shimla" class="dropdown-link">Shimla</a>
-              <a href="destinations.html#kalpa" class="dropdown-link">Kalpa</a>
+              <a href="destination.html?id=kullu" class="dropdown-link">Kullu</a>
+              <a href="destination.html?id=manali" class="dropdown-link">Manali</a>
+              <a href="destination.html?id=kasol" class="dropdown-link">Kasol</a>
+              <a href="destination.html?id=dharamshala" class="dropdown-link">Dharamshala</a>
+              <a href="destination.html?id=bir" class="dropdown-link">Bir</a>
+              <a href="destination.html?id=dalhousie" class="dropdown-link">Dalhousie</a>
+              <a href="destination.html?id=shimla" class="dropdown-link">Shimla</a>
+              <a href="destination.html?id=kinnaur" class="dropdown-link">Kalpa</a>
               <div class="dropdown-divider"></div>
               <a href="destinations.html" class="dropdown-link dropdown-view-all">All Destinations</a>
             </div>
@@ -160,14 +161,14 @@
           <div class="footer-col">
             <h4>Destinations</h4>
             <ul>
-              <li><a href="destinations.html#kullu">Kullu</a></li>
-              <li><a href="destinations.html#manali">Manali</a></li>
-              <li><a href="destinations.html#kasol">Kasol</a></li>
-              <li><a href="destinations.html#dharamshala">Dharamshala</a></li>
-              <li><a href="destinations.html#shimla">Shimla</a></li>
-              <li><a href="destinations.html#bir">Bir</a></li>
-              <li><a href="destinations.html#dalhousie">Dalhousie</a></li>
-              <li><a href="destinations.html#kalpa">Kalpa</a></li>
+              <li><a href="destination.html?id=kullu">Kullu</a></li>
+              <li><a href="destination.html?id=manali">Manali</a></li>
+              <li><a href="destination.html?id=kasol">Kasol</a></li>
+              <li><a href="destination.html?id=dharamshala">Dharamshala</a></li>
+              <li><a href="destination.html?id=shimla">Shimla</a></li>
+              <li><a href="destination.html?id=bir">Bir</a></li>
+              <li><a href="destination.html?id=dalhousie">Dalhousie</a></li>
+              <li><a href="destination.html?id=kinnaur">Kalpa</a></li>
             </ul>
           </div>
           <div class="footer-col">
@@ -471,10 +472,9 @@
       const filtered = filter === 'all' ? DESTINATIONS : DESTINATIONS.filter(d => d.difficulty === filter);
       grid.innerHTML = '';
       filtered.forEach((dest, i) => {
-        const card = document.createElement('div');
+        const card = document.createElement('a');
         card.className = 'dest-card';
-        card.setAttribute('tabindex', '0');
-        card.setAttribute('role', 'button');
+        card.href = `destination.html?id=${dest.id}`;
         card.setAttribute('aria-label', `View details for ${dest.name}`);
         card.style.setProperty('--card-color', dest.color);
         card.style.backgroundImage = `url(${dest.images ? dest.images[0] : dest.image})`;
@@ -489,11 +489,6 @@
             <span class="dest-meta-item"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>
             <span class="dest-meta-item">🌡 <span class="meta-val">${dest.temp}</span></span>
           </div>`;
-        const openDetail = () => showDestDetail(dest);
-        card.addEventListener('click', openDetail);
-        card.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDetail(); }
-        });
         grid.appendChild(card);
       });
     }
@@ -928,12 +923,236 @@
   }
 
   // ═══════════════════════════════════════════════════════════
+  // PAGE: INDIVIDUAL DESTINATION
+  // ═══════════════════════════════════════════════════════════
+
+  function initDestinationPage() {
+    const params = new URLSearchParams(window.location.search);
+    const destId = params.get('id');
+    const dest = typeof DESTINATIONS !== 'undefined' && DESTINATIONS.find(d => d.id === destId);
+    if (!dest) {
+      window.location.href = 'destinations.html';
+      return;
+    }
+
+    // Update page title and meta
+    document.title = `${dest.name} — Book Stays, Activities & More | Himachal BNB`;
+    const metaDesc = document.querySelector('meta[name="description"]');
+    if (metaDesc) metaDesc.content = `Explore ${dest.name} in ${dest.region}. Book resorts, homestays, bike rentals, cabs, and adventure activities directly from verified local operators.`;
+
+    // Hero
+    const hero = $('#dp-hero');
+    hero.style.backgroundImage = `url(${dest.images ? dest.images[0] : dest.image})`;
+    $('#dp-icon').textContent = dest.icon;
+    $('#dp-title').textContent = dest.name;
+    $('#dp-tagline').textContent = dest.tagline;
+    $('#dp-badges').innerHTML = `
+      <span class="dp-badge">↑ ${dest.altitude}</span>
+      <span class="dp-badge"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></span>
+      <span class="dp-badge">🌡 ${dest.temp}</span>
+      <span class="dp-badge">📍 ${dest.region}</span>
+    `;
+
+    // --- BOOKING SERVICES ---
+    // Match services to this destination by checking tags/area for destination name or id
+    const destName = dest.name.toLowerCase();
+    const destId2 = dest.id.toLowerCase();
+    const destRegion = dest.region.toLowerCase();
+
+    const matchService = (svc) => {
+      const haystack = [svc.area, ...(svc.tags || []), svc.name, svc.description].join(' ').toLowerCase();
+      return haystack.includes(destName) || haystack.includes(destId2) || haystack.includes(destRegion.split(' ')[0]);
+    };
+
+    const bookableServices = typeof SERVICES !== 'undefined' ? SERVICES.filter(matchService) : [];
+    // Also add some generic services if too few
+    const allServices = typeof SERVICES !== 'undefined' ? SERVICES : [];
+    const categories = ['bikes', 'cabs', 'tempo', 'homestays'];
+    const categoryLabels = { bikes: 'Bike Rental', cabs: 'Cab Booking', tempo: 'Tempo Traveller', homestays: 'Homestay', treks: 'Trek Operator', paragliding: 'Paragliding' };
+    const categoryIcons = { bikes: '🏍️', cabs: '🚖', tempo: '🚐', homestays: '🏠', treks: '🥾', paragliding: '🪂' };
+
+    const bookingGrid = $('#dp-booking-grid');
+    if (bookableServices.length > 0) {
+      bookingGrid.innerHTML = bookableServices.map(svc => `
+        <div class="dp-booking-card">
+          <div class="dp-booking-header">
+            <span class="dp-booking-icon">${svc.icon}</span>
+            <div>
+              <h3 class="dp-booking-name">${svc.name}</h3>
+              <span class="dp-booking-area">${svc.area}</span>
+            </div>
+          </div>
+          <p class="dp-booking-desc">${svc.description}</p>
+          <div class="dp-booking-price"><strong>${svc.price}</strong></div>
+          <div class="dp-booking-actions">
+            <a href="https://wa.me/${svc.whatsapp}?text=Hi! I'd like to book ${svc.name} for my ${dest.name} trip (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.625.846 5.059 2.284 7.034L.79 23.789l4.94-1.466A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.75c-2.115 0-4.09-.57-5.793-1.564l-.415-.248-2.93.868.832-2.827-.272-.432A9.706 9.706 0 012.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75z"/></svg>
+              Book on WhatsApp
+            </a>
+            <a href="tel:${svc.phone}" class="dp-btn dp-btn-call">Call Now</a>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      // Show generic booking CTAs
+      bookingGrid.innerHTML = `
+        <div class="dp-booking-empty">
+          <p>Direct operator listings for ${dest.name} coming soon.</p>
+          <div class="dp-booking-actions" style="margin-top:1rem;">
+            <a href="services.html" class="dp-btn dp-btn-whatsapp">Browse All Services</a>
+          </div>
+        </div>
+      `;
+    }
+
+    // --- ADVENTURE ACTIVITIES ---
+    const adventureServices = allServices.filter(s => (s.category === 'paragliding' || s.category === 'treks') && matchService(s));
+    const adventureSection = $('#dp-adventures');
+    if (adventureServices.length > 0) {
+      $('#dp-adventure-grid').innerHTML = adventureServices.map(svc => `
+        <div class="dp-adventure-card">
+          <span class="dp-adventure-icon">${svc.icon}</span>
+          <div class="dp-adventure-body">
+            <h3>${svc.name}</h3>
+            <p>${svc.description}</p>
+            <div class="dp-booking-price"><strong>${svc.price}</strong></div>
+          </div>
+          <a href="https://wa.me/${svc.whatsapp}?text=Hi! I want to book ${svc.name} in ${dest.name} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">Book Now</a>
+        </div>
+      `).join('');
+    } else {
+      adventureSection.style.display = 'none';
+    }
+
+    // --- NEARBY TREKS ---
+    const nearbyTreks = typeof TREKS !== 'undefined' ? TREKS.filter(t => {
+      const loc = t.location.toLowerCase();
+      const reg = t.region.toLowerCase();
+      return loc.includes(destName) || loc.includes(destId2) || reg.includes(destName) || reg.includes(destRegion.split(' ')[0]);
+    }) : [];
+    const treksSection = $('#dp-treks');
+    if (nearbyTreks.length > 0) {
+      $('#dp-treks-title').textContent = dest.name;
+      $('#dp-trek-grid').innerHTML = nearbyTreks.map(trek => `
+        <div class="dp-trek-card" style="background-image: url(${trek.image});">
+          <div class="dp-trek-overlay"></div>
+          <div class="dp-trek-content">
+            <span class="difficulty-badge ${trek.difficulty}">${trek.difficulty}</span>
+            <h3>${trek.name}</h3>
+            <div class="dp-trek-meta">
+              <span>⏱ ${trek.duration}</span>
+              <span>↑ ${trek.maxAltitude}</span>
+              <span>📏 ${trek.distance}</span>
+            </div>
+            <p>${trek.description.slice(0, 120)}...</p>
+            <div class="dp-booking-actions" style="margin-top:0.75rem;">
+              <a href="treks.html#${trek.id}" class="dp-btn dp-btn-outline">View Trek</a>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      treksSection.style.display = 'none';
+    }
+
+    // --- RESORTS ---
+    const nearbyResorts = typeof RESORTS !== 'undefined' ? RESORTS.filter(r => {
+      const loc = r.location.toLowerCase();
+      return loc.includes(destName) || loc.includes(destId2) || loc.includes(destRegion.split(',')[0].toLowerCase().trim());
+    }) : [];
+    const resortsSection = $('#dp-resorts');
+    if (nearbyResorts.length > 0) {
+      $('#dp-resort-grid').innerHTML = nearbyResorts.map(r => `
+        <div class="dp-resort-card">
+          <div class="dp-resort-img" style="background-image: url(${r.image});"></div>
+          <div class="dp-resort-body">
+            <h3>${r.name}</h3>
+            <span class="dp-resort-loc">${r.location}</span>
+            <p>${r.description}</p>
+            <div class="dp-resort-meta">
+              <span class="dp-resort-price">${r.price}</span>
+              <span class="dp-resort-rating">★ ${r.rating}</span>
+            </div>
+            <div class="dp-resort-features">${r.features.map(f => `<span class="dp-feature-tag">${f}</span>`).join('')}</div>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      resortsSection.style.display = 'none';
+    }
+
+    // --- INFO BOX ---
+    const bestMonths = dest.bestMonths.map(m => {
+      const s = typeof SEASONS !== 'undefined' ? SEASONS.find(s => s.month === m) : null;
+      return s ? s.name.slice(0, 3) : m;
+    }).join(', ');
+
+    $('#dp-info-grid').innerHTML = `
+      <div class="dp-info-item"><div class="dp-info-label">Altitude</div><div class="dp-info-value">${dest.altitude}</div></div>
+      <div class="dp-info-item"><div class="dp-info-label">Difficulty</div><div class="dp-info-value"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty}</span></div></div>
+      <div class="dp-info-item"><div class="dp-info-label">Best Months</div><div class="dp-info-value">${bestMonths}</div></div>
+      <div class="dp-info-item"><div class="dp-info-label">Temperature</div><div class="dp-info-value">${dest.temp}</div></div>
+    `;
+
+    $('#dp-highlights').innerHTML = `
+      <div class="dp-detail-desc">${dest.description}</div>
+      <h4>Highlights</h4>
+      <ul class="dp-list">${dest.highlights.map(h => `<li>${h}</li>`).join('')}</ul>
+      <h4>Must-Do Experiences</h4>
+      <ul class="dp-list">${dest.mustDo.map(m => `<li>${m}</li>`).join('')}</ul>
+    `;
+
+    $('#dp-budget').innerHTML = `
+      <div class="dp-budget-grid">
+        <div class="dp-budget-tier"><span class="dp-budget-label">Backpacker</span><span class="dp-budget-value">${dest.budget.backpacker}</span></div>
+        <div class="dp-budget-tier"><span class="dp-budget-label">Mid-Range</span><span class="dp-budget-value">${dest.budget.mid}</span></div>
+        <div class="dp-budget-tier"><span class="dp-budget-label">Luxury</span><span class="dp-budget-value">${dest.budget.luxury}</span></div>
+      </div>
+    `;
+
+    $('#dp-practical').innerHTML = `
+      <div class="dp-practical-grid">
+        <div><strong>Permits</strong><p>${dest.permits}</p></div>
+        <div><strong>Getting There</strong><p>${dest.gettingThere}</p></div>
+      </div>
+    `;
+
+    $('#dp-climate').innerHTML = `
+      <div class="dp-practical-grid">
+        <div><strong>Summer</strong><p>${dest.climate.summer}</p></div>
+        <div><strong>Winter</strong><p>${dest.climate.winter}</p></div>
+      </div>
+      <p style="margin-top:1rem;color:var(--text-secondary);font-size:14px;"><strong>Best time to visit:</strong> ${bestMonths}</p>
+    `;
+
+    // Collapsible toggles
+    $$('.dp-collapsible').forEach(section => {
+      const trigger = $('.dp-collapsible-trigger', section);
+      const content = $('.dp-collapsible-content', section);
+      const isOpen = section.dataset.open === 'true';
+      if (isOpen) {
+        section.classList.add('open');
+        content.style.maxHeight = content.scrollHeight + 'px';
+      }
+      trigger.addEventListener('click', () => {
+        section.classList.toggle('open');
+        if (section.classList.contains('open')) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+          content.style.maxHeight = '0';
+        }
+      });
+    });
+  }
+
+  // ═══════════════════════════════════════════════════════════
   // INIT — auto-detect page and initialise
   // ═══════════════════════════════════════════════════════════
 
   const PAGE_INIT = {
     home: initHomePage,
     destinations: initDestinationsPage,
+    destination: initDestinationPage,
     treks: initTreksPage,
     resorts: initResortsPage,
     planner: initPlannerPage,
