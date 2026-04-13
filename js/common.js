@@ -840,38 +840,32 @@
     const grid = $('#services-grid');
     if (!grid) return;
 
-    const CATEGORY_LABELS = { bikes:'Bike Rental', cabs:'Cab Booking', tempo:'Tempo Traveller', homestays:'Homestay', treks:'Trek Operator', paragliding:'Paragliding' };
+    const CATEGORY_LABELS = { bikes:'Bike Rentals', cabs:'Cab Booking', tempo:'Tempo Travellers', homestays:'Homestays', treks:'Trek Operators', paragliding:'Paragliding' };
+    const categories = [...new Set(SERVICES.map(s => s.category))];
 
-    function renderServices(filter) {
-      const items = filter === 'all' ? SERVICES : SERVICES.filter(s => s.category === filter);
-      grid.innerHTML = items.map(s => `
-        <article class="service-card" id="${s.id}">
-          <span class="service-icon">${s.icon}</span>
-          <h3>${s.name}</h3>
-          <div class="service-area">📍 ${s.area} · ${CATEGORY_LABELS[s.category]}</div>
-          <p>${s.description}</p>
-          <span class="service-price">${s.price}</span>
-          <a href="https://wa.me/${s.whatsapp}?text=Hi! I found you on Himachal BNB and want to enquire about ${s.name}" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 Book on WhatsApp</a>
-        </article>
-      `).join('');
-    }
-
-    renderServices('all');
-
-    // Hash-based category jump
-    const hash = window.location.hash.replace('#', '');
-    if (hash && CATEGORY_LABELS[hash]) {
-      renderServices(hash);
-      $$('.filter-btn').forEach(b => b.classList.toggle('active', b.dataset.filter === hash));
-    }
-
-    $$('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        $$('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderServices(btn.dataset.filter);
-      });
+    let html = '';
+    categories.forEach(cat => {
+      const items = SERVICES.filter(s => s.category === cat);
+      html += `<div class="service-category" id="${cat}">
+        <h2 class="service-cat-title">${items[0].icon} ${CATEGORY_LABELS[cat]}</h2>
+        <div class="services-grid">
+          ${items.map(s => `
+            <article class="service-card" id="${s.id}">
+              <span class="service-icon">${s.icon}</span>
+              <h3>${s.name}</h3>
+              <div class="service-area">📍 ${s.area}</div>
+              <p>${s.description}</p>
+              <span class="service-price">${s.price}</span>
+              <div class="service-actions">
+                <a href="https://wa.me/${s.whatsapp}?text=Hi! I found you on Himachal BNB and want to book ${s.name}" target="_blank" rel="noopener" class="btn btn-whatsapp">💬 Book on WhatsApp</a>
+                <a href="tel:${s.phone}" class="btn btn-outline btn-call">📞 Call Now</a>
+              </div>
+            </article>
+          `).join('')}
+        </div>
+      </div>`;
     });
+    grid.innerHTML = html;
   }
 
   // ═══════════════════════════════════════════════════════════
@@ -895,6 +889,30 @@
     renderNav();
     renderDetailOverlay();
     renderFooter();
+
+    // Scroll-aware nav — transparent at top, frosted on scroll
+    const nav = $('#main-nav');
+    if (nav) {
+      const updateNav = () => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+      };
+      window.addEventListener('scroll', updateNav, { passive: true });
+      updateNav();
+    }
+
+    // Scroll reveal — animate sections into view
+    const revealEls = $$('.section, .feature-card, .service-card, .testimonial-card, .exp-card, .service-strip-card');
+    if (revealEls.length && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            setTimeout(() => entry.target.classList.add('visible'), i * 60);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      revealEls.forEach(el => { el.classList.add('reveal'); observer.observe(el); });
+    }
 
     // Run page-specific initialiser
     const pageInit = PAGE_INIT[currentPage];
