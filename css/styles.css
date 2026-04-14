@@ -89,6 +89,45 @@ img { max-width: 100%; height: auto; display: block; }
 .nav-dropdown-menu { left: 50%; right: auto; transform: translateX(-50%) translateY(-8px) scale(0.98); }
 .nav-dropdown.open .nav-dropdown-menu { transform: translateX(-50%) translateY(0) scale(1); }
 
+/* Nav right cluster */
+.nav-right { display: flex; align-items: center; gap: 4px; }
+
+/* Compact nav search */
+.nav-search { position: relative; display: flex; align-items: center; }
+.nav-search-toggle {
+  width: 36px; height: 36px; border-radius: 50%; background: var(--bg-surface);
+  border: 1px solid var(--border); display: flex; align-items: center;
+  justify-content: center; cursor: pointer; color: var(--text-secondary);
+  transition: all 0.2s; flex-shrink: 0;
+}
+.nav-search-toggle:hover { background: var(--border); color: var(--text-primary); }
+.nav-search-box {
+  position: absolute; right: 0; top: calc(100% + 8px);
+  background: #fff; border: 1px solid var(--border); border-radius: 50px;
+  padding: 6px 6px 6px 16px;
+  display: flex; align-items: center; gap: 4px;
+  width: 260px; box-shadow: var(--shadow-md);
+  opacity: 0; visibility: hidden; transform: translateY(-6px) scale(0.97);
+  transition: all 0.2s var(--ease); z-index: 200;
+}
+.nav-search.open .nav-search-box { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+.nav-search-box input {
+  flex: 1; border: none; outline: none; background: transparent;
+  font-family: var(--font-body); font-size: 13px; color: var(--text-primary);
+}
+.nav-search-box input::placeholder { color: var(--text-muted); }
+.nav-search-go {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--text-primary); color: #fff;
+  border: none; display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0; transition: background 0.15s;
+}
+.nav-search-go:hover { background: #333; }
+
+/* Clickable card hover (non-link cards) */
+.sp-card-clickable:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+.sp-card-clickable { transition: all 0.2s var(--ease); }
+
 /* Hamburger */
 .nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; border-radius: 8px; transition: background 0.15s; }
 .nav-hamburger:hover { background: var(--bg-surface); }

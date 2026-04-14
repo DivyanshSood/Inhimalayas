@@ -112,9 +112,22 @@
 
           <a href="planner.html" class="nav-cta ${currentPage === 'planner' ? 'active' : ''}">Plan Trip</a>
         </div>
-        <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
-          <span></span><span></span><span></span>
-        </button>
+        <div class="nav-right">
+          <div class="nav-search" id="nav-search">
+            <button class="nav-search-toggle" id="nav-search-toggle" aria-label="Search">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" width="17" height="17"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+            <div class="nav-search-box" id="nav-search-box">
+              <input type="text" id="nav-search-input" placeholder="Search destinations, treks…" autocomplete="off">
+              <button class="nav-search-go" id="nav-search-go" aria-label="Go">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="15" height="15"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              </button>
+            </div>
+          </div>
+          <button class="nav-hamburger" id="nav-hamburger" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
       </div>
     `;
     document.body.prepend(nav);
@@ -123,6 +136,28 @@
     $('#nav-hamburger').addEventListener('click', () => {
       $('#nav-hamburger').classList.toggle('open');
       $('#nav-links').classList.toggle('open');
+    });
+
+    // Nav search toggle
+    const searchToggle = $('#nav-search-toggle');
+    const searchBox = $('#nav-search-box');
+    const searchInput = $('#nav-search-input');
+    const searchGo = $('#nav-search-go');
+    const navSearch = $('#nav-search');
+
+    const doNavSearch = () => {
+      const q = searchInput.value.trim();
+      if (q) window.location.href = `destinations.html?q=${encodeURIComponent(q)}`;
+    };
+    searchToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navSearch.classList.toggle('open');
+      if (navSearch.classList.contains('open')) searchInput.focus();
+    });
+    searchGo.addEventListener('click', doNavSearch);
+    searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') doNavSearch(); });
+    document.addEventListener('click', (e) => {
+      if (!navSearch.contains(e.target)) navSearch.classList.remove('open');
     });
 
     // Dropdowns — hover on desktop, click on mobile
@@ -419,6 +454,79 @@
     openDetailOverlay();
   }
 
+  function showResortDetail(r) {
+    const content = $('#detail-content');
+    content.innerHTML = `
+      <div class="detail-hero detail-gallery" id="detail-gallery">
+        <img src="${r.image}" alt="${r.name}" class="gallery-img active" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div class="detail-body">
+        <div class="detail-name">${r.name}</div>
+        <span class="detail-tag">${r.location} &middot; ${r.category || 'Resort'}</span>
+        <p class="detail-desc">${r.description}</p>
+        <div class="detail-section">
+          <div class="detail-section-title">At a Glance</div>
+          <div class="detail-info-grid">
+            <div class="detail-info-item"><div class="detail-info-label">Price</div><div class="detail-info-value">${r.price}</div></div>
+            <div class="detail-info-item"><div class="detail-info-label">Rating</div><div class="detail-info-value">&#9733; ${r.rating}</div></div>
+          </div>
+        </div>
+        ${r.features && r.features.length ? `
+        <div class="detail-section">
+          <div class="detail-section-title">Features</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">${r.features.map(f => `<span class="dp-feature-tag">${f}</span>`).join('')}</div>
+        </div>` : ''}
+        <div class="detail-section">
+          <div class="detail-section-title">Book Direct</div>
+          ${r.phone ? `<a href="tel:${r.phone}" class="dp-btn dp-btn-call" style="display:inline-flex;margin-right:0.5rem;">&#128222; Call to Book</a>` : ''}
+          ${r.whatsapp ? `<a href="https://wa.me/${r.whatsapp}?text=Hi! I'd like to enquire about ${encodeURIComponent(r.name)} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">WhatsApp</a>` : ''}
+        </div>
+      </div>`;
+    initGallery();
+    openDetailOverlay();
+  }
+
+  function showServiceDetail(s) {
+    const catImages = {
+      bikes: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop',
+      cabs: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+      tempo: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+      homestays: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&auto=format&fit=crop',
+      treks: 'https://images.unsplash.com/photo-1626714486580-08709e99a341?w=800&auto=format&fit=crop',
+      paragliding: 'https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop'
+    };
+    const content = $('#detail-content');
+    content.innerHTML = `
+      <div class="detail-hero detail-gallery" id="detail-gallery">
+        <img src="${catImages[s.category] || catImages.bikes}" alt="${s.name}" class="gallery-img active" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div class="detail-body">
+        <span class="detail-icon">${s.icon || '🔑'}</span>
+        <div class="detail-name">${s.name}</div>
+        <span class="detail-tag">${s.area} &middot; ${s.category}</span>
+        <p class="detail-desc">${s.description}</p>
+        <div class="detail-section">
+          <div class="detail-section-title">Pricing</div>
+          <div class="detail-info-grid">
+            <div class="detail-info-item"><div class="detail-info-label">From</div><div class="detail-info-value">${s.price}</div></div>
+            ${s.rating ? `<div class="detail-info-item"><div class="detail-info-label">Rating</div><div class="detail-info-value">&#9733; ${s.rating}</div></div>` : ''}
+          </div>
+        </div>
+        ${(s.tags || []).length ? `
+        <div class="detail-section">
+          <div class="detail-section-title">Tags</div>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">${s.tags.map(t => `<span class="dp-feature-tag">${t}</span>`).join('')}</div>
+        </div>` : ''}
+        <div class="detail-section">
+          <div class="detail-section-title">Book Direct</div>
+          <a href="tel:${s.phone}" class="dp-btn dp-btn-call" style="display:inline-flex;margin-right:0.5rem;">&#128222; Call to Book</a>
+          <a href="https://wa.me/${s.whatsapp}?text=Hi! I'd like to enquire about ${encodeURIComponent(s.name)} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+      </div>`;
+    initGallery();
+    openDetailOverlay();
+  }
+
   // ═══════════════════════════════════════════════════════════
   // IMAGE GALLERY
   // ═══════════════════════════════════════════════════════════
@@ -457,12 +565,10 @@
 
     // ── Category strip ──────────────────────────────────────────
     const CATEGORIES = [
-      { id: 'all', icon: '🗺️', label: 'All' },
+      { id: 'all',       icon: '🗺️', label: 'All' },
+      { id: 'stays',     icon: '🏠', label: 'Stays' },
       { id: 'adventure', icon: '🏔️', label: 'Adventure' },
-      { id: 'Easy', icon: '🌿', label: 'Easy Access' },
-      { id: 'Moderate', icon: '🥾', label: 'Trekking' },
-      { id: 'Hard', icon: '❄️', label: 'Remote' },
-      { id: 'workation', icon: '💻', label: 'Workation' },
+      { id: 'services',  icon: '🔑', label: 'Services' },
     ];
 
     let activeCategory = 'all';
@@ -510,26 +616,49 @@
         );
       }
 
-      // Category filter
-      if (activeCategory === 'adventure') {
-        filtered = filtered.filter(d => (d.tags || []).some(t => ['adventure', 'trek', 'paragliding', 'rafting'].includes(t)));
-      } else if (activeCategory === 'workation') {
-        filtered = filtered.filter(d => (d.tags || []).some(t => ['cafes', 'quiet', 'nature', 'tibetan'].includes(t)));
-      } else if (['Easy', 'Moderate', 'Hard'].includes(activeCategory)) {
-        filtered = filtered.filter(d => d.difficulty === activeCategory);
+      // Services category — render service cards inline, not destinations
+      if (activeCategory === 'services') {
+        const titleEl = document.getElementById('hp-listings-title');
+        if (titleEl) titleEl.textContent = 'Services & Transport';
+        const svcData = typeof SERVICES !== 'undefined' ? SERVICES.slice(0, 10) : [];
+        const catImages = {
+          bikes: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop',
+          cabs: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+          tempo: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+          homestays: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&auto=format&fit=crop',
+          treks: 'https://images.unsplash.com/photo-1626714486580-08709e99a341?w=800&auto=format&fit=crop',
+          paragliding: 'https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop'
+        };
+        grid.innerHTML = svcData.map((s, i) => `
+          <div class="bnb-listing-card" role="button" tabindex="0" style="cursor:pointer;animation-delay:${i*0.05}s" data-svc-idx="${i}">
+            <div class="bnb-listing-card-img-wrap">
+              <img src="${catImages[s.category] || catImages.bikes}" alt="${s.name}" loading="lazy" width="400" height="400">
+              <span class="bnb-listing-card-type-badge">${s.category}</span>
+            </div>
+            <div class="bnb-listing-card-body">
+              <div class="bnb-listing-card-top">
+                <div class="bnb-listing-card-name">${s.icon || ''} ${s.name}</div>
+              </div>
+              <div class="bnb-listing-card-loc">${s.area}</div>
+              <div class="bnb-listing-card-snippet">${s.description.slice(0, 70)}…</div>
+              <div class="bnb-listing-card-price"><strong>${s.price}</strong></div>
+            </div>
+          </div>`).join('');
+        // Make service cards clickable → open detail overlay
+        $$('[data-svc-idx]', grid).forEach((card, i) => {
+          const open = () => showServiceDetail(svcData[i]);
+          card.addEventListener('click', open);
+          card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') open(); });
+        });
+        return;
       }
 
-      // Budget filter
-      const budgetVal = budgetSelect ? budgetSelect.value : 'all';
-      if (budgetVal === 'budget') {
-        filtered = filtered.filter(d => {
-          const num = parseInt((d.budget.backpacker || '').replace(/[^\d]/g, ''));
-          return num < 2000;
-        });
-      } else if (budgetVal === 'mid') {
+      // Category filter
+      if (activeCategory === 'adventure') {
+        filtered = filtered.filter(d => (d.tags || []).some(t => ['adventure', 'trek', 'paragliding', 'rafting', 'snow'].includes(t)));
+      } else if (activeCategory === 'stays') {
+        // All destinations have stays — show all but sorted by most stay options
         filtered = filtered.filter(d => d.difficulty !== 'Hard');
-      } else if (budgetVal === 'luxury') {
-        filtered = filtered.filter(d => d.difficulty === 'Hard' || d.difficulty === 'Moderate');
       }
 
       const titleEl = document.getElementById('hp-listings-title');
@@ -584,7 +713,52 @@
       const grid = document.getElementById('dest-grid');
       if (!grid) return;
       grid.className = 'bnb-listing-grid';
-      const filtered = filter === 'all' ? DESTINATIONS : DESTINATIONS.filter(d => d.difficulty === filter);
+
+      // Services filter — render service cards inline
+      if (filter === 'services') {
+        const svcData = typeof SERVICES !== 'undefined' ? SERVICES.slice(0, 12) : [];
+        const catImages = {
+          bikes: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=800&auto=format&fit=crop',
+          cabs: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+          tempo: 'https://images.unsplash.com/photo-1449965408869-ebd13bc9e358?w=800&auto=format&fit=crop',
+          homestays: 'https://images.unsplash.com/photo-1587061949409-02df41d5e562?w=800&auto=format&fit=crop',
+          treks: 'https://images.unsplash.com/photo-1626714486580-08709e99a341?w=800&auto=format&fit=crop',
+          paragliding: 'https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop'
+        };
+        grid.innerHTML = svcData.map((s, i) => `
+          <div class="bnb-listing-card" role="button" tabindex="0" style="cursor:pointer;animation-delay:${i*0.05}s" data-svc-idx="${i}">
+            <div class="bnb-listing-card-img-wrap">
+              <img src="${catImages[s.category] || catImages.bikes}" alt="${s.name}" loading="lazy" width="400" height="400">
+              <span class="bnb-listing-card-type-badge">${s.category}</span>
+            </div>
+            <div class="bnb-listing-card-body">
+              <div class="bnb-listing-card-top">
+                <div class="bnb-listing-card-name">${s.icon || ''} ${s.name}</div>
+              </div>
+              <div class="bnb-listing-card-loc">${s.area}</div>
+              <div class="bnb-listing-card-snippet">${s.description.slice(0, 70)}…</div>
+              <div class="bnb-listing-card-price"><strong>${s.price}</strong></div>
+            </div>
+          </div>`).join('');
+        $$('[data-svc-idx]', grid).forEach((card, i) => {
+          const open = () => showServiceDetail(svcData[i]);
+          card.addEventListener('click', open);
+          card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') open(); });
+        });
+        return;
+      }
+
+      let filtered;
+      if (filter === 'all') {
+        filtered = DESTINATIONS;
+      } else if (filter === 'adventure') {
+        filtered = DESTINATIONS.filter(d => (d.tags || []).some(t => ['adventure', 'trek', 'paragliding', 'rafting', 'snow'].includes(t)));
+      } else if (filter === 'stays') {
+        filtered = DESTINATIONS.filter(d => d.difficulty !== 'Hard');
+      } else {
+        filtered = DESTINATIONS;
+      }
+
       grid.innerHTML = filtered.map((dest, i) => {
         const img = dest.images ? dest.images[0] : dest.image;
         const fromPrice = dest.budget.backpacker.split('\u2013')[0];
@@ -609,6 +783,33 @@
           </a>`;
       }).join('');
     }
+    // Handle ?q= from nav search
+    const qParam = new URLSearchParams(window.location.search).get('q');
+    if (qParam) {
+      const q = qParam.toLowerCase();
+      const grid = document.getElementById('dest-grid');
+      if (grid) {
+        grid.className = 'bnb-listing-grid';
+        const matched = DESTINATIONS.filter(d =>
+          d.name.toLowerCase().includes(q) ||
+          d.region.toLowerCase().includes(q) ||
+          (d.tags || []).some(t => t.toLowerCase().includes(q)) ||
+          (d.description || '').toLowerCase().includes(q)
+        );
+        if (matched.length === 0) {
+          grid.innerHTML = `<div class="bnb-empty" style="grid-column:1/-1"><p>No results for "<strong>${qParam}</strong>".</p><a href="destinations.html" class="btn btn-outline" style="margin-top:1rem;">Clear search</a></div>`;
+        } else {
+          grid.innerHTML = matched.map((dest, i) => {
+            const img = dest.images ? dest.images[0] : dest.image;
+            const fromPrice = dest.budget.backpacker.split('\u2013')[0];
+            const rating = dest.difficulty === 'Hard' ? '4.9' : dest.difficulty === 'Moderate' ? '4.8' : '4.7';
+            return `<a href="destination.html?id=${dest.id}" class="bnb-listing-card" style="animation-delay:${i*0.05}s"><div class="bnb-listing-card-img-wrap"><img src="${img}" alt="${dest.name}" loading="lazy" width="400" height="400"><span class="bnb-listing-card-type-badge">${dest.region}</span></div><div class="bnb-listing-card-body"><div class="bnb-listing-card-top"><div class="bnb-listing-card-name">${dest.icon} ${dest.name}</div><div class="bnb-listing-card-rating">\u2605 ${rating}</div></div><div class="bnb-listing-card-loc">${dest.region}</div><div class="bnb-listing-card-price"><strong>${fromPrice}</strong><span>/day from</span></div></div></a>`;
+          }).join('');
+        }
+        return;
+      }
+    }
+
     renderDest('all');
     $$('#dest-filters .filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -1408,21 +1609,26 @@
     // For resorts, show RESORTS data with photos
     if (cat === 'resorts') {
       const resorts = typeof RESORTS !== 'undefined' ? RESORTS : [];
-      $('#sp-grid').innerHTML = resorts.map(r => `
-        <div class="sp-card sp-card-visual">
+      $('#sp-grid').innerHTML = resorts.map((r, i) => `
+        <div class="sp-card sp-card-visual sp-card-clickable" role="button" tabindex="0" data-resort-idx="${i}" style="cursor:pointer;">
           <div class="sp-card-img"><img src="${r.image}" alt="${r.name}" loading="lazy" width="400" height="240"></div>
           <div class="sp-card-body">
             <h3>${r.name}</h3>
             <span class="sp-card-loc">${r.location}</span>
-            <p>${r.description.slice(0, 100)}...</p>
+            <p>${r.description.slice(0, 100)}…</p>
             <div class="sp-card-footer">
               <span class="sp-card-price">${r.price}</span>
               <span class="sp-card-rating">&#9733; ${r.rating}</span>
             </div>
-            <div class="sp-card-tags">${r.features.map(f => `<span class="dp-feature-tag">${f}</span>`).join('')}</div>
           </div>
         </div>
       `).join('');
+      $$('[data-resort-idx]').forEach((card) => {
+        const r = resorts[+card.dataset.resortIdx];
+        const open = () => showResortDetail(r);
+        card.addEventListener('click', open);
+        card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') open(); });
+      });
       return;
     }
 
@@ -1446,8 +1652,8 @@
       paragliding: 'https://images.unsplash.com/photo-1610444583163-9a3d45c55209?w=800&auto=format&fit=crop'
     };
 
-    $('#sp-grid').innerHTML = items.map(s => `
-      <div class="sp-card sp-card-visual">
+    $('#sp-grid').innerHTML = items.map((s, i) => `
+      <div class="sp-card sp-card-visual sp-card-clickable" role="button" tabindex="0" data-svc-idx="${i}" style="cursor:pointer;">
         <div class="sp-card-img"><img src="${catImages[s.category] || meta.img}" alt="${s.name}" loading="lazy" width="400" height="220"></div>
         <div class="sp-card-body">
           <div class="sp-card-header">
@@ -1461,13 +1667,15 @@
           <div class="sp-card-footer">
             <span class="sp-card-price">${s.price}</span>
           </div>
-          <div class="sp-card-actions">
-            <a href="tel:${s.phone}" class="dp-btn dp-btn-call">&#128222; Call to Book</a>
-            <a href="https://wa.me/${s.whatsapp}?text=Hi! I'd like to enquire about ${s.name} (via Himachal BNB)" class="dp-btn dp-btn-outline" target="_blank" rel="noopener">WhatsApp</a>
-          </div>
         </div>
       </div>
     `).join('');
+    $$('[data-svc-idx]').forEach((card) => {
+      const s = items[+card.dataset.svcIdx];
+      const open = () => showServiceDetail(s);
+      card.addEventListener('click', open);
+      card.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') open(); });
+    });
   }
 
   // ═══════════════════════════════════════════════════════════
