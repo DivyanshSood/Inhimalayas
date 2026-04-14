@@ -10,6 +10,38 @@
   const $ = (sel, ctx = document) => ctx.querySelector(sel);
   const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 
+  // ── SEO helpers ──────────────────────────────────────────────
+  function setMeta(name, content, attr = 'name') {
+    let el = document.querySelector(`meta[${attr}="${name}"]`);
+    if (!el) { el = document.createElement('meta'); el.setAttribute(attr, name); document.head.appendChild(el); }
+    el.content = content;
+  }
+  function setLink(rel, href) {
+    let el = document.querySelector(`link[rel="${rel}"]`);
+    if (!el) { el = document.createElement('link'); el.rel = rel; document.head.appendChild(el); }
+    el.href = href;
+  }
+  function setPageMeta({ url, image, title, description }) {
+    if (url) setLink('canonical', url);
+    if (title) setMeta('og:title', title, 'property');
+    if (description) setMeta('og:description', description, 'property');
+    if (url) setMeta('og:url', url, 'property');
+    if (image) setMeta('og:image', image, 'property');
+    if (!document.querySelector('meta[property="og:type"]')) setMeta('og:type', 'website', 'property');
+    if (!document.querySelector('meta[property="og:site_name"]')) setMeta('og:site_name', 'Himachal BNB', 'property');
+    setMeta('twitter:card', 'summary_large_image');
+    if (title) setMeta('twitter:title', title);
+    if (description) setMeta('twitter:description', description);
+    if (image) setMeta('twitter:image', image);
+    if (!document.querySelector('meta[name="robots"]')) setMeta('robots', 'index, follow');
+  }
+  function injectSchema(schemaObj) {
+    const s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify({ '@context': 'https://schema.org', ...schemaObj });
+    document.head.appendChild(s);
+  }
+
   // Current page detection
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';
   const PAGE_MAP = {
@@ -1000,7 +1032,20 @@
     // ── Meta ─────────────────────────────────────────────────────
     document.title = `${dest.name} — Stays, Treks & Activities | Himachal BNB`;
     const metaDesc = document.querySelector('meta[name="description"]');
-    if (metaDesc) metaDesc.content = `Book stays, treks, adventure activities, and transport in ${dest.name}, ${dest.region}. Verified local operators. Instant WhatsApp booking.`;
+    if (metaDesc) metaDesc.content = `Book stays, treks, adventure activities, and transport in ${dest.name}, ${dest.region}. Verified local operators. Real listings, no middlemen.`;
+    const pageUrl = `https://himachalbnb.com/destination.html?id=${dest.id}`;
+    setPageMeta({ url: pageUrl, image: dest.image, title: `${dest.name} — Stays, Treks & Activities | Himachal BNB`, description: `Discover the best stays and activities in ${dest.name}. Curated by locals.` });
+    injectSchema({
+      '@type': 'TouristDestination',
+      '@id': pageUrl,
+      'name': dest.name,
+      'description': dest.description || `Travel guide for ${dest.name}, Himachal Pradesh`,
+      'url': pageUrl,
+      'image': dest.image,
+      'touristType': ['Backpackers', 'Families', 'Adventure Travelers'],
+      'geo': { '@type': 'GeoCoordinates' },
+      'containedInPlace': { '@type': 'AdministrativeArea', 'name': 'Himachal Pradesh', 'containedInPlace': { '@type': 'Country', 'name': 'India' } }
+    });
 
     const destName = dest.name.toLowerCase();
     const destId2 = dest.id.toLowerCase();
@@ -1346,6 +1391,11 @@
     if (!meta) { window.location.href = 'services.html'; return; }
 
     document.title = `${meta.title} — Himachal BNB`;
+    const svcDesc = `Book ${meta.title.toLowerCase()} in Himachal Pradesh directly from verified operators. No middlemen.`;
+    const svcUrl = `https://himachalbnb.com/service.html?cat=${cat}`;
+    setPageMeta({ url: svcUrl, image: meta.img, title: `${meta.title} in Himachal Pradesh — Himachal BNB`, description: svcDesc });
+    const metaDescEl = document.querySelector('meta[name="description"]');
+    if (metaDescEl) metaDescEl.content = svcDesc;
 
     // Set page header
     const label = $('#sp-label');
@@ -1441,7 +1491,12 @@
     const meta = ADV_META[type];
     if (!meta) { window.location.href = 'treks.html'; return; }
 
-    document.title = `${meta.title} in Himachal — Himachal BNB`;
+    document.title = `${meta.title} in Himachal Pradesh — Himachal BNB`;
+    const advDesc = `Book ${meta.title.toLowerCase()} in Himachal Pradesh with verified local operators. ${meta.tagline}`;
+    const advUrl = `https://himachalbnb.com/adventure.html?type=${type}`;
+    setPageMeta({ url: advUrl, image: meta.img, title: `${meta.title} in Himachal Pradesh — Himachal BNB`, description: advDesc });
+    const advMetaDesc = document.querySelector('meta[name="description"]');
+    if (advMetaDesc) advMetaDesc.content = advDesc;
 
     // Set page header (no hero)
     const label = $('#ap-label');

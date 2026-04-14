@@ -1,0 +1,49 @@
+# Himachal BNB
+
+> Curated travel guide for Himachal Pradesh, India — stays, treks, adventure activities, and local services. Verified by locals who live here.
+
+Himachal BNB is an independent, locally-curated travel platform covering 10 destinations across Himachal Pradesh. It lists hostels, homestays, luxury resorts, bike rentals, cab operators, trekking guides, and adventure activity providers. All operators are vetted. No booking fees, no middlemen — direct operator contact.
+
+## Key pages
+
+- [Home](https://himachalbnb.com/): Overview of all destinations and curated collections
+- [All Destinations](https://himachalbnb.com/destinations.html): Browse all 10 Himachal Pradesh destinations
+- [Treks](https://himachalbnb.com/treks.html): 8 curated Himalayan treks with day-by-day itineraries
+- [Travel Guide](https://himachalbnb.com/info.html): Seasons, permits, wildlife, culture, packing lists
+- [Trip Planner](https://himachalbnb.com/planner.html): Personalised destination recommendations in 4 steps
+
+## Destinations
+
+- [Manali](https://himachalbnb.com/destination.html?id=manali): Kullu Valley, 2,050m — adventure hub, Rohtang Pass, Hadimba Temple
+- [Shimla](https://himachalbnb.com/destination.html?id=shimla): Colonial hill capital, Mall Road, Jakhu Temple, Naldehra golf
+- [Kasol](https://himachalbnb.com/destination.html?id=kasol): Parvati Valley backpacker base, Kheerganga trek gateway
+- [Dharamshala](https://himachalbnb.com/destination.html?id=dharamshala): Dalai Lama's residence, Tibetan culture, Triund trek
+- [Bir Billing](https://himachalbnb.com/destination.html?id=bir): World-class paragliding, Tibetan monasteries, yoga retreats
+- [Spiti Valley](https://himachalbnb.com/destination.html?id=spiti): Cold desert at 4,000m+, Key Monastery, Pin Valley, stargazing
+- [Dalhousie](https://himachalbnb.com/destination.html?id=dalhousie): Dhauladhar panoramas, colonial architecture, Khajjiar meadow
+- [Kullu](https://himachalbnb.com/destination.html?id=kullu): Apple orchards, Kullu Dussehra festival, Bijli Mahadev temple
+- [Kinnaur](https://himachalbnb.com/destination.html?id=kinnaur): Sutlej Valley, Recong Peo, Sangla, Chitkul near Tibet border
+- [Chamba](https://himachalbnb.com/destination.html?id=chamba): Ancient temples, Ravi Valley, Chamba Rumal craft, Manimahesh
+
+## Treks
+
+- Triund (Easy, 1 day, Dharamshala)
+- Kheerganga (Easy, 2 days, Kasol)
+- Beas Kund (Easy, 2 days, Manali)
+- Hampta Pass (Moderate, 4 days, 4,270m)
+- Bhrigu Lake (Moderate, 3 days, 4,300m)
+- Chandrakhani Pass (Moderate, 4 days)
+- Deo Tibba Base Camp (Hard, 7 days, 4,700m)
+- Pin Parvati Pass (Hard, 10 days, 5,319m)
+
+## Services
+
+- Hostels, homestays, luxury resorts across Himachal Pradesh
+- Bike rentals (Royal Enfield, scooters) — Manali and Dharamshala
+- Cab and tempo traveller booking — airport transfers, intercity, Spiti circuit
+- Trek operators and adventure activity guides
+
+## Optional
+
+- [Sitemap](https://himachalbnb.com/sitemap.xml)
+- Contact: hello@himachalbnb.com

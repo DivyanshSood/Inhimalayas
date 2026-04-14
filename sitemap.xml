@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- Main Pages -->
-  <url><loc>https://himachalbnb.com/</loc><priority>1.0</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/planner.html</loc><priority>0.9</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://himachalbnb.com/info.html</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
 
-  <!-- Destinations -->
-  <url><loc>https://himachalbnb.com/destinations.html</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/destination.html?id=manali</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/destination.html?id=shimla</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/destination.html?id=kasol</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/destination.html?id=dharamshala</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/destination.html?id=bir</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/destination.html?id=dalhousie</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/destination.html?id=kullu</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/destination.html?id=kinnaur</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/destination.html?id=spiti</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/destination.html?id=chamba</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <!-- Core pages -->
+  <url><loc>https://himachalbnb.com/</loc><lastmod>2025-04-14</lastmod><priority>1.0</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/destinations.html</loc><lastmod>2025-04-14</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/treks.html</loc><lastmod>2025-04-14</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/services.html</loc><lastmod>2025-04-14</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/info.html</loc><lastmod>2025-04-14</lastmod><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/planner.html</loc><lastmod>2025-04-14</lastmod><priority>0.8</priority><changefreq>monthly</changefreq></url>
 
-  <!-- Services -->
-  <url><loc>https://himachalbnb.com/services.html</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/service.html?cat=resorts</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/service.html?cat=homestays</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/service.html?cat=bikes</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/service.html?cat=cabs</loc><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <!-- Destination pages -->
+  <url><loc>https://himachalbnb.com/destination.html?id=manali</loc><lastmod>2025-04-14</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/destination.html?id=shimla</loc><lastmod>2025-04-14</lastmod><priority>0.9</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/destination.html?id=kasol</loc><lastmod>2025-04-14</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/destination.html?id=dharamshala</loc><lastmod>2025-04-14</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/destination.html?id=bir</loc><lastmod>2025-04-14</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/destination.html?id=spiti</loc><lastmod>2025-04-14</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/destination.html?id=dalhousie</loc><lastmod>2025-04-14</lastmod><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/destination.html?id=kullu</loc><lastmod>2025-04-14</lastmod><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/destination.html?id=kinnaur</loc><lastmod>2025-04-14</lastmod><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/destination.html?id=chamba</loc><lastmod>2025-04-14</lastmod><priority>0.7</priority><changefreq>weekly</changefreq></url>
 
-  <!-- Adventure -->
-  <url><loc>https://himachalbnb.com/treks.html</loc><priority>0.9</priority><changefreq>weekly</changefreq></url>
-  <url><loc>https://himachalbnb.com/adventure.html?type=paragliding</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://himachalbnb.com/adventure.html?type=trekking</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://himachalbnb.com/adventure.html?type=rafting</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://himachalbnb.com/adventure.html?type=snow-sports</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://himachalbnb.com/adventure.html?type=rock-climbing</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
-  <url><loc>https://himachalbnb.com/adventure.html?type=bungee</loc><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <!-- Service pages -->
+  <url><loc>https://himachalbnb.com/service.html?cat=resorts</loc><lastmod>2025-04-14</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/service.html?cat=homestays</loc><lastmod>2025-04-14</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/service.html?cat=hostels</loc><lastmod>2025-04-14</lastmod><priority>0.8</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/service.html?cat=bikes</loc><lastmod>2025-04-14</lastmod><priority>0.7</priority><changefreq>weekly</changefreq></url>
+  <url><loc>https://himachalbnb.com/service.html?cat=cabs</loc><lastmod>2025-04-14</lastmod><priority>0.7</priority><changefreq>weekly</changefreq></url>
+
+  <!-- Adventure pages -->
+  <url><loc>https://himachalbnb.com/adventure.html?type=paragliding</loc><lastmod>2025-04-14</lastmod><priority>0.8</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=trekking</loc><lastmod>2025-04-14</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=rafting</loc><lastmod>2025-04-14</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=snow-sports</loc><lastmod>2025-04-14</lastmod><priority>0.7</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=rock-climbing</loc><lastmod>2025-04-14</lastmod><priority>0.6</priority><changefreq>monthly</changefreq></url>
+  <url><loc>https://himachalbnb.com/adventure.html?type=bungee</loc><lastmod>2025-04-14</lastmod><priority>0.6</priority><changefreq>monthly</changefreq></url>
+
 </urlset>

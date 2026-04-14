@@ -1,6 +1,22 @@
 User-agent: *
 Allow: /
-Sitemap: https://himachalbnb.com/sitemap.xml
+Disallow: /.env.local
+Disallow: /.vercel/
 
-# Crawl-delay for politeness
-Crawl-delay: 1
+# AI crawlers — welcome, llms.txt has a structured summary
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://himachalbnb.com/sitemap.xml
