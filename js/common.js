@@ -519,8 +519,11 @@
         </div>` : ''}
         <div class="detail-section">
           <div class="detail-section-title">Book Direct</div>
-          <a href="tel:${s.phone}" class="dp-btn dp-btn-call" style="display:inline-flex;margin-right:0.5rem;">&#128222; Call to Book</a>
-          <a href="https://wa.me/${s.whatsapp}?text=Hi! I'd like to enquire about ${encodeURIComponent(s.name)} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+          <div style="display:flex;flex-wrap:wrap;gap:0.5rem;">
+            ${s.phone ? `<a href="tel:${s.phone}" class="dp-btn dp-btn-call">&#128222; Call</a>` : ''}
+            ${s.whatsapp ? `<a href="https://wa.me/${s.whatsapp}?text=Hi! I'd like to enquire about ${encodeURIComponent(s.name)} (via Himachal BNB)" class="dp-btn dp-btn-whatsapp" target="_blank" rel="noopener">WhatsApp</a>` : ''}
+            ${s.mapsLink ? `<a href="${s.mapsLink}" class="dp-btn" style="background:#4285f4;color:#fff;" target="_blank" rel="noopener">&#128205; View on Maps</a>` : ''}
+          </div>
         </div>
       </div>`;
     initGallery();
