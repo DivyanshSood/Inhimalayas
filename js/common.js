@@ -1307,28 +1307,9 @@
         </div>`;
     }
 
-    // ── Search bar ────────────────────────────────────────────────
+    // ── Search bar (removed) ─────────────────────────────────────
     const searchContainer = document.getElementById('bnb-search-container');
-    if (searchContainer) {
-      searchContainer.innerHTML = `
-        <div class="bnb-search-bar">
-          <div class="bnb-search-field-wrap">
-            <span class="bnb-search-field-label">Destination</span>
-            <div style="font-size:14px;color:#222;font-weight:500;margin-top:1px;">${dest.name}, ${dest.region}</div>
-          </div>
-          <div class="bnb-search-field-wrap">
-            <span class="bnb-search-field-label">What are you looking for?</span>
-            <input class="bnb-search-field" id="bnb-type-input" type="text" placeholder="Stays, treks, activities...">
-          </div>
-          <div class="bnb-search-field-wrap">
-            <span class="bnb-search-field-label">Budget</span>
-            <input class="bnb-search-field" id="bnb-budget-input" type="text" placeholder="Any price range...">
-          </div>
-          <button class="bnb-search-btn" id="bnb-search-btn" aria-label="Search">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          </button>
-        </div>`;
-    }
+    if (searchContainer) searchContainer.innerHTML = '';
 
     // ── Build listings ────────────────────────────────────────────
     const CAT_IMG = {
@@ -1341,16 +1322,9 @@
     };
 
     function getSvcCategory(s) {
-      if (s.category === 'bikes' || s.category === 'cabs' || s.category === 'tempo') return 'transport';
-      if (s.category === 'paragliding') return 'adventure';
-      if (s.category === 'treks') return 'treks';
-      if (s.category === 'homestays') {
-        const p = parseFloat(s.price.replace(/[^\d.]/g, ''));
-        if (s.tags && (s.tags.includes('luxury')) || p >= 8000) return 'luxury';
-        if (s.tags && (s.tags.includes('quiet') || s.tags.includes('nature') || s.tags.includes('ghnp'))) return 'quiet';
-        return 'stays';
-      }
-      return 'stays';
+      if (s.category === 'bikes' || s.category === 'cabs' || s.category === 'tempo') return 'services';
+      if (s.category === 'paragliding' || s.category === 'treks') return 'adventure';
+      return 'stays'; // homestays
     }
     function getSvcBadge(s) {
       const badges = { bikes: 'BIKE RENTAL', cabs: 'CAB', tempo: 'GROUP TRAVEL', treks: 'GUIDED TREK', paragliding: 'ADVENTURE' };
@@ -1385,7 +1359,8 @@
           rating: FAKE_RATINGS[i % FAKE_RATINGS.length],
           badge: getSvcBadge(s),
           whatsapp: s.whatsapp, phone: s.phone,
-          snippet: s.description
+          snippet: s.description,
+          rawData: s
         });
       });
     }
@@ -1397,11 +1372,12 @@
         return loc.includes(destName) || loc.includes(destId2) || loc.includes(destRegion.split(',')[0].trim());
       }).forEach(r => {
         allListings.push({
-          id: r.id, type: 'resort', category: 'luxury',
+          id: r.id, type: 'resort', category: 'stays',
           name: r.name, location: r.location,
           image: r.image, price: r.price, priceUnit: '/night',
           rating: parseFloat(r.rating), badge: 'LUXURY RESORT',
-          snippet: r.description.slice(0, 90) + '...'
+          snippet: r.description.slice(0, 90) + '...',
+          rawData: r
         });
       });
     }
@@ -1414,30 +1390,26 @@
         return loc.includes(destName) || loc.includes(destId2) || reg.includes(destName) || reg.includes(destRegion.split(' ')[0]);
       }).forEach(t => {
         allListings.push({
-          id: t.id, type: 'trek', category: 'treks',
-          name: t.name, location: `${t.location} &middot; ${t.duration}`,
+          id: t.id, type: 'trek', category: 'adventure',
+          name: t.name, location: `${t.location} · ${t.duration}`,
           image: t.image, price: t.cost, priceUnit: '/person',
           rating: t.difficulty === 'Hard' ? 4.9 : 4.8,
           badge: t.difficulty.toUpperCase(),
-          trekLink: `treks.html#${t.id}`,
-          snippet: t.description.slice(0, 90) + '...'
+          snippet: t.description.slice(0, 90) + '...',
+          rawData: t
         });
       });
     }
 
     // ── Categories ────────────────────────────────────────────────
     const ALL_CATEGORIES = [
-      { id: 'all',       icon: '\u{1F3D4}\uFE0F', label: 'All' },
-      { id: 'stays',     icon: '\u{1F3E0}', label: 'Stays' },
-      { id: 'luxury',    icon: '\u{1F48E}', label: 'Luxury' },
-      { id: 'quiet',     icon: '\u{1F33F}', label: 'Quiet Escape' },
-      { id: 'adventure', icon: '\u{1FA82}', label: 'Adventure' },
-      { id: 'treks',     icon: '\u{1F97E}', label: 'Treks' },
-      { id: 'transport', icon: '\u{1F696}', label: 'Transport' },
+      { id: 'all',       icon: '🗺️',  label: 'All' },
+      { id: 'stays',     icon: '🏠',  label: 'Stays' },
+      { id: 'adventure', icon: '🏔️', label: 'Adventure' },
+      { id: 'services',  icon: '🔑',  label: 'Services' },
     ].filter(c => c.id === 'all' || allListings.some(l => l.category === c.id));
 
     let activeCategory = 'all';
-    let activeSearch = '';
 
     // ── Category strip ────────────────────────────────────────────
     const catStrip = document.getElementById('bnb-category-strip');
@@ -1464,14 +1436,6 @@
 
       let filtered = allListings;
       if (activeCategory !== 'all') filtered = filtered.filter(l => l.category === activeCategory);
-      if (activeSearch.trim()) {
-        const q = activeSearch.toLowerCase();
-        filtered = filtered.filter(l =>
-          l.name.toLowerCase().includes(q) ||
-          (l.location && l.location.toLowerCase().includes(q)) ||
-          (l.snippet && l.snippet.toLowerCase().includes(q))
-        );
-      }
 
       if (header) {
         const catLabel = ALL_CATEGORIES.find(c => c.id === activeCategory)?.label || 'All';
@@ -1490,17 +1454,8 @@
         return;
       }
 
-      grid.innerHTML = filtered.map((item, i) => {
-        let ctaHtml = '';
-        if (item.type === 'trek') {
-          ctaHtml = `<a href="${item.trekLink}" class="bnb-listing-card-cta explore" onclick="event.stopPropagation()">View Trek &rarr;</a>`;
-        } else if (item.type === 'resort') {
-          ctaHtml = `<a href="resorts.html" class="bnb-listing-card-cta explore" onclick="event.stopPropagation()">View Stay &rarr;</a>`;
-        } else {
-          ctaHtml = `<a href="service.html?cat=${item.category === 'transport' ? 'cabs' : 'homestays'}" class="bnb-listing-card-cta outline" onclick="event.stopPropagation()">Explore &rarr;</a>`;
-        }
-        return `
-          <div class="bnb-listing-card" style="animation-delay:${i * 0.04}s">
+      grid.innerHTML = filtered.map((item, i) => `
+          <div class="bnb-listing-card sp-card-clickable" data-type="${item.type}" data-idx="${i}" style="animation-delay:${i * 0.04}s;cursor:pointer;">
             <div class="bnb-listing-card-img-wrap">
               <img src="${item.image}" alt="${item.name}" loading="lazy" width="400" height="400">
               <button class="bnb-listing-card-heart" aria-label="Save" onclick="event.stopPropagation();this.classList.toggle('liked');this.textContent=this.classList.contains('liked')?'\u2665':'\u2661';">\u2661</button>
@@ -1515,23 +1470,27 @@
               <div class="bnb-listing-card-loc">${item.location}</div>
               <div class="bnb-listing-card-snippet">${item.snippet || ''}</div>
               <div class="bnb-listing-card-price"><strong>${item.price}</strong><span> ${item.priceUnit}</span></div>
-              ${ctaHtml}
             </div>
-          </div>`;
-      }).join('');
+          </div>`).join('');
+
+      // Card click → open detail overlay
+      grid.querySelectorAll('.bnb-listing-card').forEach((card, i) => {
+        card.addEventListener('click', () => {
+          const item = filtered[i];
+          if (!item) return;
+          if (item.type === 'resort' && typeof showResortDetail === 'function') {
+            showResortDetail(item.rawData);
+          } else if (item.type === 'service' && typeof showServiceDetail === 'function') {
+            showServiceDetail(item.rawData);
+          } else if (item.type === 'trek' && typeof showTrekDetail === 'function') {
+            showTrekDetail(item.rawData);
+          }
+        });
+      });
     }
 
     // Initial render
     renderListings();
-
-    // Search wiring
-    const searchBtn = document.getElementById('bnb-search-btn');
-    const typeInput = document.getElementById('bnb-type-input');
-    if (searchBtn && typeInput) {
-      const doSearch = () => { activeSearch = typeInput.value; renderListings(); };
-      searchBtn.addEventListener('click', doSearch);
-      typeInput.addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
-    }
 
     // ── About section ─────────────────────────────────────────────
     const aboutContainer = document.getElementById('bnb-about-container');
