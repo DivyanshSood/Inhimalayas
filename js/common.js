@@ -1281,30 +1281,11 @@
     }
 
     // ── Destination header ────────────────────────────────────────
-    const bestMonths = dest.bestMonths.map(m => {
-      const s = typeof SEASONS !== 'undefined' ? SEASONS.find(s => s.month === m) : null;
-      return s ? s.name.slice(0, 3) : m;
-    }).join(', ');
-    const fromDelhi = dest.gettingThere.match(/(\d+)\s*hr/i);
-    const travelTime = fromDelhi ? fromDelhi[0] : '~12hr';
-    
     const headerEl = document.getElementById('bnb-dest-header');
     if (headerEl) {
       headerEl.innerHTML = `
         <h1>${dest.icon} ${dest.name}</h1>
-        <div class="bnb-dest-tagline">${dest.tagline} &middot; ${dest.region}</div>
-        <div class="bnb-dest-badges">
-          <span class="bnb-dest-badge">&uarr; ${dest.altitude}</span>
-          <span class="bnb-dest-badge"><span class="difficulty-badge ${dest.difficulty}">${dest.difficulty} Access</span></span>
-          <span class="bnb-dest-badge">&#127777; ${dest.temp}</span>
-          <span class="bnb-dest-badge">&#128197; Best: ${bestMonths.split(',').slice(0,3).join(',')}...</span>
-        </div>
-        <div class="bnb-info-grid">
-          <div class="bnb-info-item"><span class="bnb-info-label">Altitude</span><div class="bnb-info-value">${dest.altitude}</div></div>
-          <div class="bnb-info-item"><span class="bnb-info-label">Best Visit</span><div class="bnb-info-value">${bestMonths.split(',')[0].trim()}</div></div>
-          <div class="bnb-info-item"><span class="bnb-info-label">From Delhi</span><div class="bnb-info-value">${travelTime}</div></div>
-          <div class="bnb-info-item"><span class="bnb-info-label">Budget/day</span><div class="bnb-info-value">${dest.budget.backpacker.split('\u2013')[0]}</div></div>
-        </div>`;
+        <div class="bnb-dest-tagline">${dest.tagline} &middot; ${dest.region}</div>`;
     }
 
     // ── Search bar (removed) ─────────────────────────────────────
